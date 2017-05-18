@@ -2,6 +2,7 @@
 #include once "../common/new/list.bas"
 #include once "gameobjects/elementgrid.bas"
 #include once "gameobjects/actor.bas"
+#include once "gameobjects/menucommand.bas"
 
 const item_command = 2 'Belongs with menucommands; needed for giveactorcommand
 
@@ -9,6 +10,8 @@ type FF4Rom
 
  public:
  elementgrids(total_element_grids) as ElementGrid
+ menu_commands(total_menu_commands) as MenuCommand
+
  actors(total_actors) as Actor
  names(total_names) as String
  jobchange_actor as Integer
