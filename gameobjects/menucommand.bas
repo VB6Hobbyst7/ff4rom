@@ -19,6 +19,10 @@
 '   relevant is so that you can use the element/status constants and have
 '   them work the way you expect. Thus, the first 8 flags do nothing.
 
+' The "charging stance" is the animation that plays for the character
+'  while it's waiting to execute the command. The "action stance" is the
+'  character animation that plays when the command executes.
+
 ' Since many commands (mainly the unused ones but also some of the
 '  regular ones) are commonly called a variety of different things, I have
 '  included all the frequently used aliases in the constants to make it
@@ -26,6 +30,22 @@
 '  used to refer either to Palom's spell boosting ability or yang's charge
 '  punch. Since Focus was used in an official release to refer to Yang's
 '  ability, I have decided to err in that direction.
+
+type MenuCommand
+
+ name as String
+ target as UByte
+ delay as UByte
+ disabling_statuses_persistent(8) as Boolean
+ disabling_statuses_temporary(8) as Boolean
+ charging_stance as UByte
+ action_stance as UByte
+ action_stance2 as UByte
+ action_stance3 as UByte
+ parameters(24) as UByte 'This could be spells, success rates, etc.
+ message_index(5) as UByte
+ 
+end type
 
 const total_menu_commands = 25
 
@@ -96,19 +116,3 @@ const left_hand_raised_stance = 12
 const first_special_stance = 13
 const second_special_stance = 14
 const alt_resting_stance = 15 'Not sure why there are two of these...
-
-type MenuCommand
-
- name as String
- target as UByte
- delay as UByte
- disabling_statuses_persistent(8) as Boolean
- disabling_statuses_temporary(8) as Boolean
- charging_stance as UByte
- action_stance as UByte
- action_stance2 as UByte
- action_stance3 as UByte
- parameters(24) as UByte 'This could be spells, success rates, etc.
- message_index(5) as UByte
- 
-end type
