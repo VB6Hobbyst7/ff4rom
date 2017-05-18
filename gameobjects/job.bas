@@ -6,7 +6,7 @@
 '  same, but there is nothing technically preventing them from being
 '  different if desired.
 
-' There number of jobs that are actually defined is different from the number
+' The number of jobs that are actually defined is different from the number
 '  that can be referenced by other things, such as equip charts. That is why
 '  there are two separate constants to track total jobs versus usable jobs.
 
