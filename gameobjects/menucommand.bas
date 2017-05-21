@@ -36,8 +36,7 @@ type MenuCommand
  name as String
  target as UByte
  delay as UByte
- disabling_statuses_persistent(8) as Boolean
- disabling_statuses_temporary(8) as Boolean
+ disabling_statuses(24) as Boolean
  charging_stance as UByte
  action_stance as UByte
  action_stance2 as UByte

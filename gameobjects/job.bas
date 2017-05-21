@@ -22,5 +22,5 @@ type Job
 
 end type
 
-'const total_jobs = 
-'const usable_jobs = 
+const total_jobs = 15
+const usable_jobs = 13

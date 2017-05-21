@@ -27,8 +27,10 @@ sub FF4Rom.ReadFromFile(filename as String)
   end if
  close
 
- ReadElementGrids()
  ReadActors()
+ ReadElementGrids()
+ ReadEquipCharts()
+ ReadMenuCommands()
 
 end sub
 

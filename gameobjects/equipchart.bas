@@ -10,4 +10,4 @@ type EquipChart
 
 end type
 
-'const total_equip_charts = 
+const total_equip_charts = 31

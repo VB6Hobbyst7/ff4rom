@@ -5,13 +5,13 @@ sub FF4Rom.ReadActors()
 
  for i as Integer = 0 to total_actors
   
-  actors(i).name_index = ByteAt(&h8656 + i)
+  actors(i).name_index = ByteAt(&h8657 + i)
 
-  temp = ByteAt(&h6898 + i)
+  temp = ByteAt(&h689A + i)
   actors(i).load_initial = (temp < &h80)
   actors(i).load_slot = temp mod &h80
   
-  temp = ByteAt(&h691B + i)
+  temp = ByteAt(&h691D + i)
   actors(i).store_shadow = (temp < &h80)
   if actors(i).store_shadow then actors(i).store_slot = temp
   
