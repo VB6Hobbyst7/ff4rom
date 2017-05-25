@@ -26,11 +26,22 @@ type Item
  'All items
  name as String
  price_code as UByte
+ description as UByte
 
- 'Medicines and Weapons
- casts as UByte
- spell_power as UByte
-
+ 'Medicines only
+ delay as UByte
+ target as UByte
+ power as UByte
+ boss as Boolean
+ success as UByte
+ impact as Boolean
+ effect as UByte
+ damage as UByte
+ element_code as UByte
+ reflectable as Boolean
+ mp_cost as UByte
+ visual as UByte
+ 
  'Armors only
  defense as UByte
  evade as UByte
@@ -49,5 +60,9 @@ type Item
  colors as UByte
  swing as UByte
  slash as UByte
+ casts as UByte
+ spell_power as UByte
 
 end type
+
+const total_items = &hFF

@@ -3,7 +3,7 @@ sub FF4Rom.ReadElementGrids()
  for i as Integer = 0 to total_element_grids
   for j as Integer = 0 to 2
    for k as Integer = 0 to 7
-    elementgrids(i).flags(j * 8 + k + 1) = iif(ByteAt(&h7A790 + i * 3 + j) and 2^k, true, false)
+    elementgrids(i).flags(j * 8 + k) = iif(ByteAt(&h7A790 + i * 3 + j) and 2^k, true, false)
    next
   next
  next
@@ -19,7 +19,7 @@ sub FF4Rom.WriteElementGrids()
   for j as Integer = 0 to 2
    temp = 0
    for k as Integer = 0 to 7
-    temp += iif(elementgrids(i).flags(j * 8 + k + 1), 2^k, 0)
+    temp += iif(elementgrids(i).flags(j * 8 + k), 2^k, 0)
    next
    WriteByte(&h7A790 + i * 3 + j, temp)
   next

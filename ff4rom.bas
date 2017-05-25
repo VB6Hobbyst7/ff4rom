@@ -24,6 +24,13 @@ type FF4Rom
  blackreplace_actor as Integer
  blackreplace_text as String
  
+ items(total_items) as Item
+ descriptions_range as Range
+ weapons_range as Range
+ armors_range as Range
+ medicines_range as Range
+ tools_range as Range
+ 
  private:
  romdata as String
  unheadered as Boolean
@@ -66,6 +73,8 @@ type FF4Rom
  declare sub WriteElementGrids()
  declare sub  ReadEquipCharts()
  declare sub WriteEquipCharts()
+ declare sub  ReadItems()
+ declare sub WriteItems()
  declare sub  ReadJobs()
  declare sub WriteJobs()
  declare sub  ReadMenuCommands()
@@ -89,4 +98,6 @@ end type
 #include once "readwrite/actors.bas"
 #include once "readwrite/elementgrids.bas"
 #include once "readwrite/equipcharts.bas"
+#include once "readwrite/items.bas"
+#include once "readwrite/jobs.bas"
 #include once "readwrite/menucommands.bas"

@@ -30,39 +30,39 @@
 '                   same manner as the immune flag). I'm not sure whether it
 '                   halves the damage as well or just inverts it.
 
-const total_element_grids = 123
-
-const fire = 1
-const ice = 2
-const bolt = 3
-const dark = 4
-const holy = 5
-const air = 6
-const absorb = 7
-const immune = 8
-
-const poison = 9
-const blind = 10
-const mute = 11
-const pig = 12
-const mini = 13
-const frog = 14
-const petrify = 15
-const ko = 16
-
-const calcify1 = 17
-const calcify2 = 18
-const berserk = 19
-const charm = 20
-const asleep = 21 'I can't call it "sleep" as that is a BASIC keyword
-const stun = 22
-const float = 23
-const curse = 24
-
 type ElementGrid
 
- flags(24) as Boolean
+ flags(23) as Boolean
 
 end type
+
+const total_element_grids = 123
+
+const fire = 0
+const ice = 1
+const bolt = 2
+const dark = 3
+const holy = 4
+const air = 5
+const absorb = 6
+const immune = 7
+
+const poison = 8
+const blind = 9
+const mute = 10
+const pig = 11
+const mini = 12
+const frog = 13
+const petrify = 14
+const ko = 15
+
+const calcify1 = 16
+const calcify2 = 17
+const berserk = 18
+const charm = 19
+const asleep = 20 'I can't call it "sleep" as that is a BASIC keyword
+const stun = 21
+const float = 22
+const curse = 23
 
 
