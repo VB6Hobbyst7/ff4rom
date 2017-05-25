@@ -30,6 +30,14 @@ type FF4Rom
  armors_range as Range
  medicines_range as Range
  tools_range as Range
+ two_handed_range as Range
+ bow_range as Range
+ arrow_range as Range
+ shield_range as Range
+ head_range as Range
+ body_range as Range
+ arms_range as Range
+ key_items_range as Range
  
  private:
  romdata as String
