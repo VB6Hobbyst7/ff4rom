@@ -39,7 +39,7 @@ type Item
  damage as UByte
  element_code as UByte
  reflectable as Boolean
- mp_cost as UByte
+ mp_cost as UByte 'No idea why an item has an MP cost...
  visual as UByte
  
  'Armors only
@@ -49,11 +49,14 @@ type Item
  magic_evade as UByte
 
  'Weapons and Armors
+ magnetic as Boolean
  elements as UByte
  races(7) as Boolean
  stat_bonus as StatBonus
+ equip_code as UByte
 
  'Weapons only
+ properties(8) as Boolean
  attack as UByte
  hit as UByte
  sprite as UByte
@@ -61,6 +64,7 @@ type Item
  swing as UByte
  slash as UByte
  casts as UByte
+ cast_visual as UByte
  spell_power as UByte
 
 end type

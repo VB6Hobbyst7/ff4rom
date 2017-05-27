@@ -38,7 +38,46 @@ sub FF4Rom.ReadItems()
    items(i).price_code = ByteAt(&h7A700 + i)
   end if
   
+  if armors_range.InRange(i) then
+   start = &h79600
+   items(i).magnetic = iif(ByteAt(start + i * 8) and &h80, true, false)
+   items(i).magic_evade = ByteAt(start + i * 8) mod &h80
+   items(i).defense = ByteAt(start + i * 8 + 1)
+   items(i).evade = ByteAt(start + i * 8 + 2)
+   items(i).magic_defense = ByteAt(start + i * 8 + 3)
+   items(i).element_code = ByteAt(start + i * 8 + 4) mod &h40
+   for j as Integer = 0 to 7
+    items(i).races(j) = iif(ByteAt(start + i * 8 + 5) and 2^j, true, false)
+   next
+   items(i).equip_code = ByteAt(start + i * 8 + 6) mod &h20
+   items(i).stat_bonus.amount = ByteAt(start + i * 8 + 7) mod 8
+   for j as Integer = 0 to 4
+    items(i).stat_bonus.flags(4 - j) = iif(ByteAt(start + i * 8 + 7) and 2^(j + 3), true, false)
+   next
+  end if
   
+  if weapons_range.InRange(i) then
+   start = &h79300
+   for j as Integer = 0 to 7
+    items(i).properties(j) = iif(ByteAt(start + i * 8) and 2^j, true, false)
+   next
+   items(i).attack = ByteAt(start + i * 8 + 1)
+   items(i).hit = ByteAt(start + i * 8 + 2) mod &h80
+   items(i).casts = ByteAt(start + i * 8 + 3)
+   items(i).element_code = ByteAt(start + i * 8 + 4)
+   for j as Integer = 0 to 7
+    items(i).races(j) = iif(ByteAt(start + i * 8 + 5) and 2^j, true, false)
+   next
+   items(i).equip_code = ByteAt(start + i * 8 + 6) mod &h20
+   items(i).properties(8) = iif(ByteAt(start + i * 8 + 6) and &h40, true, false)
+   start = &h7A010
+   items(i).colors = ByteAt(start + i * 4)
+   items(i).sprite = ByteAt(start + i * 4 + 1)
+   items(i).slash = ByteAt(start + i * 4 + 2)
+   items(i).swing = ByteAt(start + i * 4 + 3)
+   items(i).spell_power = ByteAt(&h79270 + i)
+   items(i).cast_visual = ByteAt(&h7D6E0 + i)
+  end if
  
  next
 
@@ -46,4 +85,101 @@ end sub
 
 
 sub FF4Rom.WriteItems()
+
+ dim start as Integer
+ dim temp as UByte
+
+ WriteByte(&hA9BB, descriptions_range.start)
+ WriteByte(&hA9BF, descriptions_range.finish)
+
+ for i as Integer = 0 to total_items
+ 
+  for j as Integer = 0 to 8
+   WriteByte(&h78200 + i * 9 + j, asc(mid(items(i).name, j + 1, 1)))
+  next
+  
+  if descriptions_range.InRange(i) then
+   WriteByte(&h7B000 + i - descriptions_range.start, items(i).description)
+  end if
+  
+  WriteByte(&h7A650 + i, items(i).price_code)
+  
+  if medicines_range.InRange(i) then
+   start = &h79880 + i * 6
+   WriteByte(start, items(i).delay + items(i).target * &h20)
+   WriteByte(start + 1, items(i).power)
+   temp = items(i).success
+   if items(i).boss then temp += &h80
+   WriteByte(start + 2, temp)
+   temp = items(i).effect
+   if items(i).impact then temp += &h80
+   WriteByte(start + 3, temp)
+   temp = items(i).element_code
+   if items(i).damage then temp += &h80
+   WriteByte(start + 4, temp)
+   temp = items(i).mp_cost
+   if items(i).reflectable then temp += &h80
+   WriteByte(start + 5, temp)
+   WriteByte(&h7D790 + i, items(i).visual)
+   WriteByte(&h7A700 + i, items(i).price_code)
+  end if
+  
+  if armors_range.InRange(i) then
+   start = &h79600
+   temp = items(i).magic_evade
+   if items(i).magnetic then temp += &h80
+   WriteByte(start + i * 8, temp)
+   WriteByte(start + i * 8 + 1, items(i).defense)
+   WriteByte(start + i * 8 + 2, items(i).evade)
+   WriteByte(start + i * 8 + 3, items(i).magic_defense)
+   temp = items(i).element_code
+   temp += (ByteAt(start + i * 8 + 4) \ &h40) * &h40
+   WriteByte(start + i * 8 + 4, temp)
+   temp = 0
+   for j as Integer = 0 to 7
+    if items(i).races(j) then temp += 2^j
+   next
+   WriteByte(start + i * 8 + 5, temp)
+   temp = items(i).equip_code
+   temp += (ByteAt(start + i * 8 + 6) \ &h20) * &h20
+   WriteByte(start + i * 8 + 6, temp)
+   temp = items(i).stat_bonus.amount
+   for j as Integer = 0 to 4
+    if items(i).stat_bonus.flags(4 - j) then temp += 2^(j + 3)
+   next
+   WriteByte(start + i * 8 + 7, temp)
+  end if
+  
+  if weapons_range.InRange(i) then
+   start = &h79300
+   temp = 0
+   for j as Integer = 0 to 7
+    if items(i).properties(j) then temp += 2^j
+   next
+   WriteByte(start + i * 8, temp)
+   WriteByte(start + i * 8 + 1, items(i).attack)
+   temp = items(i).hit
+   temp += iif(ByteAt(start + i * 8 + 2) and &h80, &h80, 0)
+   WriteByte(start + i * 8 + 2, temp)
+   WriteByte(start + i * 8 + 3, items(i).casts)
+   WriteByte(start + i * 8 + 4, items(i).element_code)
+   temp = 0
+   for j as Integer = 0 to 7
+    if items(i).races(j) then temp += 2^j
+   next
+   WriteByte(start + i * 8 + 5, temp)
+   temp = items(i).equip_code
+   if items(i).properties(8) then temp += &h40
+   temp += (ByteAt(start + i * 8 + 6) \ &h40) * &h40
+   start = &h7A010
+   WriteByte(start + i * 4, items(i).colors)
+   WriteByte(start + i * 4 + 1, items(i).sprite)
+   WriteByte(start + i * 4 + 2, items(i).slash)
+   WriteByte(start + i * 4 + 3, items(i).swing)
+   WriteByte(&h79270 + i, items(i).spell_power)
+   WriteByte(&h7D6E0 + i, items(i).cast_visual)
+  end if
+ 
+ next
+
 end sub

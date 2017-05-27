@@ -7,6 +7,7 @@
 #include once "gameobjects/item.bas"
 #include once "gameobjects/menucommand.bas"
 #include once "gameobjects/actor.bas"
+#include once "gameobjects/character.bas"
 
 type FF4Rom
 
@@ -16,6 +17,8 @@ type FF4Rom
  
  jobs(total_jobs) as Job
  equipcharts(total_equip_charts) as EquipChart
+ 
+ characters(total_characters) as Character
 
  actors(total_actors) as Actor
  names(total_names) as String

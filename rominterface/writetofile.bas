@@ -3,8 +3,12 @@
 
 sub FF4Rom.WriteToFile(filename as String)
 
- WriteElementGrids()
  WriteActors()
+ WriteElementGrids()
+ WriteEquipCharts()
+ WriteItems()
+ WriteJobs()
+ WriteMenuCommands()
 
  dim temp as String
 

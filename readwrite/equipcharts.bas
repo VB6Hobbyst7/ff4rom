@@ -21,6 +21,7 @@ sub FF4Rom.WriteEquipCharts()
 
  for i as Integer = 0 to total_jobs
   
+  temp = 0
   for j as Integer = 0 to 7
    if equipcharts(i).flags(j) then temp += 2^j
   next
