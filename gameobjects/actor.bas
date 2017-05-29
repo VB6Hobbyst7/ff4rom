@@ -1,6 +1,23 @@
 'An actor is what joins or leaves your team; there can be multiple actors of
 ' the same character.
 
+
+type Actor
+
+ name_index as UByte
+ load_initial as Boolean
+ store_shadow as Boolean
+ load_slot as UByte
+ store_slot as UByte
+ level_link as UByte
+ menu_command(5) as UByte
+ starting_gear(5) as UByte
+ right_ammo as UByte
+ left_ammo as UByte
+
+end type
+
+
 const total_actors = 19
 const total_names = 13
 
@@ -27,17 +44,8 @@ const kain3_actor = 19
 const golbez_actor = 20 'His data isn't read but he can be referred to
                         ' in, say, the events and such.
 
-type Actor
-
- name_index as UByte
- load_initial as Boolean
- store_shadow as Boolean
- load_slot as UByte
- store_slot as UByte
- level_link as UByte
- menu_command(5) as UByte
- starting_gear(5) as UByte
- right_ammo as UByte
- left_ammo as UByte
-
-end type
+const right_hand_slot = 1
+const left_hand_slot = 2
+const head_slot = 3
+const body_slot = 4
+const arms_slot = 5

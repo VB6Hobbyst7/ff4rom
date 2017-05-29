@@ -49,6 +49,7 @@ type FF4Rom
  public:
  'INFO/
  ' These give information about the rom without actually making changes.
+ declare function CanEquip(actor_index as UByte, item_index as UByte) as Boolean
  declare function ConvertText(text as String) as String
  declare function DisplayText(text as String) as String
  declare function FlagIndex(flagname as String) as Integer
@@ -59,7 +60,8 @@ type FF4Rom
  ' Changes only exist in the copy of the rom in memory and will not be
  '  applied to the actual file until you call WriteToFile.
  declare function FindMakeElementGrid(combination as List) as Integer
- declare sub GiveActorCommand(actorindex as UByte, commandindex as UByte)
+ declare sub GiveActorCommand(actor_index as UByte, command_index as UByte)
+ declare sub GiveActorItem(actor_index as UByte, item_index as UByte, arrow_ammo as UByte = 50, force_right as Boolean = false)
 
  'ROMINTERFACE/
  ' These are for reading and writing between the abstract objects stored
@@ -80,6 +82,8 @@ type FF4Rom
  '  don't have to call them all manually.
  declare sub  ReadActors()
  declare sub WriteActors()
+ declare sub  ReadCharacters()
+ declare sub WriteCharacters()
  declare sub  ReadElementGrids()
  declare sub WriteElementGrids()
  declare sub  ReadEquipCharts()
@@ -93,6 +97,7 @@ type FF4Rom
 
 end type
 
+#include once "info/canequip.bas"
 #include once "info/converttext.bas"
 #include once "info/displaytext.bas"
 #include once "info/flagindex.bas"
@@ -100,6 +105,7 @@ end type
 
 #include once "edit/findmakeelementgrid.bas"
 #include once "edit/giveactorcommand.bas"
+#include once "edit/giveactoritem.bas"
 
 #include once "rominterface/readfromfile.bas"
 #include once "rominterface/writetofile.bas"
@@ -107,6 +113,7 @@ end type
 #include once "rominterface/writebyte.bas"
 
 #include once "readwrite/actors.bas"
+#include once "readwrite/characters.bas"
 #include once "readwrite/elementgrids.bas"
 #include once "readwrite/equipcharts.bas"
 #include once "readwrite/items.bas"

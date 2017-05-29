@@ -4,6 +4,7 @@
 sub FF4Rom.WriteToFile(filename as String)
 
  WriteActors()
+ WriteCharacters()
  WriteElementGrids()
  WriteEquipCharts()
  WriteItems()

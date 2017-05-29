@@ -52,7 +52,7 @@ sub FF4Rom.ReadItems()
    items(i).equip_code = ByteAt(start + i * 8 + 6) mod &h20
    items(i).stat_bonus.amount = ByteAt(start + i * 8 + 7) mod 8
    for j as Integer = 0 to 4
-    items(i).stat_bonus.flags(4 - j) = iif(ByteAt(start + i * 8 + 7) and 2^(j + 3), true, false)
+    items(i).stat_bonus.stats(4 - j) = iif(ByteAt(start + i * 8 + 7) and 2^(j + 3), true, false)
    next
   end if
   
@@ -145,7 +145,7 @@ sub FF4Rom.WriteItems()
    WriteByte(start + i * 8 + 6, temp)
    temp = items(i).stat_bonus.amount
    for j as Integer = 0 to 4
-    if items(i).stat_bonus.flags(4 - j) then temp += 2^(j + 3)
+    if items(i).stat_bonus.stats(4 - j) then temp += 2^(j + 3)
    next
    WriteByte(start + i * 8 + 7, temp)
   end if

@@ -28,6 +28,7 @@ sub FF4Rom.ReadFromFile(filename as String)
  close
 
  ReadActors()
+ ReadCharacters()
  ReadElementGrids()
  ReadEquipCharts()
  ReadItems()

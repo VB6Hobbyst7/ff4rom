@@ -20,9 +20,10 @@
 
 type StatBonus
  
- flags(4) as Boolean
+ stats(4) as Boolean
  amount as UByte
  
+ declare sub Display()
  declare sub SetEquipmentBonus(bonus as String)
  
 end type
@@ -60,3 +61,26 @@ sub StatBonus.SetEquipmentBonus(bonus as String)
  end select
  
 end sub
+
+
+'Displays the stat bonus information on the console screen. This is mostly for
+' debugging purposes.
+sub StatBonus.Display()
+
+ dim temp as String
+ 
+ if stats(0) then temp += "Str, "
+ if stats(1) then temp += "Agi, "
+ if stats(2) then temp += "Vit, "
+ if stats(3) then temp += "Wis, "
+ if stats(4) then temp += "Wil, "
+ 
+ if len(temp) > 0 then temp = left(temp, len(temp) - 2) + " "
+
+ temp += iif(amount = 7, "-1", "+" + str(amount))
+ 
+ print temp
+
+end sub
+
+

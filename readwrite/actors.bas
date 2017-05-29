@@ -2,6 +2,8 @@ sub FF4Rom.ReadActors()
 
  dim start as Integer
  dim temp as UByte
+ dim next_char as Integer
+ dim level_ptr(total_characters) as Integer
 
  for i as Integer = 0 to total_actors
   
@@ -44,7 +46,24 @@ sub FF4Rom.ReadActors()
  blackreplace_actor = ByteAt(&hB1B3)
  jobchange_actor = ByteAt(&h67B8)
  jobchange_job = ByteAt(&h67BC)
-
+ 
+ start = &h7B700
+ next_char = 0
+ for i as Integer = 0 to total_actors
+  temp = ByteAt(start + i * 2)
+  temp += ByteAt(start + i * 2 + 1) * &h100
+  for j as Integer = 0 to i
+   if level_ptr(j) = temp then
+    actors(i).level_link = j
+   end if
+  next
+  if actors(i).level_link = 0 then
+   level_ptr(next_char) = temp
+   actors(i).level_link = next_char
+   next_char += 1
+  end if
+ next
+ 
 end sub
 
 

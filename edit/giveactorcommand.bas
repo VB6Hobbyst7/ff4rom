@@ -4,17 +4,17 @@
 ' the specified command. If the actor doesn't have an item command, it simply
 ' adds the specified command to the end of the menu if there is room.
 
-sub FF4Rom.GiveActorCommand(actorindex as UByte, commandindex as UByte)
+sub FF4Rom.GiveActorCommand(actor_index as UByte, command_index as UByte)
 
  dim found as Boolean
 
  for i as Integer = 2 to 4
-  if actors(actorindex).menu_command(i) = item_command then
-   actors(actorindex).menu_command(i + 1) = item_command
-   actors(actorindex).menu_command(i) = commandindex
+  if actors(actor_index).menu_command(i) = item_command then
+   actors(actor_index).menu_command(i + 1) = item_command
+   actors(actor_index).menu_command(i) = command_index
    found = true
    exit for
-  elseif actors(actorindex).menu_command(i) = commandindex then
+  elseif actors(actor_index).menu_command(i) = command_index then
    found = true
    exit for
   end if
@@ -22,8 +22,8 @@ sub FF4Rom.GiveActorCommand(actorindex as UByte, commandindex as UByte)
 
  if not found then
   for i as Integer = 1 to 5
-   if actors(actorindex).menu_command(i) = &hFF then
-    actors(actorindex).menu_command(i) = commandindex
+   if actors(actor_index).menu_command(i) = &hFF then
+    actors(actor_index).menu_command(i) = command_index
     exit for
    end if
   next

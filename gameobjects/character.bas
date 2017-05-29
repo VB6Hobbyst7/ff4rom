@@ -17,15 +17,16 @@ type Character
  character_id as UByte
  left_handed as Boolean
  right_handed as Boolean
- job_index as Job
+ job_index as UByte
+ sprite as UByte
  level as UByte
  max_hp as UInteger
  max_mp as UInteger
- stat(5) as UByte
+ stats(5) as UByte
  xp as UInteger
  tnl as UInteger
- levelups(70) as LevelUp
- after70(8) as StatBonus
+ levelups(69) as LevelUp
+ after70(7) as StatBonus
 
 end type
 
