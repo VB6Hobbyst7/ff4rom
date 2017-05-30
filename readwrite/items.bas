@@ -7,6 +7,16 @@ sub FF4Rom.ReadItems()
  armors_range.SetRange(&h60, &hAF)
  medicines_range.SetRange(&hB0, &hDD)
  tools_range.SetRange(&hDE, &hFF)
+ two_handed_range.SetRange(ByteAt(&hC22B), ByteAt(&hC1BE) - 1)
+ bow_range.SetRange(ByteAt(&hC1BE), ByteAt(&hC286) - 1)
+ arrow_range.SetRange(ByteAt(&hC286), ByteAt(&hC287))
+ shield_range.SetRange(armors_range.start + 1, ByteAt(&hC1DC) - 1)
+ head_range.SetRange(ByteAt(&hC1DC), ByteAt(&hC1D2) - 1)
+ body_range.SetRange(ByteAt(&hC1D2), ByteAt(&hC1D7) - 1)
+ arms_range.SetRange(ByteAt(&hC1D7), ByteAt(&hC1D8))
+ key_items_range.SetRange(ByteAt(&hCB30), total_items)
+ special_key_item1 = ByteAt(&hCB28)
+ special_key_item2 = ByteAt(&hCB2C)
 
  for i as Integer = 0 to total_items
  

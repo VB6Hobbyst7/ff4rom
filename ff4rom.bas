@@ -41,6 +41,8 @@ type FF4Rom
  body_range as Range
  arms_range as Range
  key_items_range as Range
+ special_key_item1 as UByte
+ special_key_item2 as UByte
  
  private:
  romdata as String
@@ -59,9 +61,10 @@ type FF4Rom
  ' These could end up changing the data that's in the rom.
  ' Changes only exist in the copy of the rom in memory and will not be
  '  applied to the actual file until you call WriteToFile.
+ declare sub Equip(actor_index as UByte, item_index as UByte, arrow_ammo as UByte = 50, force_hand as String = "")
  declare function FindMakeElementGrid(combination as List) as Integer
  declare sub GiveActorCommand(actor_index as UByte, command_index as UByte)
- declare sub GiveActorItem(actor_index as UByte, item_index as UByte, arrow_ammo as UByte = 50, force_right as Boolean = false)
+ declare sub Unequip(actor_index as UByte, slot_index as Integer = -1)
 
  'ROMINTERFACE/
  ' These are for reading and writing between the abstract objects stored
@@ -103,9 +106,10 @@ end type
 #include once "info/flagindex.bas"
 #include once "info/nextunusedelementgrid.bas"
 
+#include once "edit/equip.bas"
 #include once "edit/findmakeelementgrid.bas"
 #include once "edit/giveactorcommand.bas"
-#include once "edit/giveactoritem.bas"
+#include once "edit/unequip.bas"
 
 #include once "rominterface/readfromfile.bas"
 #include once "rominterface/writetofile.bas"

@@ -7,6 +7,7 @@ sub FF4Rom.ReadJobs()
   if i > usable_jobs then
    jobs(i).name = ConvertText("Extra " + str(i - usable_jobs))
   else
+   temp = ""
    for j as Integer = 0 to 6
     temp += chr(ByteAt(&h7A964 + i * 7 + j))
    next

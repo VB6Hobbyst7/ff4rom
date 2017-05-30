@@ -2,7 +2,7 @@ sub FF4Rom.ReadEquipCharts()
 
  dim start as UInteger = &h7A750
  
- for i as Integer = 0 to total_jobs
+ for i as Integer = 0 to total_equip_charts
   for j as Integer = 0 to 7
    equipcharts(i).flags(j) = iif(ByteAt(start + i * 2) and 2^j, true, false)
   next
@@ -19,7 +19,7 @@ sub FF4Rom.WriteEquipCharts()
  dim start as UInteger = &h7A750
  dim temp as UByte
 
- for i as Integer = 0 to total_jobs
+ for i as Integer = 0 to total_equip_charts
   
   temp = 0
   for j as Integer = 0 to 7
