@@ -10,6 +10,8 @@ sub FF4Rom.WriteToFile(filename as String)
  WriteItems()
  WriteJobs()
  WriteMenuCommands()
+ WriteSpells()
+ WriteSpellSets()
 
  dim temp as String
 

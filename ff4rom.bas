@@ -5,9 +5,14 @@
 #include once "gameobjects/equipchart.bas"
 #include once "gameobjects/statbonus.bas"
 #include once "gameobjects/item.bas"
+#include once "gameobjects/shop.bas"
 #include once "gameobjects/menucommand.bas"
 #include once "gameobjects/actor.bas"
 #include once "gameobjects/character.bas"
+#include once "gameobjects/spell.bas"
+#include once "gameobjects/spellset.bas"
+#include once "gameobjects/trigger.bas"
+#include once "gameobjects/map.bas"
 
 type FF4Rom
 
@@ -15,11 +20,17 @@ type FF4Rom
  elementgrids(total_element_grids) as ElementGrid
  menu_commands(total_menu_commands) as MenuCommand
  
+ spells(total_spells) as Spell
+ spellsets(total_spell_sets) as SpellSet
+ player_spells as Range
+ menu_spells as Range
+ white_spells as Range
+ summon_spells as Range
+ black_spells as Range 'Includes Ninja and Twin spells
+ 
  jobs(total_jobs) as Job
  equipcharts(total_equip_charts) as EquipChart
- 
  characters(total_characters) as Character
-
  actors(total_actors) as Actor
  names(total_names) as String
  jobchange_actor as Integer
@@ -28,6 +39,7 @@ type FF4Rom
  blackreplace_text as String
  
  items(total_items) as Item
+ shops(total_shops) as Shop
  descriptions_range as Range
  weapons_range as Range
  armors_range as Range
@@ -43,6 +55,8 @@ type FF4Rom
  key_items_range as Range
  special_key_item1 as UByte
  special_key_item2 as UByte
+ 
+ maps(total_maps) as Map
  
  private:
  romdata as String
@@ -64,6 +78,7 @@ type FF4Rom
  declare sub Equip(actor_index as UByte, item_index as UByte, arrow_ammo as UByte = 50, force_hand as String = "")
  declare function FindMakeElementGrid(combination as List) as Integer
  declare sub GiveActorCommand(actor_index as UByte, command_index as UByte)
+ declare sub SortSpellSets()
  declare sub Unequip(actor_index as UByte, slot_index as Integer = -1)
 
  'ROMINTERFACE/
@@ -95,8 +110,18 @@ type FF4Rom
  declare sub WriteItems()
  declare sub  ReadJobs()
  declare sub WriteJobs()
+ declare sub  ReadMaps() 'Includes triggers
+ declare sub WriteMaps()
  declare sub  ReadMenuCommands()
  declare sub WriteMenuCommands()
+ declare sub  ReadShops()
+ declare sub WriteShops()
+ declare sub  ReadSpells()
+ declare sub WriteSpells()
+ declare sub  ReadSpellSets()
+ declare sub WriteSpellSets()
+ 
+ declare sub  ReadTrigger(t as Trigger ptr, address as Integer) 'Used by map reader
 
 end type
 
@@ -109,6 +134,7 @@ end type
 #include once "edit/equip.bas"
 #include once "edit/findmakeelementgrid.bas"
 #include once "edit/giveactorcommand.bas"
+#include once "edit/sortspellsets.bas"
 #include once "edit/unequip.bas"
 
 #include once "rominterface/readfromfile.bas"
@@ -122,4 +148,8 @@ end type
 #include once "readwrite/equipcharts.bas"
 #include once "readwrite/items.bas"
 #include once "readwrite/jobs.bas"
+#include once "readwrite/maps.bas"
 #include once "readwrite/menucommands.bas"
+#include once "readwrite/shops.bas"
+#include once "readwrite/spells.bas"
+#include once "readwrite/spellsets.bas"

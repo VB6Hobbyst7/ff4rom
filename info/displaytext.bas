@@ -102,6 +102,12 @@ function FF4Rom.DisplayText(text as String) as String
     result += "(Mail)"
    case gauntlet_symbol
     result += "(Gauntlet)"
+   case black_symbol
+    result += "(Black)"
+   case white_symbol
+    result += "(White)"
+   case summon_symbol
+    result += "(Call)"
    case flat_m_symbol
     result += "(Flat M)"
    case flat_h_symbol

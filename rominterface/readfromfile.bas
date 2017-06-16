@@ -34,6 +34,8 @@ sub FF4Rom.ReadFromFile(filename as String)
  ReadItems()
  ReadJobs()
  ReadMenuCommands()
+ ReadSpells()
+ ReadSpellSets()
 
 end sub
 

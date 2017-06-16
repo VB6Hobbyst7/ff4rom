@@ -1,6 +1,5 @@
 'This is something that happens when you step on or examine certain tiles on
-' certain maps. Each map has associated with it a list of triggers. The
-' "parent map" of a trigger is the map it is associated with.
+' certain maps. Each map has associated with it a list of triggers.
 
 ' There are three types of triggers, and they all have special parameters
 '  unique to their type:
@@ -43,6 +42,7 @@ type Trigger
  destination_map as UByte
  destination_x as UByte
  destination_y as UByte
+ facing as UByte
 
  'Treasure triggers give you money or an item; they could be trapped.
  treasure as Boolean
