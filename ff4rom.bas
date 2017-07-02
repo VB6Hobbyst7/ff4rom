@@ -122,6 +122,7 @@ type FF4Rom
  declare sub WriteSpellSets()
  
  declare sub  ReadTrigger(t as Trigger ptr, address as Integer) 'Used by map reader
+ declare sub WriteTrigger(t as Trigger ptr, address as Integer)
 
 end type
 

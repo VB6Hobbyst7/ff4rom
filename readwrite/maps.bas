@@ -35,7 +35,7 @@ sub FF4Rom.WriteTrigger(t as Trigger ptr, address as Integer)
   WriteByte(address + 2, t->destination_map)
   temp = t->destination_x + t->facing * 2^6
   WriteByte(address + 3, temp)
-  WriteByte(address + 4, t->new_y)
+  WriteByte(address + 4, t->destination_y)
  elseif t->treasure then
   WriteByte(address + 2, &hFE)
   temp = t->formation
@@ -56,7 +56,6 @@ sub FF4Rom.ReadMaps()
 
  dim start as Integer
  dim temp as UByte
- 'dim next_pointer as Integer
  dim t as Trigger ptr
  dim address as UInteger
  dim finish as UInteger
@@ -64,9 +63,8 @@ sub FF4Rom.ReadMaps()
  dim total_underground_triggers as UInteger
  dim total_moon_triggers as UInteger
  
-
  for i as Integer = 0 to total_maps 
- 
+
   maps(i).encounter_rate = ByteAt(&h74542 + i)
 
   start = &hA9E84 + i * 13
@@ -100,17 +98,15 @@ sub FF4Rom.ReadMaps()
  next
 
  start = &hA8200
- 'total_triggers = 0
  
  for i as Integer = 0 to total_maps
   address = &hA8500 + ByteAt(start + i * 2) + ByteAt(start + i * 2 + 1) * &h100
-  finish = &hA8500 + ByteAt(start + i * 2) + ByteAt(start + i * 2 + 1) * &h100
+  finish = &hA8500 + ByteAt(start + (i + 1) * 2) + ByteAt(start + (i + 1) * 2 + 1) * &h100
   if finish > address then
    for j as Integer = 0 to finish - address - 5 step 5
     t = callocate(SizeOf(Trigger))
     ReadTrigger(t, address + j)
     maps(i).triggers.Append(t)
-    'total_triggers += 1
    next
   end if
  next
@@ -153,6 +149,11 @@ sub FF4Rom.WriteMaps()
  dim start as UInteger
  dim temp as UByte
  dim next_pointer as UInteger
+ dim t as Trigger ptr
+ dim address as UInteger
+ dim finish as UInteger
+ dim offset as UInteger
+ dim total_overworld_triggers as UInteger
 
  for i as Integer = 0 to total_maps 
  
@@ -189,6 +190,52 @@ sub FF4Rom.WriteMaps()
   
  next
  
+ start = &hA8200
+ address = &hA8500
+ total_overworld_triggers = 0
  
+ for i as Integer = 0 to total_maps
+  if address > &hA981F then
+   'WarningMessage(FF4Text("Triggers Overflow!"))
+   exit for
+  else
+   offset = address - &hA8500
+   WriteByte(start, offset mod &h100)
+   WriteByte(start + 1, offset \ &h100)
+   start += 2
+   if i = 252 then
+    for j as Integer = 1 to maps(i).triggers.Length()
+     t = maps(i).triggers.PointerAt(j)
+     WriteTrigger(t, &hD0066 + (j - 1) * 5)
+    next
+    total_overworld_triggers += maps(i).triggers.Length()
+   elseif i = 253 then
+    for j as Integer = 1 to maps(i).triggers.Length()
+     t = maps(i).triggers.PointerAt(j)
+     WriteTrigger(t, &hD0066 + maps(252).triggers.Length() * 5 + (j - 1) * 5)
+    next
+    WriteByte(&hD0062, (total_overworld_triggers * 5) mod &h100)
+    WriteByte(&hD0063, (total_overworld_triggers * 5) \ &h100)
+    total_overworld_triggers += maps(i).triggers.Length()
+   elseif i = 254 then
+    for j as Integer = &hD01DD to &hD01FF
+     WriteByte(j, 0)
+    next
+    for j as Integer = 1 to maps(i).triggers.Length()
+     t = maps(i).triggers.PointerAt(j)
+     WriteTrigger(t, &hD0066 + maps(252).triggers.Length() * 5 + maps(253).triggers.Length() * 5 + (j - 1) * 5)
+    next
+    WriteByte(&hD0064, (total_overworld_triggers * 5) mod &h100)
+    WriteByte(&hD0065, (total_overworld_triggers * 5) \ &h100)
+    total_overworld_triggers += maps(i).triggers.Length()
+   else
+    for j as Integer = 1 to maps(i).triggers.Length()
+     t = maps(i).triggers.PointerAt(j)
+     WriteTrigger(t, address)
+     address += 5
+    next
+   end if
+  end if
+ next
 
 end sub
