@@ -34,3 +34,18 @@ end type
 
 
 const total_spell_sets = 12
+
+const paladin_white_spellset = 0
+const unused_spellset = 1
+const kain_spellset = 1
+const rydia_white_spellset = 2
+const rydia_black_spellset = 3
+const rydia_summon_spellset = 4
+const tellah_white_spellset = 5
+const tellah_black_spellset = 6
+const rosa_white_spellset = 7
+const palom_black_spellset = 8
+const porom_white_spellset = 9
+const fusoya_white_spellset = 10
+const fusoya_black_spellset = 11
+const edge_spellset = 12

@@ -44,7 +44,7 @@ sub FF4Rom.ReadActors()
   blackreplace_text += chr(ByteAt(&hB405 + i))
  next
  blackreplace_actor = ByteAt(&hB1B3)
- jobchange_actor = ByteAt(&h67B8)
+ jobchange_actor = ByteAt(&h67B8) - 1
  jobchange_job = ByteAt(&h67BC)
  
  start = &h7B700
@@ -114,7 +114,7 @@ sub FF4Rom.WriteActors()
   WriteByte(&hB405 + i, asc(mid(blackreplace_text, i + 1, 1)))
  next
  WriteByte(&hB1B3, blackreplace_actor)
- WriteByte(&h67B8, jobchange_actor)
+ WriteByte(&h67B8, jobchange_actor + 1)
  WriteByte(&h67BC, jobchange_job)
 
 end sub

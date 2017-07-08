@@ -203,13 +203,13 @@ sub FF4Rom.WriteMaps()
    WriteByte(start, offset mod &h100)
    WriteByte(start + 1, offset \ &h100)
    start += 2
-   if i = 252 then
+   if i = 251 then
     for j as Integer = 1 to maps(i).triggers.Length()
      t = maps(i).triggers.PointerAt(j)
      WriteTrigger(t, &hD0066 + (j - 1) * 5)
     next
     total_overworld_triggers += maps(i).triggers.Length()
-   elseif i = 253 then
+   elseif i = 252 then
     for j as Integer = 1 to maps(i).triggers.Length()
      t = maps(i).triggers.PointerAt(j)
      WriteTrigger(t, &hD0066 + maps(252).triggers.Length() * 5 + (j - 1) * 5)
@@ -217,7 +217,7 @@ sub FF4Rom.WriteMaps()
     WriteByte(&hD0062, (total_overworld_triggers * 5) mod &h100)
     WriteByte(&hD0063, (total_overworld_triggers * 5) \ &h100)
     total_overworld_triggers += maps(i).triggers.Length()
-   elseif i = 254 then
+   elseif i = 253 then
     for j as Integer = &hD01DD to &hD01FF
      WriteByte(j, 0)
     next

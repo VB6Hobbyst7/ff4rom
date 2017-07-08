@@ -6,10 +6,10 @@ sub FF4Rom.ReadCharacters()
  for i as Integer = 0 to total_characters
  
   start = &h7AB00 + i * &h20
-  characters(i).job_index = ByteAt(start) mod 2^5 - 1
+  characters(i).character_id = ByteAt(start) mod 2^5 - 1
   characters(i).left_handed = iif(ByteAt(start) and 2^6, true, false)
   characters(i).right_handed = iif(ByteAt(start) and 2^7, true, false)
-  characters(i).sprite = ByteAt(start + 1) mod 2^4
+  characters(i).job_index = ByteAt(start + 1) mod 2^4
   characters(i).level = ByteAt(start + 2)
   characters(i).max_hp = ByteAt(start + 9) + ByteAt(start + 10) * &h100
   characters(i).max_mp = ByteAt(start + 13) + ByteAt(start + 14) * &h100
@@ -59,23 +59,23 @@ sub FF4Rom.WriteCharacters()
  for i as Integer = 0 to total_characters
  
   start = &h7AB00 + i * &h20
-  temp = characters(i).job_index + 1
+  temp = characters(i).character_id + 1
   temp += iif(ByteAt(start) and 2^5, 2^5, 0)
   temp += iif(characters(i).left_handed, 2^6, 0)
   temp += iif(characters(i).right_handed, 2^7, 0)
   WriteByte(start, temp)
-  temp = characters(i).sprite
+  temp = characters(i).job_index
   temp += (ByteAt(start + 1) \ 2^4) * 2^4
   WriteByte(start + 1, temp)
   WriteByte(start + 2, characters(i).level)
+  WriteByte(start + 7, characters(i).max_hp mod &h100) 'Starting HP should be
+  WriteByte(start + 8, characters(i).max_hp \ &h100)   ' equal to max HP
   WriteByte(start + 9, characters(i).max_hp mod &h100)
   WriteByte(start + 10, characters(i).max_hp \ &h100)
-  WriteByte(start + 11, characters(i).max_hp mod &h100) 'Starting HP should be
-  WriteByte(start + 12, characters(i).max_hp \ &h100)   ' equal to max HP
+  WriteByte(start + 11, characters(i).max_mp mod &h100) 'Starting MP should be
+  WriteByte(start + 12, characters(i).max_mp \ &h100)   ' equal to max MP
   WriteByte(start + 13, characters(i).max_mp mod &h100)
   WriteByte(start + 14, characters(i).max_mp \ &h100)
-  WriteByte(start + 15, characters(i).max_mp mod &h100) 'Starting MP should be
-  WriteByte(start + 16, characters(i).max_mp \ &h100)   ' equal to max MP
   for j as Integer = 0 to 4
    WriteByte(start + 15 + j, characters(i).stats(j))
   next

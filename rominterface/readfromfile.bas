@@ -37,6 +37,7 @@ sub FF4Rom.ReadFromFile(filename as String)
  ReadSpells()
  ReadSpellSets()
  ReadMaps()
+ ReadNPCs()
 
 end sub
 

@@ -1,5 +1,6 @@
 #include once "../common/list.bas"
 #include once "../common/range.bas"
+#include once "../common/functions/pad.bas"
 #include once "gameobjects/elementgrid.bas"
 #include once "gameobjects/job.bas"
 #include once "gameobjects/equipchart.bas"
@@ -13,6 +14,7 @@
 #include once "gameobjects/spellset.bas"
 #include once "gameobjects/trigger.bas"
 #include once "gameobjects/map.bas"
+#include once "gameobjects/npc.bas"
 
 type FF4Rom
 
@@ -57,6 +59,7 @@ type FF4Rom
  special_key_item2 as UByte
  
  maps(total_maps) as Map
+ npcs(total_npcs) as NPC
  
  private:
  romdata as String
@@ -65,16 +68,24 @@ type FF4Rom
  public:
  'INFO/
  ' These give information about the rom without actually making changes.
+ declare function ActorsOfJob(job_index as UByte) as List
  declare function CanEquip(actor_index as UByte, item_index as UByte) as Boolean
+ declare function CommandCount(actor_index as UByte) as Integer
  declare function ConvertText(text as String) as String
  declare function DisplayText(text as String) as String
  declare function FlagIndex(flagname as String) as Integer
+ declare function JobChangeFrom() as UByte
+ declare function JobOfActor(actor_index as UByte) as UByte
  declare function NextUnusedElementGrid() as Integer
+ declare function UniqueActor(actor_index as UByte) as Boolean
 
  'EDIT/
  ' These could end up changing the data that's in the rom.
  ' Changes only exist in the copy of the rom in memory and will not be
  '  applied to the actual file until you call WriteToFile.
+ declare sub AssignSpellset(job_index as UByte, spellset_index as UByte, school as String)
+ declare sub ClearActorCommands(actor_index as UByte = &hFF)
+ declare sub ClearJobSpellSets(job_index as UByte = &hFF)
  declare sub Equip(actor_index as UByte, item_index as UByte, arrow_ammo as UByte = 50, force_hand as String = "")
  declare function FindMakeElementGrid(combination as List) as Integer
  declare sub GiveActorCommand(actor_index as UByte, command_index as UByte)
@@ -114,6 +125,8 @@ type FF4Rom
  declare sub WriteMaps()
  declare sub  ReadMenuCommands()
  declare sub WriteMenuCommands()
+ declare sub  ReadNPCs()
+ declare sub WriteNPCs()
  declare sub  ReadShops()
  declare sub WriteShops()
  declare sub  ReadSpells()
@@ -126,12 +139,20 @@ type FF4Rom
 
 end type
 
+#include once "info/actorsofjob.bas"
 #include once "info/canequip.bas"
+#include once "info/commandcount.bas"
 #include once "info/converttext.bas"
 #include once "info/displaytext.bas"
 #include once "info/flagindex.bas"
+#include once "info/jobchangefrom.bas"
+#include once "info/jobofactor.bas"
 #include once "info/nextunusedelementgrid.bas"
+#include once "info/uniqueactor.bas"
 
+#include once "edit/assignspellset.bas"
+#include once "edit/clearactorcommands.bas"
+#include once "edit/clearjobspellsets.bas"
 #include once "edit/equip.bas"
 #include once "edit/findmakeelementgrid.bas"
 #include once "edit/giveactorcommand.bas"
@@ -151,6 +172,7 @@ end type
 #include once "readwrite/jobs.bas"
 #include once "readwrite/maps.bas"
 #include once "readwrite/menucommands.bas"
+#include once "readwrite/npcs.bas"
 #include once "readwrite/shops.bas"
 #include once "readwrite/spells.bas"
 #include once "readwrite/spellsets.bas"

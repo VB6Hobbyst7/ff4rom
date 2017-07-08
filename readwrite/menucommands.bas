@@ -153,7 +153,7 @@ sub FF4Rom.WriteMenuCommands()
  for i as Integer = 0 to total_menu_commands
  
   for j as Integer = 0 to 4
-   WriteByte(&h7A9C6 + i * 5 + j, asc(mid(menu_commands(i).name, j + 1, 1)))
+   WriteByte(&h7A9C6 + i * 5 + j, iif(len(menu_commands(i).name) <= j, &hFF, asc(mid(menu_commands(i).name, j + 1, 1))))
   next
   
   WriteByte(&h9FFC3 + i, menu_commands(i).target)
