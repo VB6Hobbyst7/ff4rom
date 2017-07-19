@@ -27,8 +27,12 @@ sub FF4Rom.SortSpellSets()
    next
   next
   
-  spellsets(i).learning_levels = new_levels
-  spellsets(i).learning_spells = new_spells
+  spellsets(i).learning_levels.Destroy()
+  spellsets(i).learning_spells.Destroy()
+  for j as Integer = 1 to new_levels.Length()
+   spellsets(i).learning_levels.Append(new_levels.ItemAt(j))
+   spellsets(i).learning_spells.Append(new_spells.ItemAt(j))
+  next
  
  next
 

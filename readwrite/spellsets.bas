@@ -18,8 +18,8 @@ sub FF4Rom.ReadSpellSets()
   temp = ByteAt(start)
   start += 1
   do until temp = &hFF
-   spellsets(i).learning_spells.Append(chr(temp))
-   spellsets(i).learning_levels.Append(chr(ByteAt(start)))
+   spellsets(i).learning_levels.Append(chr(temp))
+   spellsets(i).learning_spells.Append(chr(ByteAt(start)))
    start += 1
    temp = ByteAt(start)
    start += 1
@@ -63,8 +63,8 @@ sub FF4Rom.WriteSpellSets()
   start = &h7C900
   for i as Integer = 0 to total_spell_sets
    for j as Integer = 1 to spellsets(i).learning_spells.Length()
-    WriteByte(start, asc(spellsets(i).learning_spells.ItemAt(j)))
-    WriteByte(start + 1, asc(spellsets(i).learning_levels.ItemAt(j)))
+    WriteByte(start, asc(spellsets(i).learning_levels.ItemAt(j)))
+    WriteByte(start + 1, asc(spellsets(i).learning_spells.ItemAt(j)))
     start += 2
    next
    WriteByte(start, &hFF)
