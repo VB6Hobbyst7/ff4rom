@@ -4,21 +4,73 @@ sub FF4Rom.ReadMessages()
  dim message_pointer as Integer
  dim text as String
  dim symbol as UByte
+ 
+ ConstructDTE()
 
- for i as Integer = 0 to total_bank1_dialogues
+ for i as Integer = 0 to total_bank1_messages
   start = &h80200 + i * 2
   message_pointer = &h80600 + ByteAt(start) + ByteAt(start + 1) * &h100
   text = ""
-  symbol = ByteAt(message_pointer)
-  message_pointer += 1
-  do until symbol = 0
+  do
+   symbol = ByteAt(message_pointer)
+   message_pointer += 1
    text += chr(symbol)
    if MessageCodeTakesParameter(symbol) then
-    message += chr(ByteAt(message_pointer))
+    text += chr(ByteAt(message_pointer))
     message_pointer += 1
    end if
-  loop
-  bank1_messages(i).text = text
+  loop until symbol = 0
+  bank1_messages(i).text = DecompressDTE(text)
+ next
+
+ for i as Integer = 0 to total_bank3_messages
+  start = &h9A700 + i * 2
+  message_pointer = &h9A900 + ByteAt(start) + ByteAt(start + 1) * &h100
+  text = ""
+  do
+   symbol = ByteAt(message_pointer)
+   message_pointer += 1
+   text += chr(symbol)
+   if MessageCodeTakesParameter(symbol) then
+    text += chr(ByteAt(message_pointer))
+    message_pointer += 1
+   end if
+  loop until symbol = 0
+  bank3_messages(i).text = DecompressDTE(text)
+ next
+
+end sub
+
+
+sub FF4Rom.WriteMessages()
+
+ dim start as Integer
+ dim message_pointer as Integer
+ dim text as String
+ dim symbol as UByte
+ 
+ message_pointer = &h80600
+ for i as Integer = 0 to total_bank1_messages
+  start = &h80200 + i * 2
+  WriteByte(start, (message_pointer - &h80600) mod &h100)
+  WriteByte(start + 1, (message_pointer - &h80600) \ &h100)
+  text = CompressDTE(bank1_messages(i).text)
+  for j as Integer = 1 to len(text)
+   WriteByte(message_pointer, asc(mid(text, j, 1)))
+   message_pointer += 1
+  next
+ next
+
+ message_pointer = &h9A900
+ for i as Integer = 0 to total_bank3_messages
+  start = &h9A700 + i * 2
+  WriteByte(start, (message_pointer - &h9A900) mod &h100)
+  WriteByte(start + 1, (message_pointer - &h9A900) \ &h100)
+  text = CompressDTE(bank3_messages(i).text)
+  for j as Integer = 1 to len(text)
+   WriteByte(message_pointer, asc(mid(text, j, 1)))
+   message_pointer += 1
+  next
  next
 
 end sub

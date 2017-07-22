@@ -128,6 +128,27 @@ function FF4Rom.DisplayText(text as String) as String
     result += "(Key)"
    case tail_symbol
     result += "(Tail)"
+   case chr(line_break_code), chr(blank_line_code)
+    result += "|"
+   case chr(message_end_code)
+    result += "[END]"
+   case chr(item_code)
+    result += "[Item]"
+   case chr(gp_code)
+    result += "[GP]"
+   case chr(advance_code)
+    result += "[Advance]"
+   case chr(name_code)
+    result += Pad(DisplayText(names(asc(mid(text, i + 1, 1)))), 6)
+    i += 1
+   case chr(song_code)
+    result += "[Song " + str(asc(mid(text, i + 1, 1))) + "]"
+    i += 1
+   case chr(pause_code)
+    result += "[Pause " + str(asc(mid(text, i + 1, 1))) + "]"
+    i += 1
+   case else
+    result += "<" + hex(asc(mid(text, i, 1)), 2) + ">"
   end select
  next
 

@@ -1,6 +1,7 @@
 #include once "../common/list.bas"
 #include once "../common/range.bas"
 #include once "../common/functions/pad.bas"
+#include once "../common/functions/tokenize.bas"
 #include once "gameobjects/elementgrid.bas"
 #include once "gameobjects/job.bas"
 #include once "gameobjects/equipchart.bas"
@@ -15,6 +16,7 @@
 #include once "gameobjects/trigger.bas"
 #include once "gameobjects/map.bas"
 #include once "gameobjects/npc.bas"
+#include once "gameobjects/message.bas"
 
 type FF4Rom
 
@@ -58,12 +60,18 @@ type FF4Rom
  special_key_item1 as UByte
  special_key_item2 as UByte
  
+ bank1_messages(total_bank1_messages) as Message
+ bank3_messages(total_bank3_messages) as Message
+ 
  maps(total_maps) as Map
  npcs(total_npcs) as NPC
  
  private:
  romdata as String
  unheadered as Boolean
+ dte_range1 as Range
+ dte_range2 as Range
+ dte(&hFE) as String
 
  public:
  'INFO/
@@ -72,10 +80,15 @@ type FF4Rom
  declare function CanEquip(actor_index as UByte, item_index as UByte) as Boolean
  declare function CommandCount(actor_index as UByte) as Integer
  declare function ConvertText(text as String) as String
+ declare function DecompressDTE(text as String) as String
  declare function DisplayText(text as String) as String
  declare function FlagIndex(flagname as String) as Integer
  declare function JobChangeFrom() as UByte
  declare function JobOfActor(actor_index as UByte) as UByte
+ declare function MessageCodeLength(symbol as UByte) as Integer
+ declare function MessageCodeTakesParameter(symbol as UByte) as Boolean
+ declare function MessageOutputLength(substring as String) as Integer
+ declare function MessagesContaining(substring as String) as List
  declare function NextUnusedElementGrid() as Integer
  declare function UniqueActor(actor_index as UByte) as Boolean
 
@@ -86,11 +99,15 @@ type FF4Rom
  declare sub AssignSpellset(job_index as UByte, spellset_index as UByte, school as String)
  declare sub ClearActorCommands(actor_index as UByte = &hFF)
  declare sub ClearJobSpellSets(job_index as UByte = &hFF)
+ declare function CompressDTE(text as String) as String
  declare sub Equip(actor_index as UByte, item_index as UByte, arrow_ammo as UByte = 50, force_hand as String = "")
  declare function FindMakeElementGrid(combination as List) as Integer
  declare sub GiveActorCommand(actor_index as UByte, command_index as UByte)
+ declare function Replace(find_word as String, replacement as String, text as String) as String
+ declare sub ReplaceAll(find_word as String, replacement as String)
  declare sub SortSpellSets()
  declare sub Unequip(actor_index as UByte, slot_index as Integer = -1)
+ declare function WrapMessage(text as String) as String
 
  'ROMINTERFACE/
  ' These are for reading and writing between the abstract objects stored
@@ -101,6 +118,7 @@ type FF4Rom
 
  private:
  declare function ByteAt(address as Integer) as UByte
+ declare sub ConstructDTE()
  declare sub WriteByte(address as Integer, newbyte as UByte)
  
  'READWRITE/
@@ -125,6 +143,8 @@ type FF4Rom
  declare sub WriteMaps()
  declare sub  ReadMenuCommands()
  declare sub WriteMenuCommands()
+ declare sub  ReadMessages()
+ declare sub WriteMessages()
  declare sub  ReadNPCs()
  declare sub WriteNPCs()
  declare sub  ReadShops()
@@ -143,25 +163,35 @@ end type
 #include once "info/canequip.bas"
 #include once "info/commandcount.bas"
 #include once "info/converttext.bas"
+#include once "info/decompressdte.bas"
 #include once "info/displaytext.bas"
 #include once "info/flagindex.bas"
 #include once "info/jobchangefrom.bas"
 #include once "info/jobofactor.bas"
+#include once "info/messagecodelength.bas"
+#include once "info/messagecodetakesparameter.bas"
+#include once "info/messageoutputlength.bas"
+#include once "info/messagescontaining.bas"
 #include once "info/nextunusedelementgrid.bas"
 #include once "info/uniqueactor.bas"
 
 #include once "edit/assignspellset.bas"
 #include once "edit/clearactorcommands.bas"
 #include once "edit/clearjobspellsets.bas"
+#include once "edit/compressdte.bas"
 #include once "edit/equip.bas"
 #include once "edit/findmakeelementgrid.bas"
 #include once "edit/giveactorcommand.bas"
+#include once "edit/replace.bas"
+#include once "edit/replaceall.bas"
 #include once "edit/sortspellsets.bas"
 #include once "edit/unequip.bas"
+#include once "edit/wrapmessage.bas"
 
 #include once "rominterface/readfromfile.bas"
 #include once "rominterface/writetofile.bas"
 #include once "rominterface/byteat.bas"
+#include once "rominterface/constructdte.bas"
 #include once "rominterface/writebyte.bas"
 
 #include once "readwrite/actors.bas"
@@ -172,6 +202,7 @@ end type
 #include once "readwrite/jobs.bas"
 #include once "readwrite/maps.bas"
 #include once "readwrite/menucommands.bas"
+#include once "readwrite/messages.bas"
 #include once "readwrite/npcs.bas"
 #include once "readwrite/shops.bas"
 #include once "readwrite/spells.bas"

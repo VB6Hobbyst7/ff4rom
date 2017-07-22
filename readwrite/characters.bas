@@ -23,7 +23,8 @@ sub FF4Rom.ReadCharacters()
   ' testing to see whether the levelups are based on job or on initial actor.
   ' In either case, it needs to be associated with character rather than job or
   ' actor because it relies on initial level, which is a character attribute.
-  start = &h7B700 + characters(i).job_index * 2
+  start = &h7B700 + characters(i).character_id * 2
+  'start = &h7B700 + characters(i).job_index * 2
   
   level_ptr = &h70200 + ByteAt(start) + ByteAt(start + 1) * &h100 + (characters(i).level - 1) * 5
   for j as Integer = characters(i).level to 69

@@ -56,7 +56,7 @@ type Item
  equip_code as UByte
 
  'Weapons only
- properties(8) as Boolean
+ properties(9) as Boolean
  attack as UByte
  hit as UByte
  sprite as UByte
