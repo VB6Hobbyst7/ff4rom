@@ -9,6 +9,7 @@
 #include once "gameobjects/item.bas"
 #include once "gameobjects/shop.bas"
 #include once "gameobjects/menucommand.bas"
+#include once "gameobjects/monster.bas"
 #include once "gameobjects/actor.bas"
 #include once "gameobjects/character.bas"
 #include once "gameobjects/spell.bas"
@@ -60,8 +61,12 @@ type FF4Rom
  special_key_item1 as UByte
  special_key_item2 as UByte
  
+ monsters(total_monsters) as Monster
+ 
  bank1_messages(total_bank1_messages) as Message
  bank3_messages(total_bank3_messages) as Message
+ battle_messages(total_battle_messages) as Message
+ alert_messages(total_alert_messages) as Message
  
  maps(total_maps) as Map
  npcs(total_npcs) as NPC
@@ -76,6 +81,7 @@ type FF4Rom
  public:
  'INFO/
  ' These give information about the rom without actually making changes.
+ declare function ActorHasCommand(actor_index as UByte, command_index as UByte) as Boolean
  declare function ActorsOfJob(job_index as UByte) as List
  declare function CanEquip(actor_index as UByte, item_index as UByte) as Boolean
  declare function CommandCount(actor_index as UByte) as Integer
@@ -83,6 +89,8 @@ type FF4Rom
  declare function DecompressDTE(text as String) as String
  declare function DisplayText(text as String) as String
  declare function FlagIndex(flagname as String) as Integer
+ declare function ItemsUsableByActor(actor_index as UByte) as List
+ declare function ItemsUsableByJob(job_index as UByte) as List
  declare function JobChangeFrom() as UByte
  declare function JobOfActor(actor_index as UByte) as UByte
  declare function MessageCodeLength(symbol as UByte) as Integer
@@ -104,7 +112,7 @@ type FF4Rom
  declare function FindMakeElementGrid(combination as List) as Integer
  declare sub GiveActorCommand(actor_index as UByte, command_index as UByte)
  declare function Replace(find_word as String, replacement as String, text as String) as String
- declare sub ReplaceAll(find_word as String, replacement as String)
+ declare sub ReplaceAll(find_word as String, replacement as String, include_battle as Boolean = false)
  declare sub SortSpellSets()
  declare sub Unequip(actor_index as UByte, slot_index as Integer = -1)
  declare function WrapMessage(text as String) as String
@@ -145,6 +153,8 @@ type FF4Rom
  declare sub WriteMenuCommands()
  declare sub  ReadMessages()
  declare sub WriteMessages()
+ declare sub  ReadMonsters()
+ declare sub WriteMonsters()
  declare sub  ReadNPCs()
  declare sub WriteNPCs()
  declare sub  ReadShops()
@@ -159,6 +169,7 @@ type FF4Rom
 
 end type
 
+#include once "info/actorhascommand.bas"
 #include once "info/actorsofjob.bas"
 #include once "info/canequip.bas"
 #include once "info/commandcount.bas"
@@ -166,6 +177,8 @@ end type
 #include once "info/decompressdte.bas"
 #include once "info/displaytext.bas"
 #include once "info/flagindex.bas"
+#include once "info/itemsusablebyactor.bas"
+#include once "info/itemsusablebyjob.bas"
 #include once "info/jobchangefrom.bas"
 #include once "info/jobofactor.bas"
 #include once "info/messagecodelength.bas"
@@ -203,6 +216,7 @@ end type
 #include once "readwrite/maps.bas"
 #include once "readwrite/menucommands.bas"
 #include once "readwrite/messages.bas"
+#include once "readwrite/monsters.bas"
 #include once "readwrite/npcs.bas"
 #include once "readwrite/shops.bas"
 #include once "readwrite/spells.bas"

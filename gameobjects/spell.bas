@@ -32,3 +32,19 @@ type Spell
 end type
 
 const total_spells = &hBF
+
+const imp_spell = 49
+const bomb_spell = 50
+const cockatrice_spell = 51
+const mage_spell = 52
+const choco_spell = 53
+const shiva_spell = 54
+const indra_spell = 55
+const jinn_spell = 56
+const titan_spell = 57
+const mist_spell = 58
+const sylph_spell = 59
+const odin_spell = 60
+const levia_spell = 61
+const asura_spell = 62
+const baham_spell = 63

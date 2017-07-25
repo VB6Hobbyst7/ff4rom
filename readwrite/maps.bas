@@ -203,27 +203,27 @@ sub FF4Rom.WriteMaps()
    WriteByte(start, offset mod &h100)
    WriteByte(start + 1, offset \ &h100)
    start += 2
-   if i = 251 then
+   if i = overworld_map then
     for j as Integer = 1 to maps(i).triggers.Length()
      t = maps(i).triggers.PointerAt(j)
      WriteTrigger(t, &hD0066 + (j - 1) * 5)
     next
     total_overworld_triggers += maps(i).triggers.Length()
-   elseif i = 252 then
+   elseif i = underground_map then
     for j as Integer = 1 to maps(i).triggers.Length()
      t = maps(i).triggers.PointerAt(j)
-     WriteTrigger(t, &hD0066 + maps(252).triggers.Length() * 5 + (j - 1) * 5)
+     WriteTrigger(t, &hD0066 + maps(overworld_map).triggers.Length() * 5 + (j - 1) * 5)
     next
     WriteByte(&hD0062, (total_overworld_triggers * 5) mod &h100)
     WriteByte(&hD0063, (total_overworld_triggers * 5) \ &h100)
     total_overworld_triggers += maps(i).triggers.Length()
-   elseif i = 253 then
+   elseif i = moon_map then
     for j as Integer = &hD01DD to &hD01FF
      WriteByte(j, 0)
     next
     for j as Integer = 1 to maps(i).triggers.Length()
      t = maps(i).triggers.PointerAt(j)
-     WriteTrigger(t, &hD0066 + maps(252).triggers.Length() * 5 + maps(253).triggers.Length() * 5 + (j - 1) * 5)
+     WriteTrigger(t, &hD0066 + maps(overworld_map).triggers.Length() * 5 + maps(underground_map).triggers.Length() * 5 + (j - 1) * 5)
     next
     WriteByte(&hD0064, (total_overworld_triggers * 5) mod &h100)
     WriteByte(&hD0065, (total_overworld_triggers * 5) \ &h100)

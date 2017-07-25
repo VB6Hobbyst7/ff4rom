@@ -20,6 +20,8 @@ end type
 
 const total_bank1_messages = 511
 const total_bank3_messages = 255
+const total_battle_messages = 185
+const total_alert_messages = 58
 
 const message_end_code = 0
 const line_break_code = 1
@@ -77,3 +79,5 @@ const crystal_symbol = chr(&h7D)
 const key_symbol = chr(&h7E)
 const tail_symbol = chr(&h7F)
 
+const legend_message = 362
+const prologue_message = 464
