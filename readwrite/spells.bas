@@ -75,13 +75,13 @@ sub FF4Rom.WriteSpells()
   temp = spells(i).delay + spells(i).target * &h20
   WriteByte(start, temp)
   WriteByte(start + 1, spells(i).power)
-  temp = spells(i).hit + iif(spells(i).boss, &h80, 0)
+  temp = spells(i).hit + iif(spells(i).boss, 0, &h80)
   WriteByte(start + 2, temp)
-  temp = spells(i).effect + iif(spells(i).damage, &h80, 0)
+  temp = spells(i).effect + iif(spells(i).damage, 0, &h80)
   WriteByte(start + 3, temp)
   temp = spells(i).element_code + iif(spells(i).impact, &h80, 0)
   WriteByte(start + 4, temp)
-  temp = spells(i).mp_cost + iif(spells(i).reflectable, &h80, 0)
+  temp = spells(i).mp_cost + iif(spells(i).reflectable, 0, &h80)
   WriteByte(start + 5, temp)
 
   start = &h7A250 + i * 4

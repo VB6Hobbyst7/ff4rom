@@ -81,6 +81,7 @@ type FF4Rom
  public:
  'INFO/
  ' These give information about the rom without actually making changes.
+ declare function ActorHandedness(actor_index as UByte) as String
  declare function ActorHasCommand(actor_index as UByte, command_index as UByte) as Boolean
  declare function ActorsOfJob(job_index as UByte) as List
  declare function CanEquip(actor_index as UByte, item_index as UByte) as Boolean
@@ -169,6 +170,7 @@ type FF4Rom
 
 end type
 
+#include once "info/actorhandedness.bas"
 #include once "info/actorhascommand.bas"
 #include once "info/actorsofjob.bas"
 #include once "info/canequip.bas"

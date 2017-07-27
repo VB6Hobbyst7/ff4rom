@@ -78,6 +78,7 @@ sub FF4Rom.ReadMaps()
   maps(i).tileset_index = ByteAt(start + 2)
   maps(i).npc_placement_index = ByteAt(start + 3)
   maps(i).border_tile = ByteAt(start + 4) mod &h80
+  maps(i).solid_border = iif(ByteAt(start + 4) and &h80, true, false)
   maps(i).map_palette = ByteAt(start + 5)
   temp = ByteAt(start + 6)
   maps(i).npc_palette_12 = temp mod &h10
@@ -169,7 +170,9 @@ sub FF4Rom.WriteMaps()
   WriteByte(start + 1, maps(i).grid_index)
   WriteByte(start + 2, maps(i).tileset_index)
   WriteByte(start + 3, maps(i).npc_placement_index)
-  WriteByte(start + 4, maps(i).border_tile)
+  temp = maps(i).border_tile
+  if maps(i).solid_border then temp += &h80
+  WriteByte(start + 4, temp)
   WriteByte(start + 5, maps(i).map_palette)
   temp = maps(i).npc_palette_12 + maps(i).npc_palette_34 * &h10
   WriteByte(start + 6, temp)

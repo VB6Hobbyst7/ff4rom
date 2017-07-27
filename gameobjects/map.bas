@@ -41,6 +41,7 @@ type Map
  tileset_index as UByte
  npc_placement_index as UByte
  border_tile as UByte 'What tile the "outside" of the map is filled with
+ solid_border as Boolean
  map_palette as UByte
  npc_palette_12 as UByte 'NPC palettes 1 and 2
  npc_palette_34 as UByte 'NPC palettes 3 and 4
