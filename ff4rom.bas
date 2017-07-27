@@ -105,10 +105,12 @@ type FF4Rom
  ' These could end up changing the data that's in the rom.
  ' Changes only exist in the copy of the rom in memory and will not be
  '  applied to the actual file until you call WriteToFile.
+ declare sub AddStock(shop_index as UByte, item_index as UByte)
  declare sub AssignSpellset(job_index as UByte, spellset_index as UByte, school as String)
  declare sub ClearActorCommands(actor_index as UByte = &hFF)
  declare sub ClearJobSpellSets(job_index as UByte = &hFF)
  declare function CompressDTE(text as String) as String
+ declare sub EmptyShop(shop_index as UByte)
  declare sub Equip(actor_index as UByte, item_index as UByte, arrow_ammo as UByte = 50, force_hand as String = "")
  declare function FindMakeElementGrid(combination as List) as Integer
  declare sub GiveActorCommand(actor_index as UByte, command_index as UByte)
@@ -190,10 +192,12 @@ end type
 #include once "info/nextunusedelementgrid.bas"
 #include once "info/uniqueactor.bas"
 
+#include once "edit/addstock.bas"
 #include once "edit/assignspellset.bas"
 #include once "edit/clearactorcommands.bas"
 #include once "edit/clearjobspellsets.bas"
 #include once "edit/compressdte.bas"
+#include once "edit/emptyshop.bas"
 #include once "edit/equip.bas"
 #include once "edit/findmakeelementgrid.bas"
 #include once "edit/giveactorcommand.bas"
