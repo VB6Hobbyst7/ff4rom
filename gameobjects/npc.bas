@@ -7,7 +7,7 @@ type NPC
 
  sprite as UByte
  visible as Boolean
- speech as UByte
+ speech as EventCall
 
 end type
 

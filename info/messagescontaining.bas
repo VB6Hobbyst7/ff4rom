@@ -7,7 +7,7 @@ function FF4Rom.MessagesContaining(substring as String) as List
   text = bank1_messages(i).text
   for j as Integer = 1 to len(text) - len(substring) + 1
    if mid(text, j, len(substring)) = substring then
-    result.Append(str(i))
+    result.AddItem(str(i))
     exit for
    end if
   next
@@ -17,7 +17,7 @@ function FF4Rom.MessagesContaining(substring as String) as List
   text = bank3_messages(i).text
   for j as Integer = 1 to len(text) - len(substring) + 1
    if mid(text, j, len(substring)) = substring then
-    result.Append(str(i + 1000))
+    result.AddItem(str(i + 1000))
     exit for
    end if
   next

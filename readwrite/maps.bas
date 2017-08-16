@@ -107,7 +107,7 @@ sub FF4Rom.ReadMaps()
    for j as Integer = 0 to finish - address - 5 step 5
     t = callocate(SizeOf(Trigger))
     ReadTrigger(t, address + j)
-    maps(i).triggers.Append(t)
+    maps(i).triggers.AddPointer(t)
    next
   end if
  next
@@ -121,14 +121,14 @@ sub FF4Rom.ReadMaps()
  for i as Integer = 1 to total_overworld_triggers
   t = callocate(SizeOf(Trigger))
   ReadTrigger(t, start + i * 5)
-  maps(overworld_map).triggers.Append(t)
+  maps(overworld_map).triggers.AddPointer(t)
  next
  start += total_overworld_triggers * 5
  
  for i as Integer = 1 to total_underground_triggers
   t = callocate(SizeOf(Trigger))
   ReadTrigger(t, start + i * 5)
-  maps(underground_map).triggers.Append(t)
+  maps(underground_map).triggers.AddPointer(t)
  next
  start += total_underground_triggers * 5
  
@@ -138,7 +138,7 @@ sub FF4Rom.ReadMaps()
   else
    t = callocate(SizeOf(Trigger))
    ReadTrigger(t, start + i * 5)
-   maps(moon_map).triggers.Append(t)
+   maps(moon_map).triggers.AddPointer(t)
   end if
  next
 

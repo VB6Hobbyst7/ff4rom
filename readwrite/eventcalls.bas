@@ -1,4 +1,4 @@
-sub FF4Rom.ReadNPCs()
+sub FF4Rom.ReadEventCalls()
 
  dim start as Integer
  dim finish as Integer
@@ -8,18 +8,11 @@ sub FF4Rom.ReadNPCs()
  dim bytes as List
  
  c = callocate(SizeOf(CallComponent))
- 
- for i as Integer = 0 to total_npcs
 
-  npcs(i).sprite = ByteAt(&h97200 + i)
-  if ByteAt(&h97400 + i \ 8) and 2 ^ (i mod 8) then
-   npcs(i).visible = true
-  else
-   npcs(i).visible = false
-  end if
-  
-  start = ByteAt(&h99A00 + 2 * i) + ByteAt(&h99A00 + 2 * i + 1) * &h100 + &h99E00
-  finish = ByteAt(&h99A00 + 2 * (i + 1)) + ByteAt(&h99A00 + 2 * (i + 1) + 1) * &h100 + &h99E00
+ for i as Integer = 0 to total_event_calls
+ 
+  start = ByteAt(&h97460 + i * 2) + ByteAt(&h97460 + i * 2 + 1) * &h100 + &h97660
+  finish = ByteAt(&h97460 + i * 2 + 2) + ByteAt(&h97460 + i * 2 + 3) * &h100 + &h97660
   offset = 0
   do while start + offset < finish
    temp = ByteAt(start + offset)
@@ -30,7 +23,7 @@ sub FF4Rom.ReadNPCs()
      offset += 1
      c->false_conditions.Join(bytes)
      bytes.Destroy()
-     npcs(i).speech.components.AddPointer(c)
+     eventcalls(i).components.AddPointer(c)
      c = callocate(SizeOf(CallComponent))
     case &hFE
      c->true_conditions.AddValue(ByteAt(start + offset))
@@ -40,8 +33,10 @@ sub FF4Rom.ReadNPCs()
    end select
   loop
   if bytes.Length() > 0 then
-   npcs(i).speech.parameters.Join(bytes)
+   eventcalls(i).parameters.Join(bytes)
    bytes.Destroy()
+   eventcalls(i).components.AddPointer(c)
+   c = callocate(SizeOf(CallComponent))
   end if
   
  next
@@ -51,29 +46,19 @@ sub FF4Rom.ReadNPCs()
 end sub
 
 
-sub FF4Rom.WriteNPCs()
+sub FF4Rom.WriteEventCalls()
 
  dim start as Integer
  dim offset as Integer
- dim temp as UByte
  dim c as CallComponent ptr
 
- for i as Integer = 0 to total_npcs
+ start = &h97660
  
-  WriteByte(&h97200 + i, npcs(i).sprite) 
-  temp = ByteAt(&h97400 + i \ 8) 
-  if npcs(i).visible then
-   temp = temp or 2 ^ (i mod 8)
-  else
-   temp = temp and &hFF - 2 ^ (i mod 8)
-  end if
-  WriteByte(&h97400 + i \ 8, temp)
-  
-  start = ByteAt(&h99A00 + 2 * i) + ByteAt(&h99A00 + 2 * i + 1) * &h100 + &h99E00
-  WriteByte(&h99A00 + 2 * i, (start - &h99E00) mod &h100)
-  WriteByte(&h99A00 + 2 * i + 1, (start - &h99E00) \ &h100)
-  for j as Integer = 1 to npcs(i).speech.components.Length()
-   c = npcs(i).speech.components.PointerAt(j)
+ for i as Integer = 0 to total_event_calls
+  WriteByte(&h97460 + i * 2, (start - &h97660) mod &h100)
+  WriteByte(&h97460 + i * 2 + 1, (start - &h97660) \ &h100)
+  for j as Integer = 1 to eventcalls(i).components.Length()
+   c = eventcalls(i).components.PointerAt(j)
    for k as Integer = 1 to c->true_conditions.Length()
     WriteByte(start + offset, &hFE)
     WriteByte(start + offset + 1, c->true_conditions.ValueAt(k))
@@ -87,13 +72,19 @@ sub FF4Rom.WriteNPCs()
    WriteByte(start + offset + 1, c->event_index)
    offset += 2
   next
-  for j as Integer = 1 to npcs(i).speech.parameters.Length()
-   WriteByte(start + offset, npcs(i).speech.parameters.ValueAt(j))
+  for j as Integer = 1 to eventcalls(i).parameters.Length()
+   WriteByte(start + offset, eventcalls(i).parameters.ValueAt(j))
    offset += 1
   next
   start += offset
   offset = 0
-
  next
+ 
+ WriteByte(&h97460 + (total_event_calls + 1) * 2, (start - &h97660) mod &h100)
+ WriteByte(&h97460 + (total_event_calls + 1) * 2 + 1, (start - &h97660) \ &h100)
 
+ for i as Integer = start to &h97817
+  'WriteByte(i, &hFF)
+ next
+ 
 end sub

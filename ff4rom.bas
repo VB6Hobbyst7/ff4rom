@@ -1,5 +1,6 @@
 #include once "../common/list.bas"
 #include once "../common/range.bas"
+#include once "../common/functions/minmax.bas"
 #include once "../common/functions/pad.bas"
 #include once "../common/functions/tokenize.bas"
 #include once "gameobjects/elementgrid.bas"
@@ -16,8 +17,10 @@
 #include once "gameobjects/spellset.bas"
 #include once "gameobjects/trigger.bas"
 #include once "gameobjects/map.bas"
+#include once "gameobjects/eventcall.bas"
 #include once "gameobjects/npc.bas"
 #include once "gameobjects/message.bas"
+#include once "gameobjects/event.bas"
 
 type FF4Rom
 
@@ -68,6 +71,10 @@ type FF4Rom
  battle_messages(total_battle_messages) as Message
  alert_messages(total_alert_messages) as Message
  
+ events(total_events) as Event
+ eventcalls(total_event_calls) as EventCall
+ prices(total_prices) as UByte
+ 
  maps(total_maps) as Map
  npcs(total_npcs) as NPC
  
@@ -77,7 +84,14 @@ type FF4Rom
  dte_range1 as Range
  dte_range2 as Range
  dte(&hFE) as String
-
+ if_patch as Boolean
+ instruction_names as List
+ element_names as List
+ persistent_status_names as List
+ temporary_status_names as List
+ hidden_status_names as List
+ system_status_names as List
+ 
  public:
  'INFO/
  ' These give information about the rom without actually making changes.
@@ -89,7 +103,11 @@ type FF4Rom
  declare function ConvertText(text as String) as String
  declare function DecompressDTE(text as String) as String
  declare function DisplayText(text as String) as String
+ declare function EventContainsInstruction(event_index as UByte, code_index as UByte, parameter as Integer = -1) as Boolean
+ declare function EventsContaining(code_index as UByte, parameter as Integer = -1) as List
  declare function FlagIndex(flagname as String) as Integer
+ declare function InstructionIndex(instruction_name as String) as UByte
+ declare function InstructionParameters(code as UByte) as Integer
  declare function ItemsUsableByActor(actor_index as UByte) as List
  declare function ItemsUsableByJob(job_index as UByte) as List
  declare function JobChangeFrom() as UByte
@@ -105,15 +123,31 @@ type FF4Rom
  ' These could end up changing the data that's in the rom.
  ' Changes only exist in the copy of the rom in memory and will not be
  '  applied to the actual file until you call WriteToFile.
+ declare sub AddScriptEntry overload (event_index as UByte, new_code as UByte, parameters as List)
+ declare sub AddScriptEntry overload (event_index as UByte, new_code as UByte, parameter1 as UByte = 0, parameter2 as UByte = 0, parameter3 as UByte = 0, parameter4 as UByte = 0)
+ declare sub AddScriptEntry overload (event_index as UByte, new_entry as Instruction)
+ declare sub AddScriptEntry overload (event_index as UByte, new_entry as Instruction ptr)
  declare sub AddStock(shop_index as UByte, item_index as UByte)
+ declare sub ApplyIPS(ips_file as String, headered as Boolean = true)
+ declare sub ApplyPatch(address as Integer, patch as String)
  declare sub AssignSpellset(job_index as UByte, spellset_index as UByte, school as String)
+ declare sub ChangeParameter(event_index as UByte, script_line as Integer, parameter_index as UByte, parameter_value as UByte)
+ declare sub ChangeScriptEntry overload (event_index as UByte, script_line as Integer, new_code as UByte, parameters as List)
+ declare sub ChangeScriptEntry overload (event_index as UByte, script_line as Integer, new_code as UByte, parameter1 as UByte = 0, parameter2 as UByte = 0, parameter3 as UByte = 0, parameter4 as UByte = 0)
+ declare sub ChangeScriptEntry overload (event_index as UByte, script_line as Integer, new_entry as Instruction)
+ declare sub ChangeScriptEntry overload (event_index as UByte, script_line as Integer, new_entry as Instruction ptr)
  declare sub ClearActorCommands(actor_index as UByte = &hFF)
+ declare sub ClearEventScript(event_index as UByte)
  declare sub ClearJobSpellSets(job_index as UByte = &hFF)
  declare function CompressDTE(text as String) as String
  declare sub EmptyShop(shop_index as UByte)
  declare sub Equip(actor_index as UByte, item_index as UByte, arrow_ammo as UByte = 50, force_hand as String = "")
  declare function FindMakeElementGrid(combination as List) as Integer
  declare sub GiveActorCommand(actor_index as UByte, command_index as UByte)
+ declare sub InsertScriptEntry overload (event_index as UByte, script_line as Integer, new_code as UByte, parameters as List)
+ declare sub InsertScriptEntry overload (event_index as UByte, script_line as Integer, new_code as UByte, parameter1 as UByte = 0, parameter2 as UByte = 0, parameter3 as UByte = 0, parameter4 as UByte = 0)
+ declare sub InsertScriptEntry overload (event_index as UByte, script_line as Integer, new_entry as Instruction)
+ declare sub InsertScriptEntry overload (event_index as UByte, script_line as Integer, new_entry as Instruction ptr)
  declare function Replace(find_word as String, replacement as String, text as String) as String
  declare sub ReplaceAll(find_word as String, replacement as String, include_battle as Boolean = false)
  declare sub SortSpellSets()
@@ -125,13 +159,9 @@ type FF4Rom
  '  in memory and the rom data as well as between the rom data and the
  '  file on disk.
  declare sub ReadFromFile(filename as String)
- declare sub WriteToFile(filename as String)
+ declare sub SaveToFile(filename as String)  'Doesn't commit changes
+ declare sub WriteToFile(filename as String) 'Commits changes then saves
 
- private:
- declare function ByteAt(address as Integer) as UByte
- declare sub ConstructDTE()
- declare sub WriteByte(address as Integer, newbyte as UByte)
- 
  'READWRITE/
  ' These are for converting the raw rom data into abstract objects that
  '  are easier to work with directly, and from those objects back to raw
@@ -146,6 +176,10 @@ type FF4Rom
  declare sub WriteElementGrids()
  declare sub  ReadEquipCharts()
  declare sub WriteEquipCharts()
+ declare sub  ReadEventCalls()
+ declare sub WriteEventCalls()
+ declare sub  ReadEvents()
+ declare sub WriteEvents()
  declare sub  ReadItems()
  declare sub WriteItems()
  declare sub  ReadJobs()
@@ -160,6 +194,8 @@ type FF4Rom
  declare sub WriteMonsters()
  declare sub  ReadNPCs()
  declare sub WriteNPCs()
+ declare sub  ReadPrices()
+ declare sub WritePrices()
  declare sub  ReadShops()
  declare sub WriteShops()
  declare sub  ReadSpells()
@@ -167,6 +203,13 @@ type FF4Rom
  declare sub  ReadSpellSets()
  declare sub WriteSpellSets()
  
+ private:
+ declare function ByteAt(address as Integer) as UByte
+ declare sub ConstructDTE()
+ declare function ConstructInstruction(address as Integer) as Instruction ptr
+ declare sub InitializeInstructionNames()
+ declare sub InitializeStatusNames()
+ declare sub WriteByte(address as Integer, newbyte as UByte)
  declare sub  ReadTrigger(t as Trigger ptr, address as Integer) 'Used by map reader
  declare sub WriteTrigger(t as Trigger ptr, address as Integer)
 
@@ -180,7 +223,11 @@ end type
 #include once "info/converttext.bas"
 #include once "info/decompressdte.bas"
 #include once "info/displaytext.bas"
+#include once "info/eventcontainsinstruction.bas"
+#include once "info/eventscontaining.bas"
 #include once "info/flagindex.bas"
+#include once "info/instructionindex.bas"
+#include once "info/instructionparameters.bas"
 #include once "info/itemsusablebyactor.bas"
 #include once "info/itemsusablebyjob.bas"
 #include once "info/jobchangefrom.bas"
@@ -192,31 +239,42 @@ end type
 #include once "info/nextunusedelementgrid.bas"
 #include once "info/uniqueactor.bas"
 
+#include once "edit/addscriptentry.bas"
 #include once "edit/addstock.bas"
+#include once "edit/applypatch.bas"
 #include once "edit/assignspellset.bas"
+#include once "edit/changeparameter.bas"
+#include once "edit/changescriptentry.bas"
 #include once "edit/clearactorcommands.bas"
+#include once "edit/cleareventscript.bas"
 #include once "edit/clearjobspellsets.bas"
 #include once "edit/compressdte.bas"
 #include once "edit/emptyshop.bas"
 #include once "edit/equip.bas"
 #include once "edit/findmakeelementgrid.bas"
 #include once "edit/giveactorcommand.bas"
+#include once "edit/insertscriptentry.bas"
 #include once "edit/replace.bas"
 #include once "edit/replaceall.bas"
 #include once "edit/sortspellsets.bas"
 #include once "edit/unequip.bas"
 #include once "edit/wrapmessage.bas"
 
-#include once "rominterface/readfromfile.bas"
-#include once "rominterface/writetofile.bas"
 #include once "rominterface/byteat.bas"
 #include once "rominterface/constructdte.bas"
+#include once "rominterface/initializeinstructionnames.bas"
+#include once "rominterface/initializestatusnames.bas"
+#include once "rominterface/readfromfile.bas"
+#include once "rominterface/savetofile.bas"
+#include once "rominterface/writetofile.bas"
 #include once "rominterface/writebyte.bas"
 
 #include once "readwrite/actors.bas"
 #include once "readwrite/characters.bas"
 #include once "readwrite/elementgrids.bas"
 #include once "readwrite/equipcharts.bas"
+#include once "readwrite/eventcalls.bas"
+#include once "readwrite/events.bas"
 #include once "readwrite/items.bas"
 #include once "readwrite/jobs.bas"
 #include once "readwrite/maps.bas"
@@ -224,6 +282,7 @@ end type
 #include once "readwrite/messages.bas"
 #include once "readwrite/monsters.bas"
 #include once "readwrite/npcs.bas"
+#include once "readwrite/prices.bas"
 #include once "readwrite/shops.bas"
 #include once "readwrite/spells.bas"
 #include once "readwrite/spellsets.bas"

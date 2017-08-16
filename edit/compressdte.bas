@@ -1,3 +1,7 @@
+'This returns the DTE encoding of the given string. It is possible that the
+' encoded string may be different from what was originally in the rom, even if
+' the decoded text is identical.
+
 function FF4Rom.CompressDTE(text as String) as String
 
  dim result as String

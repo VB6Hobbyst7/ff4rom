@@ -9,7 +9,7 @@ sub FF4Rom.ReadSpellSets()
    temp = ByteAt(start)
    start += 1
    if temp = &hFF then exit for
-   spellsets(i).starting_spells.Append(chr(temp))
+   spellsets(i).starting_spells.AddItem(chr(temp))
   next
  next
  
@@ -18,8 +18,8 @@ sub FF4Rom.ReadSpellSets()
   temp = ByteAt(start)
   start += 1
   do until temp = &hFF
-   spellsets(i).learning_levels.Append(chr(temp))
-   spellsets(i).learning_spells.Append(chr(ByteAt(start)))
+   spellsets(i).learning_levels.AddItem(chr(temp))
+   spellsets(i).learning_spells.AddItem(chr(ByteAt(start)))
    start += 1
    temp = ByteAt(start)
    start += 1

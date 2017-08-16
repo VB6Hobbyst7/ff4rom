@@ -17,21 +17,21 @@ sub FF4Rom.SortSpellSets()
   next
   
   for j as Integer = 1 to spellsets(i).learning_levels.Length()
-   bucket(asc(spellsets(i).learning_levels.ItemAt(j))).Append(spellsets(i).learning_spells.ItemAt(j))
+   bucket(asc(spellsets(i).learning_levels.ItemAt(j))).AddItem(spellsets(i).learning_spells.ItemAt(j))
   next
   
   for j as Integer = 1 to 99
    for k as Integer = 1 to bucket(j).Length()
-    new_levels.Append(chr(j))
-    new_spells.Append(bucket(j).ItemAt(k))
+    new_levels.AddItem(chr(j))
+    new_spells.AddItem(bucket(j).ItemAt(k))
    next
   next
   
   spellsets(i).learning_levels.Destroy()
   spellsets(i).learning_spells.Destroy()
   for j as Integer = 1 to new_levels.Length()
-   spellsets(i).learning_levels.Append(new_levels.ItemAt(j))
-   spellsets(i).learning_spells.Append(new_spells.ItemAt(j))
+   spellsets(i).learning_levels.AddItem(new_levels.ItemAt(j))
+   spellsets(i).learning_spells.AddItem(new_spells.ItemAt(j))
   next
  
  next

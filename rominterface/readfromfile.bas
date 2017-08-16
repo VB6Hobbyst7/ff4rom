@@ -26,21 +26,27 @@ sub FF4Rom.ReadFromFile(filename as String)
    end
   end if
  close
+ 
+ InitializeInstructionNames()
+ InitializeStatusNames()
 
  ReadActors()
  ReadCharacters()
  ReadElementGrids()
  ReadEquipCharts()
+ ReadEventCalls()
+ ReadEvents()
  ReadItems()
  ReadJobs()
+ ReadMaps()
  ReadMenuCommands()
  ReadMessages()
  ReadMonsters()
+ ReadNPCs()
+ ReadPrices()
  ReadShops()
  ReadSpells()
  ReadSpellSets()
- ReadMaps()
- ReadNPCs()
 
 end sub
 

@@ -234,6 +234,7 @@ sub FF4Rom.WriteMenuCommands()
  
  'Hide parameters
  WriteByte(&h1AD57, menu_commands(hide_command).parameters(1)) 'Auto-hide actor
+ WriteByte(&h1A608, menu_commands(hide_command).parameters(1))
 
  'Salve parameters
  WriteByte(&h1E4E8, menu_commands(salve_command).parameters(1)) 'Item consumed

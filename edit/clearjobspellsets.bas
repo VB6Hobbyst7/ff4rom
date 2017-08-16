@@ -1,3 +1,6 @@
+'This removes all spell sets from the specified job. If no job index was
+' provided, it clears all spell sets from all jobs.
+
 sub FF4Rom.ClearJobSpellSets(job_index as UByte = &hFF)
 
  if job_index = &hFF then
