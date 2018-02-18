@@ -9,7 +9,7 @@ sub FF4Rom.ReadSpellSets()
    temp = ByteAt(start)
    start += 1
    if temp = &hFF then exit for
-   spellsets(i).starting_spells.AddItem(chr(temp))
+   spell_sets(i)->starting_spells.AddPointer(spells(temp))
   next
  next
  
@@ -18,8 +18,8 @@ sub FF4Rom.ReadSpellSets()
   temp = ByteAt(start)
   start += 1
   do until temp = &hFF
-   spellsets(i).learning_levels.AddItem(chr(temp))
-   spellsets(i).learning_spells.AddItem(chr(ByteAt(start)))
+   spell_sets(i)->learning_levels.AddValue(temp)
+   spell_sets(i)->learning_spells.AddPointer(spells(ByteAt(start)))
    start += 1
    temp = ByteAt(start)
    start += 1
@@ -36,19 +36,19 @@ sub FF4Rom.WriteSpellSets()
  dim total as Integer
  
  for i as Integer = 0 to total_spell_sets
-  total += spellsets(i).starting_spells.Length()
-  if spellsets(i).starting_spells.Length() < 24 then total += 1
+  total += spell_sets(i)->starting_spells.Length()
+  if spell_sets(i)->starting_spells.Length() < 24 then total += 1
  next
  if total <= &h320 then
   start = &h7CAC0
   for i as Integer = 0 to total_spell_sets
    for j as Integer = 1 to 24
-    if j > spellsets(i).starting_spells.Length() then
+    if j > spell_sets(i)->starting_spells.Length() then
      WriteByte(start, &hFF)
      start += 1
      exit for
     else
-     WriteByte(start, asc(spellsets(i).starting_spells.ItemAt(j)))
+     WriteByte(start, IndexOfSpell(spell_sets(i)->starting_spells.PointerAt(j)))
      start += 1
     end if
    next
@@ -57,14 +57,14 @@ sub FF4Rom.WriteSpellSets()
  
  total = 0
  for i as Integer = 0 to total_spell_sets
-  total += spellsets(i).learning_spells.Length() * 2 + 1
+  total += spell_sets(i)->learning_spells.Length() * 2 + 1
  next
  if total <= &h1C0 then
   start = &h7C900
   for i as Integer = 0 to total_spell_sets
-   for j as Integer = 1 to spellsets(i).learning_spells.Length()
-    WriteByte(start, asc(spellsets(i).learning_levels.ItemAt(j)))
-    WriteByte(start + 1, asc(spellsets(i).learning_spells.ItemAt(j)))
+   for j as Integer = 1 to spell_sets(i)->learning_spells.Length()
+    WriteByte(start, spell_sets(i)->learning_levels.ValueAt(j))
+    WriteByte(start + 1, IndexOfSpell(spell_sets(i)->learning_spells.PointerAt(j)))
     start += 2
    next
    WriteByte(start, &hFF)

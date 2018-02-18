@@ -1,24 +1,8 @@
-function FF4Rom.ConstructInstruction(address as Integer) as Instruction ptr
-
- dim entry as Instruction ptr
- dim temp as UByte
- 
- temp = ByteAt(address)
- entry = callocate(SizeOf(Instruction))
- entry->code = temp
- for j as Integer = 1 to InstructionParameters(temp)
-  entry->parameters(j) = ByteAt(address + j)
- next
- 
- return entry
-
-end function
-
-
 sub FF4Rom.ReadEvents()
 
  dim start as Integer
  dim offset as Integer
+ dim bytes as List
  dim entry as Instruction ptr
  dim has_branch as Boolean
  
@@ -28,15 +12,25 @@ sub FF4Rom.ReadEvents()
   offset = 0
   has_branch = false
   do
-   entry = ConstructInstruction(start + offset)
-   offset += 1 + InstructionParameters(entry->code)
+   bytes.Destroy()
+   bytes.AddValue(ByteAt(start + offset))
+   for i as Integer = 1 to 4
+    bytes.AddValue(ByteAt(start + offset + i))
+   next
+   entry = InstructionFromBytes(bytes)
+   offset += entry.Size()
    if entry->code = yesno_instruction then has_branch = true
    events(i).script.AddPointer(entry)
   loop until entry->code = end_instruction
   if has_branch then
    do
-    entry = ConstructInstruction(start + offset)
-    offset += 1 + InstructionParameters(entry->code)
+    bytes.Destroy()
+    bytes.AddValue(ByteAt(start + offset))
+    for i as Integer = 1 to 4
+     bytes.AddValue(ByteAt(start + offset + i))
+    next
+    entry = InstructionFromBytes(bytes)
+    offset += entry.Size()
     events(i).branch.AddPointer(entry)
    loop until entry->code = end_instruction
   end if

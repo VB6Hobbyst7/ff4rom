@@ -6,7 +6,7 @@ sub FF4Rom.ReadItems()
  descriptions_range.SetRange(ByteAt(&hA9BB), ByteAt(&hA9BF))
  weapons_range.SetRange(0, &h5F)
  armors_range.SetRange(&h60, &hAF)
- medicines_range.SetRange(&hB0, &hDD)
+ consumables_range.SetRange(&hB0, &hDD)
  tools_range.SetRange(&hDE, &hFF)
  two_handed_range.SetRange(ByteAt(&hC22B), ByteAt(&hC1BE) - 1)
  bow_range.SetRange(ByteAt(&hC1BE), ByteAt(&hC286) - 1)
@@ -16,85 +16,101 @@ sub FF4Rom.ReadItems()
  body_range.SetRange(ByteAt(&hC1D2), ByteAt(&hC1D7) - 1)
  arms_range.SetRange(ByteAt(&hC1D7), ByteAt(&hC1D8))
  key_items_range.SetRange(ByteAt(&hCB30), total_items)
- special_key_item1 = ByteAt(&hCB28)
- special_key_item2 = ByteAt(&hCB2C)
+ special_key_item1 = items(ByteAt(&hCB28))
+ special_key_item2 = items(ByteAt(&hCB2C))
+ 
+ for i as Integer = weapons_range.start to weapons_range.finish
+  items(i) = weapons(i - weapons_range.start)
+ next
+ 
+ for i as Integer = armors_range.start to armors_range.finish
+  items(i) = armors(i - armors_range.start)
+ next
 
+ for i as Integer = consumables_range.start to consumables_range.finish
+  items(i) = consumables(i - consumables_range.start)
+ next
+
+ for i as Integer = tools_range.start to tools_range.finish
+  items(i) = tools(i - tools_range.start)
+ next
+ 
  for i as Integer = 0 to total_items
  
-  items(i).name = ""
+  items(i)->name = ""
   for j as Integer = 0 to 8
-   items(i).name += chr(ByteAt(&h78200 + i * 9 + j))
+   items(i)->name += chr(ByteAt(&h78200 + i * 9 + j))
   next
   
   if descriptions_range.InRange(i) then
-   items(i).description = ByteAt(&h7B000 + i - descriptions_range.start)
+   items(i)->description = ByteAt(&h7B000 + i - descriptions_range.start)
   end if
   
-  items(i).price_code = ByteAt(&h7A650 + i)
+  items(i)->price_code = ByteAt(&h7A650 + i)
   
-  if medicines_range.InRange(i) then
-   index = i - medicines_range.start
+  if consumables_range.InRange(i) then
+   index = i - consumables_range.start
    start = &h79880 + index * 6
-   items(i).delay = ByteAt(start) mod &h20
-   items(i).target = ByteAt(start) \ &h20
-   items(i).power = ByteAt(start + 1)
-   items(i).boss = iif(ByteAt(start + 2) and &h80, false, true)
-   items(i).success = ByteAt(start + 2) mod &h80
-   items(i).impact = iif(ByteAt(start + 3) and &h80, true, false)
-   items(i).effect = ByteAt(start + 3) mod &h80
-   items(i).damage = iif(ByteAt(start + 4) and &h80, false, true)
-   items(i).element_code = ByteAt(start + 4) mod &h80
-   items(i).reflectable = iif(ByteAt(start + 5) and &h80, false, true)
-   items(i).mp_cost = ByteAt(start + 5) mod &h80
-   items(i).visual = ByteAt(&h7D790 + index)
-   'items(i).price_code = ByteAt(&h7A700 + index)
+   consumables(index)->delay = ByteAt(start) mod &h20
+   consumables(index)->target = ByteAt(start) \ &h20
+   consumables(index)->power = ByteAt(start + 1)
+   consumables(index)->boss = bit(ByteAt(start + 2), 7)
+   consumables(index)->success = ByteAt(start + 2) mod &h80
+   consumables(index)->impact = bit(ByteAt(start + 3), 7)
+   consumables(index)->effect = ByteAt(start + 3) mod &h80
+   consumables(index)->damage = bit(ByteAt(start + 4), 7)
+   consumables(index)->element_code = element_status_tables(ByteAt(start + 4) mod &h80)
+   consumables(index)->reflectable = bit(ByteAt(start + 5), 7)
+   consumables(index)->mp_cost = ByteAt(start + 5) mod &h80
+   consumables(index)->visual = ByteAt(&h7D790 + index)
   end if
   
   if armors_range.InRange(i) then
    index = i - armors_range.start
    start = &h79600
-   items(i).magnetic = iif(ByteAt(start + index * 8) and &h80, true, false)
-   items(i).magic_evade = ByteAt(start + index * 8) mod &h80
-   items(i).defense = ByteAt(start + index * 8 + 1)
-   items(i).evade = ByteAt(start + index * 8 + 2)
-   items(i).magic_defense = ByteAt(start + index * 8 + 3)
-   items(i).element_code = ByteAt(start + index * 8 + 4) mod &h40
+   armors(index)->magnetic = bit(ByteAt(start + index * 8), 7)
+   armors(index)->magic_evade = ByteAt(start + index * 8) mod &h80
+   armors(index)->defense = ByteAt(start + index * 8 + 1)
+   armors(index)->evade = ByteAt(start + index * 8 + 2)
+   armors(index)->magic_defense = ByteAt(start + index * 8 + 3)
+   armors(index)->elements = element_status_tables(ByteAt(start + index * 8 + 4) mod &h40)
    for j as Integer = 0 to 7
-    items(i).races(j) = iif(ByteAt(start + index * 8 + 5) and 2^j, true, false)
+    armors(index)->races(j) = bit(ByteAt(start + index * 8 + 5), j)
    next
-   items(i).equip_code = ByteAt(start + index * 8 + 6) mod &h20
-   items(i).stat_bonus.amount = ByteAt(start + index * 8 + 7) mod 8
+   armors(index)->equip_code = equip_tables(ByteAt(start + index * 8 + 6) mod &h20)
+   armors(index)->stat_bonus.amount = ByteAt(start + index * 8 + 7) mod 8
    for j as Integer = 0 to 4
-    items(i).stat_bonus.stats(4 - j) = iif(ByteAt(start + index * 8 + 7) and 2^(j + 3), true, false)
+    armors(index)->stat_bonus.stats(4 - j) = bit(ByteAt(start + index * 8 + 7), j + 3)
    next
   end if
   
   if weapons_range.InRange(i) then
+   index = i - weapons_range.start
    start = &h79300
    for j as Integer = 0 to 7
-    items(i).properties(j) = iif(ByteAt(start + i * 8) and 2^j, true, false)
+    weapons(index)->properties(j) = bit(ByteAt(start + i * 8), j)
    next
-   items(i).attack = ByteAt(start + i * 8 + 1)
-   items(i).hit = ByteAt(start + i * 8 + 2) mod &h80
-   items(i).casts = ByteAt(start + i * 8 + 3)
-   items(i).element_code = ByteAt(start + i * 8 + 4)
+   weapons(index)->attack = ByteAt(start + i * 8 + 1)
+   weapons(index)->hit = ByteAt(start + i * 8 + 2) mod &h80
+   weapons(index)->casts = ByteAt(start + i * 8 + 3)
+   weapons(index)->elements = element_status_tables(ByteAt(start + i * 8 + 4))
    for j as Integer = 0 to 7
-    items(i).races(j) = iif(ByteAt(start + i * 8 + 5) and 2^j, true, false)
+    weapons(index)->races(j) = bit(ByteAt(start + i * 8 + 5), j)
    next
-   items(i).equip_code = ByteAt(start + i * 8 + 6) mod &h20
-   items(i).properties(8) = iif(ByteAt(start + i * 8 + 6) and &h40, true, false)
-   items(i).properties(9) = iif(ByteAt(start + i * 8 + 6) and &h80, true, false)
-   items(i).stat_bonus.amount = ByteAt(start + i * 8 + 7) mod 8
+   weapons(index)->equip_code = equip_tables(ByteAt(start + i * 8 + 6) mod &h20)
+   weapons(index)->properties(8) = bit(ByteAt(start + i * 8 + 6), 6)
+   weapons(index)->properties(9) = bit(ByteAt(start + i * 8 + 6), 7)
+   weapons(index)->stat_bonus.amount = ByteAt(start + i * 8 + 7) mod 8
    for j as Integer = 0 to 4
-    items(i).stat_bonus.stats(4 - j) = iif(ByteAt(start + i * 8 + 7) and 2^(j + 3), true, false)
+    weapons(index)->stat_bonus.stats(4 - j) = bit(ByteAt(start + i * 8 + 7), j + 3)
    next
    start = &h7A010
-   items(i).colors = ByteAt(start + i * 4)
-   items(i).sprite = ByteAt(start + i * 4 + 1)
-   items(i).slash = ByteAt(start + i * 4 + 2)
-   items(i).swing = ByteAt(start + i * 4 + 3)
-   items(i).spell_power = ByteAt(&h79270 + i)
-   items(i).cast_visual = ByteAt(&h7D6E0 + i)
+   weapons(index)->colors = ByteAt(start + i * 4)
+   weapons(index)->sprite = ByteAt(start + i * 4 + 1)
+   weapons(index)->slash = ByteAt(start + i * 4 + 2)
+   weapons(index)->swing = ByteAt(start + i * 4 + 3)
+   weapons(index)->spell_power = ByteAt(&h79270 + i)
+   weapons(index)->cast_visual = ByteAt(&h7D6E0 + i)
   end if
  
  next
@@ -114,97 +130,97 @@ sub FF4Rom.WriteItems()
  for i as Integer = 0 to total_items
  
   for j as Integer = 0 to 8
-   WriteByte(&h78200 + i * 9 + j, iif(j + 1 > len(items(i).name), &hFF, asc(mid(items(i).name, j + 1, 1))))
+   WriteByte(&h78200 + i * 9 + j, iif(j + 1 > len(items(i)->name), &hFF, asc(mid(items(i)->name, j + 1, 1))))
   next
   
   if descriptions_range.InRange(i) then
-   WriteByte(&h7B000 + i - descriptions_range.start, items(i).description)
+   WriteByte(&h7B000 + i - descriptions_range.start, items(i)->description)
   end if
   
-  WriteByte(&h7A650 + i, items(i).price_code)
+  WriteByte(&h7A650 + i, items(i)->price_code)
   
-  if medicines_range.InRange(i) then
-   index = i - medicines_range.start
+  if consumables_range.InRange(i) then
+   index = i - consumables_range.start
    start = &h79880 + index * 6
-   WriteByte(start, items(i).delay + items(i).target * &h20)
-   WriteByte(start + 1, items(i).power)
-   temp = items(i).success
-   if not items(i).boss then temp += &h80
+   WriteByte(start, consumables(index)->delay + consumables(index)->target * &h20)
+   WriteByte(start + 1, consumables(index)->power)
+   temp = consumables(index)->success
+   if not consumables(index)->boss then temp += &h80
    WriteByte(start + 2, temp)
-   temp = items(i).effect
-   if items(i).impact then temp += &h80
+   temp = consumables(index)->effect
+   if consumables(index)->impact then temp += &h80
    WriteByte(start + 3, temp)
-   temp = items(i).element_code
-   if not items(i).damage then temp += &h80
+   temp = IndexOfElementStatusTable(consumables(index)->element_code)
+   if not consumables(index)->damage then temp += &h80
    WriteByte(start + 4, temp)
-   temp = items(i).mp_cost
-   if not items(i).reflectable then temp += &h80
+   temp = consumables(index)->mp_cost
+   if not consumables(index)->reflectable then temp += &h80
    WriteByte(start + 5, temp)
-   WriteByte(&h7D790 + index, items(i).visual)
-   'WriteByte(&h7A700 + index, items(i).price_code)
+   WriteByte(&h7D790 + index, consumables(index)->visual)
   end if
   
   if armors_range.InRange(i) then
    index = i - armors_range.start
    start = &h79600
-   temp = items(i).magic_evade
-   if items(i).magnetic then temp += &h80
+   temp = armors(index)->magic_evade
+   if armors(index)->magnetic then temp += &h80
    WriteByte(start + index * 8, temp)
-   WriteByte(start + index * 8 + 1, items(i).defense)
-   WriteByte(start + index * 8 + 2, items(i).evade)
-   WriteByte(start + index * 8 + 3, items(i).magic_defense)
-   temp = items(i).element_code
+   WriteByte(start + index * 8 + 1, armors(index)->defense)
+   WriteByte(start + index * 8 + 2, armors(index)->evade)
+   WriteByte(start + index * 8 + 3, armors(index)->magic_defense)
+   temp = IndexOfElementStatusTable(armors(index)->elements)
    temp += (ByteAt(start + index * 8 + 4) \ &h40) * &h40
    WriteByte(start + index * 8 + 4, temp)
    temp = 0
    for j as Integer = 0 to 7
-    if items(i).races(j) then temp += 2^j
+    if armors(index)->races(j) then temp = bitset(temp, j)
    next
    WriteByte(start + index * 8 + 5, temp)
-   temp = items(i).equip_code
+   temp = IndexOfEquipTable(armors(index)->equip_code)
    temp += (ByteAt(start + index * 8 + 6) \ &h20) * &h20
    WriteByte(start + index * 8 + 6, temp)
-   temp = items(i).stat_bonus.amount
+   temp = armors(index)->stat_bonus.amount
    for j as Integer = 0 to 4
-    if items(i).stat_bonus.stats(4 - j) then temp += 2^(j + 3)
+    if armors(index)->stat_bonus.stats(4 - j) then temp = bitset(temp, j + 3)
    next
    WriteByte(start + index * 8 + 7, temp)
   end if
   
   if weapons_range.InRange(i) then
+   index = i - weapons_range.start
    start = &h79300
    temp = 0
    for j as Integer = 0 to 7
-    if items(i).properties(j) then temp += 2^j
+    if weapons(index)->properties(j) then temp = bitset(temp, j)
    next
    WriteByte(start + i * 8, temp)
-   WriteByte(start + i * 8 + 1, items(i).attack)
-   temp = items(i).hit
-   temp += iif(ByteAt(start + i * 8 + 2) and &h80, &h80, 0)
+   WriteByte(start + i * 8 + 1, weapons(index)->attack)
+   temp = weapons(index)->hit
+   if bit(ByteAt(start + i * 8 + 2), 7) then temp = bitset(temp, 7)
    WriteByte(start + i * 8 + 2, temp)
-   WriteByte(start + i * 8 + 3, items(i).casts)
-   WriteByte(start + i * 8 + 4, items(i).element_code)
+   WriteByte(start + i * 8 + 3, weapons(index)->casts)
+   WriteByte(start + i * 8 + 4, IndexOfElementStatusTable(weapons(index)->elements))
    temp = 0
    for j as Integer = 0 to 7
-    if items(i).races(j) then temp += 2^j
+    if weapons(index)->races(j) then temp = bitset(temp, j)
    next
    WriteByte(start + i * 8 + 5, temp)
-   temp = items(i).equip_code
-   if items(i).properties(8) then temp += &h40
-   if items(i).properties(9) then temp += &h80
+   temp = IndexOfEquipTable(weapons(index)->equip_code)
+   if weapons(index)->properties(8) then temp = bitset(temp, 6)
+   if weapons(index)->properties(9) then temp = bitset(temp, 7)
    WriteByte(start + i * 8 + 6, temp)
-   temp = items(i).stat_bonus.amount
+   temp = weapons(index)->stat_bonus.amount
    for j as Integer = 0 to 4
-    if items(i).stat_bonus.stats(4 - j) then temp += 2^(j + 3)
+    if weapons(index)->stat_bonus.stats(4 - j) then temp = bitset(temp, j + 3)
    next
    WriteByte(start + i * 8 + 7, temp)
    start = &h7A010
-   WriteByte(start + i * 4, items(i).colors)
-   WriteByte(start + i * 4 + 1, items(i).sprite)
-   WriteByte(start + i * 4 + 2, items(i).slash)
-   WriteByte(start + i * 4 + 3, items(i).swing)
-   WriteByte(&h79270 + i, items(i).spell_power)
-   WriteByte(&h7D6E0 + i, items(i).cast_visual)
+   WriteByte(start + i * 4, weapons(index)->colors)
+   WriteByte(start + i * 4 + 1, weapons(index)->sprite)
+   WriteByte(start + i * 4 + 2, weapons(index)->slash)
+   WriteByte(start + i * 4 + 3, weapons(index)->swing)
+   WriteByte(&h79270 + i, weapons(index)->spell_power)
+   WriteByte(&h7D6E0 + i, weapons(index)->cast_visual)
   end if
  
  next

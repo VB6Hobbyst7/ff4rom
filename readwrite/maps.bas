@@ -72,7 +72,7 @@ sub FF4Rom.ReadMaps()
   maps(i).battle_background = temp mod &h10
   maps(i).warpable = iif(temp and &h10, true, false)
   maps(i).exitable = iif(temp and &h20, true, false)
-  maps(i).mystery_bit = iif(temp and &h40, true, false)
+  maps(i).alternate_battle_bg = iif(temp and &h40, true, false)
   maps(i).magnetic = iif(temp and &h80, true, false)
   maps(i).grid_index = ByteAt(start + 1)
   maps(i).tileset_index = ByteAt(start + 2)
@@ -92,7 +92,7 @@ sub FF4Rom.ReadMaps()
   maps(i).mystery_bit2 = iif(temp and 8, true, false)
   maps(i).bg_move_direction = (temp \ &h10) mod 4
   maps(i).bg_move_speed = temp \ &h40
-  maps(i).underground = iif(ByteAt(start + 10) and &h80, true, false)
+  maps(i).ending = iif(ByteAt(start + 10) and &h80, true, false)
   maps(i).name_index = ByteAt(start + 11)
   maps(i).treasure_index = ByteAt(start + 12)
   
@@ -164,7 +164,7 @@ sub FF4Rom.WriteMaps()
   temp = maps(i).battle_background
   if maps(i).warpable then temp += &h10
   if maps(i).exitable then temp += &h20
-  if maps(i).mystery_bit then temp += &h40
+  if maps(i).alternate_battle_bg then temp += &h40
   if maps(i).magnetic then temp += &h80
   WriteByte(start, temp)
   WriteByte(start + 1, maps(i).grid_index)
@@ -186,7 +186,7 @@ sub FF4Rom.WriteMaps()
   temp += maps(i).bg_move_speed * &h40
   WriteByte(start + 9, temp)
   temp = ByteAt(start + 10) mod &h80
-  if maps(i).underground then temp += &h80
+  if maps(i).ending then temp += &h80
   WriteByte(start + 10, temp)
   WriteByte(start + 11, maps(i).name_index)
   WriteByte(start + 12, maps(i).treasure_index)
