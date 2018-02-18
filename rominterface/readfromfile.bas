@@ -26,25 +26,32 @@ sub FF4Rom.ReadFromFile(filename as String)
    end
   end if
  close
- 
- InitializeInstructionNames()
- InitializeStatusNames()
 
+ if_patch = false
+ for i as Integer = 1 to 8
+  if ByteAt(&h7F70 + i) <> &hFF then
+   if_patch = true
+   exit for
+  end if
+ next
+ 
  ReadActors()
  ReadCharacters()
- ReadElementGrids()
- ReadEquipCharts()
- ReadEventCalls()
+ ReadDropTables()
+ ReadElementStatusTables()
+ ReadEquipTables()
+ 'ReadEventCalls()
  ReadEvents()
+ ReadFormations()
  ReadItems()
  ReadJobs()
- ReadMaps()
+ 'ReadMaps()
  ReadMenuCommands()
- ReadMessages()
+ 'ReadMessages()
  ReadMonsters()
- ReadNPCs()
- ReadPrices()
- ReadShops()
+ 'ReadNPCs()
+ 'ReadPrices()
+ 'ReadShops()
  ReadSpells()
  ReadSpellSets()
 
