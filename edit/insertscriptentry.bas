@@ -20,6 +20,10 @@ sub FF4Rom.InsertScriptEntry(event_index as UByte, script_line as Integer, new_c
 
  dim temp as List
  
+ temp.AddValue(parameter1)
+ temp.AddValue(parameter2)
+ temp.AddValue(parameter3)
+ temp.AddValue(parameter4)
  InsertScriptEntry(event_index, script_line, new_code, temp)
 
 end sub
