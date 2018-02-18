@@ -35,7 +35,7 @@ type Map
  battle_background as UByte
  warpable as Boolean
  exitable as Boolean
- mystery_bit as Boolean
+ alternate_battle_bg as Boolean
  magnetic as Boolean
  grid_index as UByte 'This references which layout of tiles the map uses
  tileset_index as UByte
@@ -53,7 +53,7 @@ type Map
  mystery_bit2 as Boolean
  bg_move_direction as UByte 'Whether the background map moves on its own, such
  bg_move_speed as UByte     ' as the water background used in town maps.
- underground as Boolean 'I don't think this actually means an underground map
+ ending as Boolean 'Does the map use NPC indexes from the ending
  name_index as UByte 'This references a table of map names (B1, F2, Inn, etc)
  encounter_rate as UByte
  treasure_index as UByte 'THIS IS IMPORTANT. See note in preamble.

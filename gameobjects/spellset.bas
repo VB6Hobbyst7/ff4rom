@@ -1,28 +1,23 @@
 'This is a set of spells a character can have in the game menu and in battle.
-' When a "character" learns a spell at level up, it goes into the spell set
-' corresponding to that spell's color (white, summon, or black/ninja). If a
-' spell is learned through an event, it is put directly into a certain spell
-' set regardless of what character that set was assigned to.
+'When a "character" learns a spell at level up, it goes into the spell set
+'corresponding to that spell's color (white, summon, or black/ninja). If a
+'spell is learned through an event, it is put directly into a certain spell
+'set regardless of what character that set was assigned to.
 
-' A character's in-battle spell sets do not necessarily have to match their
-'  out-of-battle spell sets, but this is the default behaviour. If you wish to
-'  change it, you can do so by manipulating the variables directly, but the
-'  built-in functions will assume you want the sets in and out of battle to be
-'  the same.
+'The list of starting spells are the spells initialized into that spell set at
+'the beginning of the game. This happens when you start a new game, not when
+'you first add the character to your party.
 
-' The list of starting spells are the spells initialized into that spell set at
-'  the beginning of the game. This happens when you start a new game, not when
-'  you first add the character to your party.
+'The list of spells learned through level ups is associated with a list of
+'levels. The nth spell in the learning list is learned at the level specified
+'at the nth place in the list of learning levels. For example, if the
+'learning list consisted of [Fire, Ice, Bolt] and the level list was 
+'[15, 15, 20], then the character with that spell set would learn Fire and
+'Ice at level 15 and Bolt at level 20. In the rom, these are stored in order
+'of level, and I'm not sure whether that matters, so it's a good idea to sort
+'the list before saving (there's an edit function for doing this).
 
-' The list of spells learned through level ups is associated with a list of
-'  levels. The nth spell in the learning list is learned at the level specified
-'  at the nth place in the list of learning levels. For example, if the
-'  learning list consisted of [Fire, Ice, Bolt] and the level list was 
-'  [15, 15, 20], then the character with that spell set would learn Fire and
-'  Ice at level 15 and Bolt at level 20. In the rom, these are stored in order
-'  of level, and I'm not sure whether that matters, so it's a good idea to sort
-'  the list before saving (there's an edit function for doing this).
-
+'The spell lists are stored as lists of pointers to spells rather than indexes.
 
 type SpellSet
 

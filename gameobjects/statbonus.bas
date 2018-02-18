@@ -1,22 +1,22 @@
 'This represents a collection of bonuses granted to a character's base
-' stats by, for example, an equipment or a levelup.
+'stats by, for example, an equipment or a levelup.
 
-' Levelups treat the stat amount somewhat differently from equipment.
-'  For levelups, the amount is literally the amount the flagged stats
-'  increase, with the exception that 7 is "subtract 1" rather than
-'  "add 7". For equipment, there is a chart that determines how much
-'  the flagged stats are increased by and how much the unflagged stats
-'  are decreased by:
-'   0 =  +3 /  -0
-'   1 =  +5 /  -0
-'   2 = +10 /  -0
-'   3 = +15 /  -0
-'   4 =  +5 /  -5
-'   5 = +10 / -10
-'   6 = +15 / -15
-'   7 =  +5 / -10
+'Levelups treat the stat amount somewhat differently from equipment.
+'For levelups, the amount is literally the amount the flagged stats
+'increase, with the exception that 7 is "subtract 1" rather than
+'"add 7". For equipment, there is a chart that determines how much
+'the flagged stats are increased by and how much the unflagged stats
+'are decreased by:
+'  0 =  +3 /  -0
+'  1 =  +5 /  -0
+'  2 = +10 /  -0
+'  3 = +15 /  -0
+'  4 =  +5 /  -5
+'  5 = +10 / -10
+'  6 = +15 / -15
+'  7 =  +5 / -10
 
-' Only the lowest three bits of the amount byte matter (amount mod 8)
+'Only the lowest three bits of the amount byte matter (amount mod 8)
 
 type StatBonus
  
@@ -35,10 +35,10 @@ const wis_stat = 3
 const wil_stat = 4
 
 'Sets the amount byte based on the given string.
-' The string must be in a certain specific format, with the bonus
-' amount followed by a slash "/" followed by the penalty amount, with
-' NO + or - symbols or spaces. The bonus amounts with no penalty can
-' be shortened to simply the bonus amount without the slash.
+'The string must be in a certain specific format, with the bonus
+'amount followed by a slash "/" followed by the penalty amount, with
+'NO + or - symbols or spaces. The bonus amounts with no penalty can
+'be shortened to simply the bonus amount without the slash.
 sub StatBonus.SetEquipmentBonus(bonus as String)
  
  select case bonus
@@ -64,7 +64,7 @@ end sub
 
 
 'Displays the stat bonus information on the console screen. This is mostly for
-' debugging purposes.
+'debugging purposes.
 sub StatBonus.Display()
 
  dim temp as String

@@ -21,14 +21,20 @@
 '  a weapon means the elemental/status properties of the attack, whereas for
 '  an armor, it indicates what elements and statuses it resists.
 
-type Item
+type Item extends Object
 
  'All items
  name as String
  price_code as UByte
  description as UByte
+ 
+end type
 
- 'Medicines only
+type Tool extends Item
+end type
+
+type Consumable extends Item
+
  delay as UByte
  target as UByte
  power as UByte
@@ -37,25 +43,37 @@ type Item
  impact as Boolean
  effect as UByte
  damage as Boolean
- element_code as UByte
+ element_code as ElementStatusTable ptr
  reflectable as Boolean
  mp_cost as UByte 'No idea why an item has an MP cost...
  visual as UByte
  
- 'Armors only
+end type
+
+
+type Equipment extends Item
+
+ magnetic as Boolean
+ elements as ElementStatusTable ptr
+ races(7) as Boolean
+ stat_bonus as StatBonus
+ equip_code as EquipTable ptr
+
+end type
+
+
+type Armor extends Equipment
+
  defense as UByte
  evade as UByte
  magic_defense as UByte
  magic_evade as UByte
 
- 'Weapons and Armors
- magnetic as Boolean
- elements as UByte
- races(7) as Boolean
- stat_bonus as StatBonus
- equip_code as UByte
+end type
 
- 'Weapons only
+
+type Weapon extends Equipment
+
  properties(9) as Boolean
  attack as UByte
  hit as UByte
@@ -70,6 +88,11 @@ type Item
 end type
 
 const total_items = &hFF
+const total_tools = 34
+const total_consumables = 45
+const total_equipment = 175
+const total_armors = 79
+const total_weapons = 95
 
 const no_weapon_item = 0
 const fire_claw_item = 1

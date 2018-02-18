@@ -1,23 +1,14 @@
 'This is what tracks a character's initial stats, levelups, and other
 ' miscellaneous information.
 
-
-type LevelUp
-
- stat_bonus as StatBonus
- hp_bonus as UByte
- mp_bonus as UByte
- tnl as UInteger
-
-end type
-
+type ActorFwd as Actor
 
 type Character
 
- character_id as UByte
+ initial_actor as ActorFwd ptr
  left_handed as Boolean
  right_handed as Boolean
- job_index as UByte
+ job_link as Job ptr
  sprite as UByte
  level as UByte
  max_hp as UInteger
