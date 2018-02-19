@@ -1,16 +1,4 @@
-'This is the information for a magic spell (White, Black, Call, Ninja, or Twin)
-'or a "special technique", usually some kind of action done by a monster.
-
-'Some of these have special effects important for monster battle scripts such
-'as making a monster invincible or causing other monsters to trigger a
-'reaction (e.g. the captain telling his soldiers to attack).
-
-'The "player" spells have six letter names and will appear correctly when put
-'into spell sets. If you put a spell/technique outside this range into a
-'spell set, it will not display correctly.
-
 type Spell
-
  name as String
  delay as UByte
  target as UByte
@@ -18,8 +6,8 @@ type Spell
  hit as UByte
  boss as Boolean
  effect as UByte
- damage as Boolean
- element_status as ElementStatusTable ptr
+ damage as UByte
+ attributes as AttributeTable ptr
  impact as Boolean
  mp_cost as UByte
  reflectable as Boolean
@@ -28,82 +16,361 @@ type Spell
  visual1 as UByte
  visual2 as UByte
  sound as UByte
-
 end type
 
 const total_spells = &hBF
 
-const hold_spell = 1
-const mute_spell = 2
-const charm_spell = 3
-const blink_spell = 4
-const armor_spell = 5
-const shell_spell = 6
-const slow_spell = 7
-const fast_spell = 8
-const bersk_spell = 9
-const wall_spell = 10
-const white_spell = 11
-const dispel_spell = 12
-const peep_spell = 13
-const cure1_spell = 14
-const cure2_spell = 15
-const cure3_spell = 16
-const cure4_spell = 17
-const heal_spell = 18
-const life1_spell = 19
-const life2_spell = 20
-const size_spell = 21
-const exit_spell = 22
-const sight_spell = 23
-const float_spell = 24
+enum Spells
+ no_spell = 0
+ hold
+ mute
+ charm
+ blink
+ armor
+ shell_spell
+ slow
+ fast
+ bersk
+ wall
+ white
+ dispel
+ peep
+ cure1
+ cure2
+ cure3
+ cure4
+ heal
+ life1
+ life2
+ size
+ exit_spell
+ sight
+ float
+ toad
+ piggy
+ warp
+ venom
+ fire1
+ fire2
+ fire3
+ ice1
+ ice2
+ ice3
+ lit1
+ lit2
+ lit3
+ virus
+ weak
+ quake
+ sleep_spell
+ stone
+ fatal
+ stop_spell
+ drain
+ psych
+ meteo
+ nuke
+ imp_spell
+ bomb
+ cockatrice
+ mage
+ chocb
+ shiva
+ indra
+ jinn
+ titan
+ mist
+ sylph
+ odin
+ levia
+ baham
+ comet
+ flare
+ flame
+ flood
+ blitz
+ smoke
+ pin
+ image
+ magic_missile
+ group_heal
+ basuna
+ pure
+ dancing
+ goblin_punch
+ exploder
+ stone_gaze
+ mind_blast
+ choco_kick
+ diamond_dust
+ judgment_bolt
+ hell_fire
+ gaia_rage
+ mist_breath
+ whispering_wind
+ zantetsuken
+ tsunami
+ asura_cure2
+ asura_cure3
+ asura_life
+ megaflare
+ w_meteo
+ unknown1
+ unknown2
+ gaze
+ bluster
+ slap
+ powder
+ glance
+ monster_charm
+ tongue
+ curse
+ ray
+ count
+ beak
+ petrify
+ blast
+ hug
+ breath
+ whisper
+ entangle
+ monster_weak
+ disrupt
+ coldmist
+ explode
+ dullsong
+ hold_gas
+ gas
+ poison
+ maser
+ vanish
+ demolish
+ black_hole
+ pinkpuff_dance
+ disrupt2
+ storm
+ magnet
+ reaction
+ hatch
+ remedy
+ absorb
+ monster_heal
+ big_bang
+ vampire
+ digest
+ pollen
+ crush
+ alert
+ call_spell
+ trigger_reaction
+ vanish2
+ search
+ fission
+ retreat
+ monster_heal2
+ beam
+ globe199
+ monster_fire
+ blaze
+ monster_blitz
+ thunder
+ d_breath
+ big_wave
+ blizzard
+ wave
+ tornado
+ laser
+ explode2
+ monster_quake
+ emission
+ heat_ray
+ glare
+ monster_zantetsuken
+ meganuke
+ needle
+ counter
+ increment_counter
+ decrement_counter
+ recover
+ remedy2
+ suicide_spawn
+ end_battle
+ audiovisual
+ adult_rydia
+end enum
 
-const toad_spell = 25
-const piggy_spell = 26
-const warp_spell = 27
-const venom_spell = 28
-const fire1_spell = 29
-const fire2_spell = 30
-const fire3_spell = 31
-const ice1_spell = 32
-const ice2_spell = 33
-const ice3_spell = 34
-const lit1_spell = 35
-const lit2_spell = 36
-const lit3_spell = 37
-const virus_spell = 38
-const weak_spell = 39
-const quake_spell = 40
-const sleep_spell = 41
-const stone_spell = 42
-const fatal_spell = 43
-const stop_spell = 44
-const drain_spell = 45
-const psych_spell = 46
-const meteo_spell = 47
-const nuke_spell = 48
+enum Targets
+ self = 0
+ single_ally
+ all_allies
+ split_ally
+ single_enemy
+ single_unit
+ all_enemies
+ split_enemy
+end enum
 
-const imp_spell = 49
-const bomb_spell = 50
-const cockatrice_spell = 51
-const mage_spell = 52
-const choco_spell = 53
-const shiva_spell = 54
-const indra_spell = 55
-const jinn_spell = 56
-const titan_spell = 57
-const mist_spell = 58
-const sylph_spell = 59
-const odin_spell = 60
-const levia_spell = 61
-const asura_spell = 62
-const baham_spell = 63
+enum SpellEffects
+ damage = 0
+ damage_sap
+ recover_hp
+ single_digit_hp
+ drain_hp
+ drain_mp
+ add_status
+ immobilize
+ add_blink
+ add_reflect
+ remove_ko
+ remove_status
+ transform
+ increase_defense
+ increase_mdef
+ modify_speed
+ dispel
+ add_stop
+ scan
+ flee
+ caster_hp_damage
+ recover_mp
+ full_heal
+ damage_poison
+ damage_status
+ damage_immobilize
+ sylph
+ odin
+ count1
+ count2
+ target_hp_damage
+ add_calcify
+ gaze
+ bluster
+ slap
+ blast
+ hug
+ explode
+ reaction
+ recover_tenth_hp
+ damage_status2
+ spawn
+ dispel2
+ attack_damage
+ recover_third_hp
+ trigger_reaction
+ increment_counter
+ decrement_counter
+ revive_monster
+ suicide_spawn
+ end_battle
+ search
+ hatch
+ adult_rydia
+end enum
 
-const comet_spell = 64
-const flare_spell = 65
-const flame_spell = 66
-const flood_spell = 67
-const blitz_spell = 68
-const smoke_spell = 69
-const pin_spell = 70
-const image_spell = 71
+enum SoundEffects
+ no_sound = 0
+ electric_crackle
+ mist_dragon
+ odin
+ meteor
+ explosion
+ thud
+ blade_pierce
+ single_punch
+ black_magic
+ grinding
+ rod
+ exit_spell
+ fire
+ thunder
+ petrify
+ defeat
+ ice2
+ magnetism
+ tornado
+ transform
+ mute
+ throw
+ white_magic
+ projectile_hit
+ shiva
+ cure
+ airship
+ stop_spell
+ blizzard
+ reflect
+ float
+ quake
+ flee
+ healing_pot
+ crush
+ crystal
+ hop
+ bahamut
+ raise
+ landing
+ flood
+ take_hit
+ cash_register
+ thud2
+ globe199
+ fire3
+ beach_waves
+ unlocking
+ heavy_door
+ propellors
+ big_bang
+ summon_magic
+ gaze
+ laser
+ get_item
+ falling
+ fixing
+ harp
+ death
+ alert
+ jumping
+ bio
+ begin_battle
+ powder
+ haste
+ deep_glow
+ scan
+ splash
+ door
+ clock
+ whirlpool
+ crunch
+ hummingway
+ black_hole
+ whirling_magic
+ whistle
+ comet
+ absorb
+ sylph
+ burning
+ slap
+ entice
+ earthquake
+ pow
+ smoke
+ magnetize
+ hatch
+ needles
+ pyro
+ paralyze
+ zantetsuken
+ heal
+ venom
+ drain
+ ice3
+ flare
+ warp
+ holy
+ dispel
+ blink
+ sleep_spell
+ berserk
+ charm
+ slow
+end enum
