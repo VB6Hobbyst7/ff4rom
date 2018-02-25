@@ -6,7 +6,7 @@ end type
 
 const total_attribute_tables = 123
 
-enum Attributes
+enum AttributeNames
  'Elements
  fire = 0
  ice

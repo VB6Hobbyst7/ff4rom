@@ -20,7 +20,7 @@ end type
 
 const total_spells = &hBF
 
-enum Spells
+enum SpellNames
  no_spell = 0
  hold
  mute

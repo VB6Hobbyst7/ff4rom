@@ -1,6 +1,7 @@
 #include once "../common/list.bas"
 #include once "../common/range.bas"
 #include once "../common/set.bas"
+#include once "../common/functions/pad.bas"
 #include once "gameobjects/attributetable.bas"
 #include once "gameobjects/spell.bas"
 #include once "gameobjects/spellset.bas"
@@ -36,14 +37,14 @@
 #include once "gameobjects/placementset.bas"
 #include once "gameobjects/map.bas"
 
-type FF4Rom
+type FF4Rom extends Object
  public:
   'Arrays of game object pointers
-  attribute_table(total_attribute_tables) as AttributeTable ptr
+  attribute_tables(total_attribute_tables) as AttributeTable ptr
   spells(total_spells) as Spell ptr
   spell_sets(total_spell_sets) as SpellSet ptr
   jobs(total_jobs) as Job ptr
-  equip_table(total_equip_tables) as EquipTable ptr
+  equip_tables(total_equip_tables) as EquipTable ptr
   characters(total_characters) as Character ptr
   bank1_messages(total_bank1_messages) as Message ptr
   bank3_messages(total_bank3_messages) as Message ptr
@@ -94,14 +95,35 @@ type FF4Rom
   key_item1 as Item ptr
   key_item2 as Item ptr
   white_range as Range
+  black_range as Range
   summon_range as Range
+  menu_spell_range as Range
   player_spell_range as Range
+  'Constructors
+  declare constructor()
+  declare constructor(filename as String)
+  'Text conversion
+  declare function ConvertText(asciitext as String) as String
+  declare function DisplayText(ff4text as String) as String
  private:
-  'Raw ROM data
+  'Raw ROM data and related flags
   romdata as String
+  unheadered as Boolean
+  if_patch as Boolean
   'Direct interface with ROM
   declare function ByteAt(address as Long) as UByte
+  declare sub ReadFromFile(filename as String)
   declare sub WriteByte(address as Long, newbyte as UByte)
+  declare sub WriteToFile()
+  'Manage arrays of game objects
+  declare sub InitializeObjects()
+  'Find the index of an object pointer in the corresponding array
+  declare function AttributeTableIndex(p as AttributeTable ptr) as Integer
+  declare function SpellIndex(p as Spell ptr) as Integer
+  declare function SpellSetIndex(p as SpellSet ptr) as Integer
+  declare function JobIndex(p as Job ptr) as Integer
+  declare function CharacterIndex(p as Character ptr) as Integer
+  declare function ActorIndex(p as Actor ptr) as Integer
   'Read and write game objects to/from rom data
   declare sub  ReadActors()
   declare sub WriteActors()
@@ -161,8 +183,22 @@ type FF4Rom
   declare sub WriteTileSets()
 end type
 
+constructor FF4Rom()
+end constructor
+
+constructor FF4Rom(filename as String)
+ InitializeObjects()
+ ReadFromFile(filename)
+end constructor
+
+#include once "misc/converttext.bas"
+#include once "misc/displaytext.bas"
 #include once "rominterface/byteat.bas"
+#include once "rominterface/readfromfile.bas"
 #include once "rominterface/writebyte.bas"
+#include once "rominterface/writetofile.bas"
+#include once "rominterface/initializeobjects.bas"
+#include once "rominterface/indexfinders.bas"
 #include once "readwrite/actors.bas"
 #include once "readwrite/attributetables.bas"
 #include once "readwrite/characters.bas"
