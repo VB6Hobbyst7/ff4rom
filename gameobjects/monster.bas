@@ -8,7 +8,7 @@ type Monster
  physical_attack as StatTable ptr
  physical_defense as StatTable ptr
  magic_defense as StatTable ptr
- speed_index as UByte
+ speed as SpeedTable ptr
  drop_rate as UByte
  drop_table as DropTable ptr
  main_ai as AI ptr

@@ -1,0 +1,34 @@
+Table of stances: ??(09)/FD85
+Each stance is four bytes long.
+Each byte is the index of a pose:
+00 normal
+01 parry
+02 spread legs
+03 crouch
+04 raise right arm
+05 extend left arm
+06 raise left arm
+07 impact
+08 cheering
+09 lay down
+0A chanting 1
+0B chanting 2
+24 special/wide
+
+The stances themselves correspond to:
+01 resting
+02 parry
+03 walking
+04 crouching
+05 right attack
+06 left attack
+07 impact
+08 cheering
+09 ko
+0A chanting
+0B charging
+0C casting
+0D raise left
+0E special
+0F special also
+

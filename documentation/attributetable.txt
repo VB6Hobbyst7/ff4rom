@@ -1,0 +1,11 @@
+Attribute Table
+---------------
+An attribute table is a set of flags, each of which correspond to one of the game's attributes.
+
+An attribute is a flag corresponding to one of the game's elements and/or status effects.
+FF4 treats elements, statuses, and even certain other properties as the same kind of thing.
+Thus, you will see Fire in the same list as, say, Mute, or even things like "absorb".
+
+There is a list of attribute tables that are commonly used for spells and items. These reference an index in the list rather than fully specifying a set of attributes for each item.
+However, other objects such as monsters do not use this list and instead fully specify their own full set of attribute settings independently.
+

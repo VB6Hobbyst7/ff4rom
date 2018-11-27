@@ -1,5 +1,5 @@
 type ConditionSet
- conditions as List
+ conditions as ConditionList
 end type
 
-const total_condition_sets = 100
+const total_condition_sets = &h62

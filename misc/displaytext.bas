@@ -132,6 +132,7 @@ function FF4Rom.DisplayText(ff4text as String) as String
    result += "[Advance]"
   case Symbols.actor_name
    result += "[" + Pad(DisplayText(names.ItemAt(asc(mid(ff4text, i + 1, 1)))), 6) + "]"
+   i += 1
   case Symbols.song
    result += "[Song " + str(asc(mid(ff4text, i + 1, 1))) + "]"
    i += 1

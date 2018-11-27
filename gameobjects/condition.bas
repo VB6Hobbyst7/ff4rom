@@ -6,3 +6,4 @@ type Condition
 end type
 
 const total_conditions = &h61
+const total_condition_hps = 24

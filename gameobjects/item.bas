@@ -38,7 +38,7 @@ type Armor extends Equipment
 end type
 
 type Weapon extends Equipment
- properties(5) as Boolean
+ properties(7) as Boolean
  ranged as Boolean
  throwable as Boolean
  attack as UByte

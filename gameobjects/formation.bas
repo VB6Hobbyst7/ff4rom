@@ -7,7 +7,7 @@ type Formation
  summons as Boolean
  transforms as Boolean
  number_appearing(2) as UByte
- arrangement as Arrangement ptr
+ arrangement as UByte
  no_flee as Boolean
  no_gameover as Boolean
  battle_music as UByte
