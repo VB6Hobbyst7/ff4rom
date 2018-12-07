@@ -1,0 +1,612 @@
+======================================================================================
+NPCs                                    Phoenix Hacks
+12/17/09
+Grimoire LD - 2012 (Improved readability and added data meanings to NPC's)
+======================================================================================
+
+Each NPC has a sprite, a visibility setting, and speech data associated with it.
+The locations of each of these pieces of data are as follows:
+
+NPC Sprites (1 byte per NPC) are from 97200-973FF
+NPC Initial Visibility (1 bit per NPC) is from 97400-9745F
+NPC Speech Pointers (2 bytes, reverse and add 0x99E00) are from 99A00-99DFF
+NPC Speech Data (variable) is from 99E00-9A4FF
+
+======================================================================================
+Sprites:
+
+00  Dark Knight Cecil   24  Golbez              48  Fat Chocobo (bottom left)
+01  Kain                25  King                49  Fat Chocobo (bottom right)
+02  Rydia (young)       26  Elder               4A  Namingway (top left)
+03  Tellah              27  Cleric              4B  Namingway (top right)
+04  Edward              28  Dwarf               4C  Namingway (bottom left)
+05  Rosa                29  Calbrena            4D  Namingway (bottom right)
+06  Yang                2A  Giott               4E  Valvalis
+07  Palom               2B  Luge                4F  Dancer's leg in water
+08  Porom               2C  Luca                50  Queen
+09  Paladin Cecil       2D  Golbez's hand       51  Zemus
+0A  Cid                 2E  Cecil & Rosa kissing52  Octomamm's tentacles
+0B  Rydia (grown-up)    2F  crystal             53  Magus Sister
+0C  Edge                30  heart bubble        54  Dark Elf
+0D  FuSoYa              31  fire                55  Bahamut
+0E  Midget              32  sleeping bubble     56  Kainazzo
+0F  Frog                33  Yang's wife (waving)57  dress?
+10  Pig                 34  Yang's wife (sad)   58  ice wall
+11  Man                 35  Edward(playing harp)59  White Spear
+12  Woman               36  water splash        5A  Woman lying down
+13  Dancer              37  Masamune            5B  death ball
+14  Old Man             38  Dancer in Dress     5C  mist?
+15  Old Woman           39  Legendary Sword     5D  double door
+16  Boy                 3A  Rosa (tied-up/sick) 5E  Fallen Soldier
+17  Girl                3B  Rubicant            5F  Antlion's claw (left)
+18  Soldier             3C  sparkle             60  Antlion's claw (right)
+19  Bearded Man         3D  Elder praying       61  Anna
+1A  Scholar             3E  Black Mage praying  62  Golbez (fallen)
+1B  Black Mage          3F  Zemus (fallen)      63  Crystal Sword
+1C  White Mage          40  White Mage praying  64  Anna (fallen)
+1D  Engineer            41  Sylph               65  transparent
+1E  Chocobo             42  Zeromus' flame      66  ice magic
+1F  Karate Fighter      43  Kain (without helm) 67  flame top
+20  Captain             44  lightning           68  flame bottom
+21  Bomb                45  teleportation       69  Palom (stone)
+22  Milon / Goblin      46 Fat Chocobo(top left)6A  Porom (stone)
+23  Namingway           47 Fat Chocobo (top right)
+======================================================================================
+
+
+======================================================================================
+Speech Data:
+
+FFxx = Load event xx
+FEaa = If event flag aa is set...
+aa = If event flag aa is clear...
+
+Examples:
+aaFFxxFFyy = If event flag aa is clear, then load event xx, else load event yy
+FEaabbFFxxFEccFFyyFFzz = If event flag aa is set and bb is clear, then load event xx,
+else if event flag cc is set, load event yy, else load event zz
+
+The speech data utilizes events numbers 01-03, which are event code EE message calls:
+"Show bank 2 message [hex # xx after event call] from pointer [map#]"
+For example, the Old Man wandering in the town of Baron has the following data (at 99EDE-99EEA):
+FE 06 FF 03 FE 0B FF 02 FF 01 03 04 05
+This translates to:
+Data        Meaning
+--------    ------------------------
+FE 06       If event flag 06 is set,
+FF 03       load event 03 (i.e. message call EE 02 = message 05 of bank 2)
+FE 0B       (else) if event flag 0B is set,
+FF 02       load event 02 (i.e. message call EE 01 = message 04 of bank 2)
+FF 01       (else) load event 01 (i.e. message call EE 00 = message 03 of bank 2)
+03 04 05    [Hex data following event call]
+======================================================================================
+
+Key IEF(X): If X Event Flag is Set
+Note!: I will not be deciphering where each and everyone Bank02 Message goes and to what NPC, or else I'd be here for a long time.
+This Document will only include events that are not normal chatting with NPCs related.
+
+
+-------------------------------------------
+Overworld NPCs (Sp = Sprite, A = Active)
+-------------------------------------------
+#   Description                     Sp  A       Offset      Pntr    Speech Data
+--  -----------                     --  -       ------      ----    -----------
+00  [separator]                     00  1       99E00       0000    FF 00 (in the name)
+01  door opening mechanism          65  1       99E02       0200    FF 0B (in the name)
+02  book/ad? (Magnes Cave crystal)  65  0       99E04       0400    FF 29 (Links to a Bank 2 message, I don't know what this is)
+03  Baron Soldier                   18  1       99E06       0600    FE 0B FF 2D FE 04 FF 2C FF 2B
+04  Baron Soldier                   18  1       99E10       1000    FE 0B FF 02 FE 04 FF 01 FF 2E 05 06
+05  Kainazzo                        56  0       99E1C       1C00    FF
+06  Castle Baron (Engineer)         1D  1       99E1D       1D00    FE 36 FF 03 FE 0A 36 FF 1D FE 06 FF 02 FF 01 0D 0E 0F (IEF(36) - Message 2, IEF(0A/36) - Attaching Hook to Enterprise, IEF(06) - Message2(x3)
+07  Castle Baron (Engineer)         1D  1       99E2F       2F00    FE 36 FF 03 FE 0A 36 FF 1D FE 06 FF 02 FF 01 10 11 12 (IEF(36) - Message 2, IEF(0A/36) - Attaching Hook to Enterprise, IEF(06) - Message2(x3)
+08  Baigan                          20  1       99E41       4100    FF
+09  Castle Baron (White Mage)       1C  1       99E42       4200    06 FF 01 FF 02 04 05
+0A  Castle Baron (White Mage)       1C  1       99E49       4900    06 FF 01 FF 02 02 03
+0B  Castle Baron (White Mage)       1C  1       99E50       5000    06 FF 01 FF 02 00 01
+0C  Castle Baron (Black Mage)       1B  1       99E57       5700    06 FF 29 FF 2A
+0D  Castle Baron (Black Mage)       1B  1       99E5C       5C00    06 FF 27 FF 28
+0E  Castle Baron (Black Mage)       1B  1       99E61       6100    06 FF 2B FF 8F (Message2, IEF(6) - Being Turned Mini)
+0F  Castle Baron (Soldier)          18  0       99E66       6600    FE 06 FF 28 FF 27
+10  Porom                           07  1       99E6C       6C00    FF
+11  Palom                           08  1       99E6C       6C00    FF
+12  Kain (normal NPC)               01  1       99E6D       6D00    01 FF 12 FF 01 0C (Speaking to Kain in Baron Castle, IEF(1) - Message2)
+13  Castle Baron (Soldier)          18  1       99E73       7300    FE 06 FF 2A FF 29
+14  Castle Baron (Soldier)          18  1       99E79       7900    FE 06 FF 2C FF 2B
+15  Castle Baron (Soldier)          18  1       99E7F       7F00    FE 06 FF 2E FF 2D
+16  Baigan (normal NPC)             20  0       99E85       8500    FE 06 FF 02 FF 01 0A 0B
+17  Castle Baron (King)             25  0       99E8D       8D00    FF 1B (Cagnazzo Events)
+18  Elder                           26  1       99E8F       8F00    FE 0B FF 64 FE 1C 0B FF 01 FF 5E 16 (IEF(B) - Talking to Elder after returning from Mt. Ordeals, IEF(1C) - Message2, IEF(5E) - First Time Talking with Elder)
+19  HP/Status Recovery              65  1       99E9B       9B00    FF 7D (Self explanatory)
+1A  Yang                            06  1       99E9D       9D00    FF 21 (Cecil/Yang Fight)
+1B  Rosa                            05  1       99E9F       9F00    FF
+1C  Castle Baron (Soldier)          18  0       99EA0       A000    FF 01 0A
+1D  Toroia Armor Shop (Woman)       12  0       99EA3       A300    FF 6D (Shop0D)
+1E  Castle Baron/Mysidia(Black Mage)1B  1       99EA5       A500    FF 29
+1F  Castle Baron/Mysidia(White Mage)1C  1       99EA7       A700    FF 2A
+20  Castle Baron (Black Mage)       1B  1       99EA9       A900    FF 2B
+21  Castle Baron (Soldier)          18  0       99EAB       AB00    FE 06 FF 02 FF 01 08 09
+22  Toroia Weapon Shop (Dancer)     38  1       99EB3       B300    FF 6E (Shop04)
+23  Item Shop (Girl)                17  1       99EB5       B500    FF 6F (Shop18)
+24  sleeping bubble                 32  1       99EB7       B700    FF 01 08 
+25  Castle Baron (Cecil's maid)     12  1       99EBA       BA00    FF 13 (Cecil's Maid moving out of the way and leaving)
+26  Tower of Bab-il(Rubicant)       3B  1       99EBC       BC00    FF 0E (Rubicant healing and starting battle)
+27  Dark Knight Cecil               00  1       99EBE       BE00    FF
+28  Legendary Sword                 39  1       99EBE       BE00    FF
+29  Kain                            01  1       99EBE       BE00    FF
+2A  MP Recovery                     65  1       99EBF       BF00    FF 7E (Self explanatory)
+2B  Captain                         20  0       99EC1       C100    FF 01 0C 
+2C  sparkle                         3C  0       99EC4       C400    FF
+2D  Baron (locked door: Waterway)   65  1       99EC5       C500    FE 05 FF 1F FF 0C (Event 0C, "Locked.", IEF(5) - Using Key to unlock Baron Waterway)
+2E  Baron(locked door:EquipmentShop)65  0       99ECB       CB00    FE 05 FF 20 FF 0C (Event 0C, "Locked." IEF(5) - Use Baron Key to Unlock Baron Equipment Shop)
+2F  Baron (Man)                     11  0       99ED1       D100    FE 06 FF 03 FE 0B FF 02 FF 01 00 01 02
+30  Baron (Old Man)                 14  1       99EDE       DE00    FE 06 FF 03 FE 0B FF 02 FF 01 03 04 05
+31  Namingway                       23  1       99EEB       EB00    FF 0D (Self explanatory)
+32  Baron / Toroia (Woman)          12  1       99EED       ED00    FE 06 FF 03 FE 0B FF 02 FF 01 06 07 08
+33  Baron (Boy)                     16  1       99EFA       FA00    FE 06 FF 03 FE 0B FF 02 FF 01 09 0A 0B
+34  Baron (Old Woman)               15  1       99F07       0701    FF 01 0C
+35  Castle Baron / Tower of Zot(Cid)0A  1       99F0A       0A01    FF
+36  Baron (Dancer)                  13  1       99F0B       0B01    FE 06 FF D6 06 FE 0B FF 02 FF D1 0E 0F 10 (Baron Dance 1, IEF(B) - Will not Dance, Message2, IEF(6) - Baron Dance 2
+37  Baron Rosa's House (Rosa's Mom) 15  1       99F19       1901    FE 0B FE 0C FF 03 FE 0B 0C FF 02 FF 01 00 01 02
+38  Baron/Kaipo Innkeeper(Beard Man)19  1       99F29       2901    FF 22
+39  Baron Inn (Girl)                17  1       99F2B       2B01    FE 06 FF 03 FE 0B FF 02 FF 01 00 01 09
+3A  Baron Inn (Man)                 11  1       99F38       3801    FE 06 FF 03 FE 0B FF 02 FF 01 03 04 05
+3B  Baron Inn (Woman)               12  1       99F45       4501    FE 06 FF 03 FE 0B FF 02 FF 01 06 07 08
+3C  Baron Cid's Home(Cid's Daughter)12  1       99F52       5201    FE 0A FF 2E FE 06 FF 2D FE 0B FF 2C FF 28
+3D  books                           65  1       99F60       6001    FF 29
+3E  books                           65  1       99F62       6201    FF 2A
+3F  books                           65  1       99F64       6401    FF 2B
+40  Cid                             0A  0       99F66       6601    FF 27
+41  fire (in fireplace)             31  0       99F68       6801    FF 0F (Ouch!)
+42  Baron Weapon Shop (Man)         11  0       99F6A       6A01    FF 24 (Shop03)
+43  Baron Armor Shop (Bearded Man)  19  1       99F6C       6C01    FF 25 (Shop0C)
+44  Baron/Kaipo/Toroia ItemShop(Man)19  1       99F6E       6E01    FF 26 (Shop13)
+45  Paladin Cecil                   09  1       99F70       7001    FF
+46  Mist/Farm/Agart/Eblana(Man)     11  1       99F71       7101    FF 27
+47  Mist / Toroia Cafe (Man)        11  0       99F73       7301    FF 28
+48  Mist (Man)                      11  1       99F75       7501    FF 29
+49  Overworld Villages (OldMan)     14  1       99F77       7701    FF 2A
+4A  Rydia (young)                   02  1       99F79       7901    FF
+4B  Woman lying down                5A  1       99F7A       7A01    FF 2D
+4C  Mist Innkeeper (Bearded Man)    19  1       99F7C       7C01    FF 22
+4D  Mist Weapon Shop (Bearded Man)  19  0       99F7E       7E01    FF 33
+4E  Mist Armor Shop (Old Man)       14  0       99F80       8001    FF 34
+4F  Kaipo (Man)                     11  0       99F82       8201    FF 27
+50  Kaipo (Bearded Man)             19  1       99F84       8401    FF 28
+51  Kaipo (Woman)                   12  1       99F86       8601    FF 29
+52  Kaipo (Dancer)                  13  1       99F88       8801    FF D2 03 (Self Explanatory)
+53  Kaipo (Boy)                     16  1       99F8B       8B01    FF 2B 
+54  Kaipo / Toroia (Man)            11  1       99F8D       8D01    FF 2C
+55  Kaipo (Woman)                   12  1       99F8F       8F01    FF 2D
+56  Kaipo Weapon Shop (Old Man)     14  1       99F91       9101    FF 35 (Shop00)
+57  Kaipo Armor Shop (Bearded Man)  19  1       99F93       9301    FF 36 (Shop0A)
+58  Fabul Weapon Shop (Old Woman)   15  1       99F95       9501    FF 7B (Shop01)
+59  Damcyan/Eblan/Zot (locked door) 65  1       99F97       9701    FF 0C (No idea where this goes, since only Zot has a locked door.)
+5A  Kaipo Inn 2F (Woman)            12  1       99F99       9901    FF 28 
+5B  Kaipo Inn 2F (Scholar)          1A  1       99F9B       9B01    FF 27
+5C  Kaipo Inn 2F (Bearded Man)      19  1       99F9D       9D01    FF 2A
+5D  advertisement                   65  1       99F9F       9F01    FF 29
+5E  KaipoInn/Mysidia/Airship(Army)  18  1       99FA1       A101    FF
+5F  Kaipo Sickhouse (Old Man)       14  1       99FA2       A201    11 FF 29 FF 2C
+60  Kaipo Sickhouse (Old Woman)     15  0       99FA7       A701    11 FF 27 FF 28
+61  Rosa (tied-up/sick)             3A  0       99FAC       AC01    FE 12 FF 3A FF 2B (Message2, IEF(12) - Curing Rosa)
+62  Edward                          04  0       99FB2       B201    FF
+63  Edward (playing harp)           35  0       99FB2       B201    FF
+64  Anna                            61  0       99FB2       B201    FF
+65  Milon / Goblin                  22  0   `   99FB2       B201    FF
+66  Tellah                          03  1       99FB3       B301    FE 0F FE 02 FF 3B FF 27 (Message2, IEF(F) AND 1EF(2) - Tellah Joining 
+67  water splash                    36  1       99FBB       BB01    FF
+68  Octomamm                        52  0       99FBB       BB01    FF
+69  Fallen Soldier                  5E  1       99FBC       BC01    FF 3F (Just "..." What an odd use of an actual event space.
+6A  Fallen Soldier (speaks, bank2?) 5E  1       99FBE       BE01    FF 27 
+6B  Anna (fallen)                   64  1       99FC0       C001    FF
+6C  Fallen Soldier (speaks, bank1?) 5E  1       99FC1       C101    FF 41 (As above, instead of using Bank2 messages they used an event digit)
+6D  Fallen Soldier (speaks,vanishes)5E  1       99FC3       C301    FF 44 (Soldier that dies when you speak to him guarding the treasure room)
+6E  Toroia Inn (Woman)              12  0       99FC5       C501    FF 70 (Event 70, stay at 400 GP inn)
+6F  Porom (stone)                   69  0       99FC7       C701    FF 16 (Palom/Porom as Stone.)
+70  Palom (stone)                   6A  0       99FC9       C901    FF 16 (As above)
+71  fire magic                      31  0       99FCB       CB01    FF 00 (No event?)
+72  ice wall                        58  0       99FCD       CD01    FF 27 (Message2 "Blocked by ice" or some such.)
+73  Yang                            06  1       99FCF       CF01    FF
+74  Silvera (Midget)                0E  1       99FD0       D001    FF 27
+75  Bomb                            21  1       99FD2       D201    FF
+76  Karate Fighter (says nothing)   1F  0       99FD2       D201    FF
+77  Yang's wife (waving)            33  0       99FD2       D201    FF
+78  Silvera (Midget)                0E  0       99FD3       D301    FF 28
+79  Silvera (Frog)                  0F  1       99FD5       D501    FF 29
+7A  Fabul (Karate Fighter)          1F  1       99FD7       D701    FE 18 FF 2A FE 2C 18 FF 29 18 FE 1B FF 28 FF 27 
+7B  Antlion's claw (left)           5F  0       99FE7       E701    FF
+7C  Captain (not used?)             20  0       99FE8       E801    FF 01 02
+7D  Castle Baron (first door opener)65  1       99FEB       EB01    FF 0B (Open a Dooor)
+7E  Chocobo (not used?)             1E  1       99FED       ED01    FF 2B (Message2? Looks like it may be unused, then. Yes.)
+7F  Golbez (says nothing)           24  1       99FEF       EF01    FF
+80  Mysidia / Fabul (crystal)       2F  0       99FEF       EF01    FF
+81  lightning                       44  0       99FEF       EF01    FF
+82  Black Chocobo Farm Chocobo      1E  0       99FF0       F001    FF 2A (Message2)
+83  Silvera (Pig, part of trio)     10  0       99FF2       F201    FF D7 (Silvera 3's Dance)
+84  Queen                           50  1       99FF4       F401    FF
+85  Dancer (says nothing)           13  1       99FF4       F401    FF
+86  Dancer space                    65  0       99FF4       F401    FF
+87  Fat Chocobo (top left)          46  1       99FF5       F501    FF 4D (Fat Chocobo Screen)
+88  Fat Chocobo (top right)         47  1       99FF7       F701    FF 4D ("    ")
+89  Fat Chocobo (bottom left)       48  0       99FF9       F901    FF 4D ("    ")
+8A  Fat Chocobo (bottom right)      49  1       99FFB       FB01    FF 4D ("    ")
+8B  well sign                       65  1       99FFD       FD01    FE 2B 30 FF 84 FF 27 (Message 2, IEF(2B) - Using Magma Key)
+8C  Yellow Chocobo                  1E  1       9A004       0402    FF 4F (Self explanatory)
+8D  White Chocobo                   1E  0       9A006       0602    FF 50 (Self explanatory)
+8E  Dancer's leg in water           4F  0       9A008       0802    FF
+8F  Octomamm's tentacles            52  0       9A008       0802    FF
+90  Rubicant's flames               31  1       9A008       0802    FF
+91  Antlion's claw (right)          60  1       9A008       0802    FF
+92  Old Man (not used?)             14  1       9A009       0902    FF 28 (Message2)
+93  Training Room Soldier (outside) 18  1       9A00B       0B02    FF 01 11 
+94  Cave Eblana (Soldier)           18  1       9A00E       0E02    FF 29
+95  Cave Eblana (Soldier)           18  1       9A010       1002    FF 2A
+96  Soldier (not used?)             18  0       9A012       1202    FF 2C
+97  Cave Eblana (Soldier)           18  0       9A014       1402    FF 2B
+98  Fabul (Karate Fighter)          1F  1       9A016       1602    FF 28
+99  Fabul (Karate Fighter)          1F  1       9A018       1802    FE 2C FF 2A FE 1B FF 28 FF 27
+9A  Fabul (Karate Fighter)          1F  1       9A022       2202    FF 29
+9B  Fabul (Man)                     11  1       9A024       2402    FE 1B FF 28 FF 27
+9C  Fabul (Woman)                   12  1       9A02A       2A02    FE 1B FF 2A FF 29
+9D  Fabul (Boy)                     16  1       9A030       3002    FE 1B FF 2C FF 2B
+9E  Fabul (Dancer)                  13  1       9A036       3602    FF D3
+9F  Fabul (Old Woman)               15  0       9A038       3802    FE 1B FF 2B FF 2A
+A0  Fabul (King)                    25  1       9A03E       3E02    FE 18 FF 29 18 FE 2C FF 2C FF 27
+A1  Fabul (White Mage)              1C  1       9A049       4902    FE 1B FF 28 FF 27
+A2  Fabul (Karate Fighter)          1F  0       9A04F       4F02    FF 29
+A3  Fabul (Karate Fighter)          1F  1       9A051       5102    FF 2A
+A4  Fabul (Sheila)                  12  0       9A053       5302    FE 48 FF 01 FE 4F FF 01 FE 4E 4F FF F9 FE 4D FF 2B FE 1A 4D FF 09 1A FE 19 FF 2A FE 0C 19 FF 29 FE 1B FF 28 FF 27 0A (Talk about a complicated NPC! I'm afraid there's too much here to really dissect without a headache)
+A5  Mist (Bomb, not used)           21  0       9A07A       7A02    FF
+A6  Silvera (Pig)                   10  1       9A07B       7B02    FF 2A
+A7  Silvera (Frog)                  0F  0       9A07D       7D02    FF 2B
+A8  Dark Elf                        54  1       9A07F       7F02    FE 24 FE 2E FF 81 FE 24 2E FF 73 FF 80 (Event 80, Impossible to win battle, IEF(24) - Event 73, Event Battle, IEF(2E) - Actual Dark Elf/Dragon battle)
+A9  Baron / Toroia / Agart (Woman)  12  1       9A08C       8C02    FF 28
+AA  Silvera Weapon Shop (Frog)      0F  1       9A08E       8E02    FF 23
+AB  Silvera Armor Shop (Pig)        10  1       9A090       9002    FF 37 (Shop0E)
+AC  Silvera Item Shop (Midget)      0E  1       9A092       9202    FF 38 (Shop15)
+AD  Silvera Inn (Pig)               10  1       9A094       9402    FF 32 (Self-explanatory)
+AE  Agart (Boy)                     16  1       9A096       9602    FF 29 
+AF  Magnes Cave (crystal)           2F  1       9A098       9802    FF 74 (Obtaining Earth Crystal)
+B0  Kaipo/Toroia/Agart (Old Woman)  15  1       9A09A       9A02    FF 2B
+B1  Toroia / Agart (Girl)           17  1       9A09C       9C02    FF 2C
+B2  Toroia / Agart (Bearded Man)    19  1       9A09E       9E02    FF 2E
+B3  Agart (Dancer)                  13  1       9A0A0       A002    FF D4 (Agart Dance)
+B4  Agart Weapon Shop (Man)         11  1       9A0A2       A202    FF 53 (Shop 1A)
+B5  Agart Armor Shop (Old Man)      14  1       9A0A4       A402    FF 54 (Shop 1B)
+B6  Fabul Inn (Old Man)             14  1       9A0A6       A602    FF 49 (Self-explanatory)
+B7  Mysidia (Black Mage, casts toad)1B  1       9A0A8       A802    FE 0B FF 2A FE 1C 0B FF 28 FF 5D (Turned into a Toad, IEF(B) - Message2, IEF(1C) - Message2)
+B8  Mysidia (Black Mage)            1B  1       9A0B3       B302    FE 0B FF 03 FE 1C 0B FF 02 FF 01 07 08 09
+B9  Mysidia (Black Mage)            1B  0       9A0C1       C102    FE 0B FF 03 FE 1C 0B FF 02 FF 01 0D 0E 0F 
+BA  Mysidia (White Mage)            1C  1       9A0CF       CF02    FE 0B FF 2D FE 1C 0B FF 2C FF 2B
+BB  Mysidia (White Mage)            1C  1       9A0DA       DA02    FE 0B FF 03 FE 1C 0B FF 02 FF 01 0A 0B 0C
+BC  Mysidia (White Mage)            1C  1       9A0E8       E802    FE 0B FF 02 FE 1C 0B FF 01 FF 57 11 12 (Jumps away, IEF(B) - Message2, IEF(1C) - Message2)
+BD  Mysidia (Dancer)                13  1       9A0F5       F502    FF D5 (Mysidia Dance)
+BE  Fabul / Mysidia (Old Woman)     15  1       9A0F7       F702    FF
+BF  Mysidia Innkeeper (White Mage)  1C  1       9A0F8       F802    FF 56 (Mysidia Inn) 
+C0  Mysidia Weapon Shop (Black Mage)1B  0       9A0FA       FA02    FF 5A (Shop02)
+C1  Mysidia Armor Shop (White Mage) 1C  1       9A0FC       FC02    FF 5B (Shop0B)
+C2  Mysidia Item Shop (Black Mage)  1B  1       9A0FE       FE02    FF 5C (Shop14)
+C3  Mysidia (Black Mage, poisons)   1B  0       9A100       0003    FE 0B FF 02 FE 1C 0B FF 01 FF 55 0B 0C (Poisons Cecil, IEF(B) - Message2, IEF(1C) Message2)
+C4  teleportation                   45  1       9A10D       0D03    FF
+C5  flame top (Mt. Ordeals)         67  1       9A10D       0D03    FF
+C6  flame bottom (Mt. Ordeals)      68  1       9A10E       0E03    FF 27 (Message2)
+C7  ice magic                       66  1       9A110       1003    FF
+C8  Mist (Rydia's mother)           5A  1       9A110       1003    FF
+C9  Tower of Bab-il (Old Man)       14  0       9A110       1003    FF
+CA  Valvalis                        4E  1       9A110       1003    FF
+CB  Cecil and Rosa kissing          2E  1       9A110       1003    FF
+CC  death ball                      5B  0       9A111       1103    FF 2D (Message2? What could the "Death Ball" have to say?)
+CD  Black Chocobo                   1E  0       9A113       1303    FF 75 (Self-explanatory)
+CE  Magus Sister                    53  0       9A115       1503    FF
+CF  Fat Chocobo spot                65  1       9A116       1603    FF 4E (Self-explanatory)
+D0  Castle Toroia (Cleric)          27  1       9A118       1803    FE 0C FF 2B FE 31 0C FF 2A FF 28
+D1  Castle Toroia (Cleric)          27  1       9A123       2303    FE 0C FF 2E FE 31 0C FF 2D FF 2C
+D2  Castle Toroia (Cleric)          27  1       9A12E       2E03    FE 0C FF 03 FE 31 0C FF 02 FF 01 08 09 0A
+D3  Castle Toroia (Cleric)          27  1       9A13C       3C03    FE 0C FF 03 FE 31 0C FF 02 FF 01 0B 0C 0D
+D4  Castle Toroia (Cleric)          27  1       9A14A       4A03    FE 0C FF 03 FE 31 0C FF 02 FF 01 0E 0F 10
+D5  Castle Toroia (Cleric)          27  1       9A158       5803    FE 0C FF 03 FE 31 0C FF 02 FF 01 11 12 13
+D6  Castle Toroia (Cleric)          27  1       9A166       6603    FE 0C FF 03 FE 31 0C FF 02 FF 01 14 15 16
+D7  Castle Toroia (Cleric)          27  1       9A174       7403    FE 0C FF 03 FE 31 0C FF 02 FF 01 17 18 19
+D8  Toroia (Dancer)                 13  1       9A182       8203    FF 27 
+D9  Toroia (Dancer)                 13  1       9A184       8403    FF 29
+DA  Edward (Toroia)                 04  1       9A186       8603    FF
+DB  Mysidia (Black Mage)            1B  1       9A187       8703    FF 01 14
+DC  Elder praying                   3D  1       9A18A       8A03    FE 43 FF DA 06 2F FF 88 FE 06 2F FF 89 FE 06 FE 2F FF 8A (This is a really odd one. All of these events DA, 88, 89, 8A are all about characters toggling visibility. But now that I think on it this does make a bit of sense. When you speak to the Praying Elder he does turn to you so it may be canceling his praying sprite and loading his normal sprite to speak to Cecil)
+DD  Castle Baron (Captain)          20  1       9A19D       9D03    FE 06 FF 02 FF 01 0E 0F
+DE  Mysidia (White Mage)            1C  1       9A1A5       A503    FF 01 15
+DF  Silvera (Frog)                  0F  1       9A1A8       A803    FF 2D
+E0  Tower of Wishes(Elder)          26  0       9A1AA       AA03    FE 43 FF 2E 06 2F FF 27 FE 06 2F FF 28 FE 06 FE 2F FF 2B (Repeating what he would say above when he turns to face Cecil)
+E1  Mysidia (Black Mage praying)    3E  1       9A1BD       BD03    FE 43 FF 2C FF 29
+E2  Mysidia (White Mage praying)    40  1       9A1C3       C303    FE 43 FF 2D FF 2A
+E3  Silvera (Frog)                  0F  1       9A1C9       C903    FF 27
+E4  Cave Eblana Weapon Shop(Old Man)14  1       9A1CB       CB03    FF 98 (Shop07)
+E5  Cave Eblana Armor Shop (Man)    11  1       9A1CD       CD03    FF 99 (Shop10)
+E6  Cave Eblana Inn (Bearded Man)   19  1       9A1CF       CF03    FF 97 (Self-explanatory)
+E7  Edge                            0C  0       9A1D1       D103    FF
+E8  Rubicant                        3B  1       9A1D1       D103    FF
+E9  Rydia (grown-up)                0B  1       9A1D1       D103    FF
+EA  Blue Whale Crystal              2F  1       9A1D1       D103    FF
+EB  Fallen Soldier (speaks, bank2?) 5E  0       9A1D2       D203    FF 27
+EC  Airship (Engineer)              1D  1       9A1D4       D403    FF
+ED  Toroia(Dancer guarding Treasure)13  1       9A1D5       D503    31 FF 9F FF 0A (Now here's an odd event. There should be an FE before it to say "IEF" but there is none. Regardless you do need IEF 31 to activate event so... (Event 9F Asking if you have Cleric's Permission when you don't, IEF(31) - Event 0A, Asking for Clerics Permission when you do have it. Event)
+EE  Fallen Soldier (speaks, bank2?) 5E  0       9A1DA       DA03    FF 28
+EF  Cave Eblana (Old Man)           14  1       9A1DC       DC03    34 FF 2C FF 01 0A
+F0  Cave Eblana (Soldier)           18  1       9A1E2       E203    34 FF 27 FF 01 08
+F1  Cave Eblana (Soldier)           18  1       9A1E8       E803    34 FF 2C FF 01 09
+F2  Airship, docked (Dwarf)         28  0       9A1EE       EE03    FF
+F3  Kain (Tower of Zot)             01  1       9A1EF       EF03    FF 82 (Kain regains his senses)
+F4  Golbez                          24  1       9A1F1       F103    FF
+F5  Tower of Zot (locked door)      65  0       9A1F2       F203    FF 0C (Before you speak to Kain)
+F6  Pass Seller (Woman)             12  1       9A1F4       F403    FF EF (Shop1F)
+F7  Pass Receiver (Man)             11  1       9A1F6       F603    FF F0 (Asks if you have Pass)
+F8  Grotto Adamant (Midget)         0E  1       9A1F8       F803    4A FF E2 FF E3 (Trading Rat Tail for Adamant, IEF(4A) - Trading Pink Tail for Adamant Armor)
+F9  Cave Eblana (Soldier)           18  0       9A1FD       FD03    FF 29
+FA  Saloon KING (Man)               11  0       9A1FF       FF03    FF D8 (Troia Dance Troupe Dance)
+FB  Silvera (Midget)                0E  0       9A201       0104    FF 2C
+FC  FuSoYa                          0D  1       9A203       0304    FF
+FD  Mysidia (White Mage praying)    40  1       9A204       0404    FF 2C
+FE  Mysidia (Black Mage praying)    3E  0       9A206       0604    FF 2D
+FF  Dark Knight Cecil               00  1       9A208       0804    FF
+
+
+-------------------------------------------
+Underground NPCs (Sp = Sprite, A = Active)
+-------------------------------------------
+#   Description                    Sp  A       Offset      Pntr    Speech Data
+--  -----------                    --  -       ------      ----    -----------
+00  Dark Knight Cecil              00  1       9A209       0904    FF
+01  Dwarf                          28  1       9A20A       0A04    FF 28
+02  Dwarf                          28  1       9A20C       0C04    FF 29
+03  Dwarf                          28  1       9A20E       0E04    FF 2A
+04  Dwarf                          28  1       9A210       1004    FF 2B
+05  Dwarf                          28  1       9A212       1204    FF 2C
+06  Dwarf                          28  1       9A214       1404    FF 2D
+07  Dwarf                          28  1       9A216       1604    FF 2E
+08  King Giott                     2A  0       9A218       1804    FE 3D FF 02 FE 3A 3B FF 01 FF 2E 09 0A (Despite him being a very important NPC, he has no important events related to directly talking with him. All of his events are Location Triggered.)
+09  Luca                           2C  0       9A225       2504    FE 3D FF 03 FE 3A 3B FF 02 FF 01 08 0B 10
+0A  Dwarf Weapon Salesman          28  1       9A233       3304    FF C7 (Shop06)
+0B  Dwarf Armor Salesman           28  1       9A235       3504    FF C8 (Shop0F)
+0C  Dwarf Item Salesman            28  1       9A237       3704    FF 6F (Shop18)
+0D  Dwarf Innkeeper                28  1       9A239       3904    FF 90 (Self-explanatory)
+0E  Rosa                           05  0       9A23B       3B04    FF
+0F  Kain                           01  1       9A23B       3B04    FF
+10  Yang                           06  1       9A23B       3B04    FF
+11  Cid                            0A  1       9A23B       3B04    FF
+12  Rydia (grown-up)               0B  0       9A23B       3B04    FF
+13  Edge                           0C  0       9A23B       3B04    FF
+14  Golbez                         24  0       9A23B       3B04    FF
+15  Golbez's hand                  2D  0       9A23B       3B04    FF
+16  Calbrena                       29  0       9A23B       3B04    FF
+17  Dwarf Guarding Base            28  0       9A23C       3C04    07 FF 29 FF 91 (Message2 (not allowed through, or some such), IEF(7) - Dwarf opening door to base. 
+18  Dwarf                          28  0       9A241       4104    FF 92 (A lot of Dwarves use this event actually. Many of them can only be reached by accessing parts of the castle where you normally can't go until after beating Golbez. They guard the Treasure Rooms most explicitly)
+19  Dwarf                          28  0       9A243       4304    FE 3D FF 01 FE 39 FF 2E 38 FF 27 FF 29 09
+1A  Dwarf                          28  1       9A251       5104    FE 3D FF 01 FE 39 FF 2D 38 FF 28 FF 2A 0A
+1B  crystal                        2F  0       9A25F       5F04    FF AF (Obtaining Dark Crystal)
+1C  Golbez (fallen)                62  1       9A261       6104    FF
+1D  Dwarf                          28  1       9A262       6204    FF 27 
+1E  Fat Chocobo (top left)         46  1       9A264       6404    FF 4D (Self-explanatory)
+1F  Fat Chocobo (top right)        47  1       9A266       6604    FF 4D 
+20  Fat Chocobo (bottom left)      48  1       9A268       6804    FF 4D
+21  Fat Chocobo (bottom right)     49  1       9A26A       6A04    FF 4D
+22  Fat Chocobo spot               65  0       9A26C       6C04    FF 4E (Self-explanatory
+23  Fat Chocobo spot               65  1       9A26E       6E04    FF 0B (Self-explanatory)
+24  Namingway                      23  1       9A270       7004    FF 0D (Self-explanatory)
+25  Cid                            0A  1       9A272       7204    FF
+26  invisible                      65  0       9A273       7304    FF 85 (HP/MP Status Restoring Pot?)
+27  Luge                           2B  0       9A275       7504    FF
+28  Rubicant                       3B  0       9A275       7504    FF
+29  teleportation                  45  0       9A275       7504    FF
+2A  Milon / Goblin                 22  0       9A275       7504    FF
+2B  invisible                      65  0       9A276       7604    FE 19 FF 27 FE 33 19 FF FA FF 0C (Tower of Babil Tower Key Door) ("Locked.", IEF(19) Message2?, IEF33 - Using Tower Key)
+2C  mist?                          5C  1       9A281       8104    FF
+2D  Cid                            0A  1       9A282       8204    FE 3D FF 02 FF 01 08 0B (Message2 dealings only.)
+2E  Edge                           0C  0       9A28A       8A04    FF
+2F  Dwarf                          28  1       9A28B       8B04    FF 2B 
+30  Dwarf                          28  1       9A28D       8D04    FF 2C
+31  Dwarf                          28  1       9A28F       8F04    FE 3A FF 01 FF 27 0D
+32  Dwarf                          28  0       9A296       9604    FE 3A FF 01 FF 28 0C
+33  Dwarf                          28  1       9A29D       9D04    FE 3A FF 01 FF 29 0E
+34  Dwarf                          28  1       9A2A4       A404    FE 3A FF 01 FF 2A 0F
+35  sleeping bubble                32  1       9A2AB       AB04    FF 01 08
+36  Tomra Dwarf Innkeeper          28  1       9A2AE       AE04    FF AB (Self-explanatory)
+37  Tomra Dwarf Weapon Salesman    28  0       9A2B0       B004    FF AC (Shop08)
+38  Tomra Dwarf Armor Salesman     28  1       9A2B2       B204    FF AD (Shop11)
+39  Tomra Dwarf Item Salesman      28  1       9A2B4       B404    FF AE (Shop00... That's Kaipo Weapons. Hmm, not sure why it would say that. Tomra does have an Item Shop, doesn't it?)
+3A  Luca                           2C  1       9A2B6       B604    FF 2D
+3B  double door                    5D  0       9A2B8       B804    3C FF A8 00 (No event, IEF(3B) - Open Sealed Cave)
+3C  lightning                      44  1       9A2BC       BC04    FF
+3D  double door                    5D  1       9A2BD       BD04    FF B7 (TrapDoor from here to 4A)
+3E  double door                    5D  1       9A2BF       BF04    FF B8
+3F  double door                    5D  1       9A2C1       C104    FF B9
+40  double door                    5D  1       9A2C3       C304    FF BA
+41  double door                    5D  1       9A2C5       C504    FF BB
+42  double door                    5D  1       9A2C7       C704    FF BC
+43  double door                    5D  1       9A2C9       C904    FF BD
+44  double door                    5D  1       9A2CB       CB04    FF BE
+45  double door                    5D  1       9A2CD       CD04    FF BF
+46  double door                    5D  1       9A2CF       CF04    FF C0
+47  double door                    5D  1       9A2D1       D104    FF C1
+48  double door                    5D  1       9A2D3       D304    FF C2
+49  double door                    5D  1       9A2D5       D504    FF C3
+4A  double door                    5D  1       9A2D7       D704    FF C4
+4B  Milon / Goblin                 22  1       9A2D9       D904    FF 27
+4C  Milon / Goblin                 22  1       9A2DB       DB04    FF 28
+4D  Milon / Goblin                 22  1       9A2DD       DD04    FF 29
+4E  Milon / Goblin                 22  1       9A2DF       DF04    FF 2A
+4F  Chocobo                        1E  1       9A2E1       E104    FF 2B
+50  Chocobo                        1E  1       9A2E3       E304    FF 2C
+51  Bomb                           21  1       9A2E5       E504    FF 2D
+52  Bomb                           21  1       9A2E7       E704    FF 2E
+53  Old Man                        14  1       9A2E9       E904    FE 45 FF 2A FE 44 45 FF CA FF 2B (Message2, IEF(44) - Leviathan Battle, IEF(45) - Message2)
+54  Queen                          50  1       9A2F4       F404    FE 44 FF 29 FF C9 (Asura Battle - IEF(44), Message2)
+55  invisible                      65  1       9A2FA       FA04    FF 29
+56  invisible                      65  1       9A2FC       FC04    FF 2A
+57  invisible                      65  1       9A2FE       FE04    FF 2B
+58  invisible                      65  1       9A300       0005    FF 2C
+59  invisible                      65  1       9A302       0205    FF 2D
+5A  invisible                      65  1       9A304       0405    FF 2E
+5B  invisible                      65  1       9A306       0605    FF 01 08
+5C  invisible                      65  1       9A309       0905    FF 01 09
+5D  invisible                      65  1       9A30C       0C05    FF 01 0A
+5E  invisible                      65  1       9A30F       0F05    FF 01 0B
+5F  Monster Weapon Salesman        22  1       9A312       1205    FF CB (Shop1C)
+60  Bomb Armor Salesman            21  0       9A314       1405    FF CC (Shop1D)
+61  Monster Inn Keeper             22  0       9A316       1605    FF CD (Self-explanatory)
+62  Chocobo Item Salesman          1E  1       9A318       1805    FF CE (Shop1E)
+63  Bahamut                        55  1       9A31A       1A05    FE 46 FF 2C FE 45 46 FF CF 45 FF 2B (Message2, IEF(45) - Bahamut Battle, IEF(46) Message2)
+64  Boy                            16  1       9A326       2605    FE 46 FF 29 FF 27
+65  Girl                           17  1       9A32C       2C05    FE 46 FF 2A FF 28
+66  FuSoYa                         0D  1       9A332       3205    FF
+67  sparkle                        3C  1       9A332       3205    FF
+68  double door                    5D  0       9A333       3305    FF EC (TrapDoor Battle? In what seems the Crystal Palace?)
+69  invisible                      65  1       9A335       3505    FF E9 (Boarding the Big Whale Visual Effect?)
+6A  Flight Crystal                 2F  0       9A337       3705    FE 47 48 FF 9D FF EA (Fly to/from Moon, IEB(47) AND IEB(48) - Returning from Moon to see Giant of Babil)
+6B  invisible                      65  0       9A33E       3E05    FF DE (Obtaining the Magazine)
+6C  invisible                      65  1       9A340       4005    FF DF (Obtaining the Grimoire?)
+6D  invisible                      65  1       9A342       4205    FF E0 (Obtaining the 2nd Grimoire?)
+6E  Kokkol (initial)               14  1       9A344       4405    4A FF 27 FF EE (Message2, IEF(4A) Give Adamant and Legend Sword to Kokkol)
+6F  Smithy (finished Excalibur)    14  1       9A349       4905    4C FE 43 FF E1 43 FF 2B FF 2D (Message2, IEF(43) - Obtaining the Excalibur, IEF(4C) - Message2  
+70  Soldier                        18  1       9A353       5305    FF 27
+71  Man                            11  1       9A355       5505    FF 28
+72  Soldier                        18  1       9A357       5705    FF 29
+73  Black Mage                     1B  1       9A359       5905    FF 2A
+74  White Mage                     1C  1       9A35B       5B05    FF 2B
+75  Soldier                        18  1       9A35D       5D05    FF 2C
+76  Soldier                        18  1       9A35F       5F05    FF 2D
+77  Black Mage                     1B  1       9A361       6105    FF 2E
+78  invisible                      65  1       9A363       6305    FF 01 08
+79  White Mage                     1C  1       9A366       6605    FF 01 08
+7A  Old Man                        14  1       9A369       6905    FF 01 09
+7B  Girl                           17  1       9A36C       6C05    FF 2B
+7C  Dancer                         13  1       9A36E       6E05    FF 2C
+7D  Midget                         0E  1       9A370       7005    FF 29
+7E  Milon / Goblin                 22  1       9A372       7205    FF 2A
+7F  Namingway                      23  1       9A374       7405    FF 29
+80  Man                            11  1       9A376       7605    FF 2A
+81  Scholar                        1A  1       9A378       7805    FF 27
+82  Boy                            16  1       9A37A       7A05    FF 28
+83  crystal                        2F  1       9A37C       7C05    FE 48 FF 01 FF 27 08
+84  crystal                        2F  1       9A383       8305    FE 48 FF 01 FF 28 09
+85  crystal                        2F  1       9A38A       8A05    FE 48 FF 01 FF 29 0A
+86  crystal                        2F  1       9A391       9105    FE 48 FF 01 FF 2A 0B
+87  crystal                        2F  1       9A398       9805    FE 48 FF 01 FF 2B 0C
+88  crystal                        2F  1       9A39F       9F05    FE 48 FF 01 FF 2C 0D
+89  crystal                        2F  1       9A3A6       A605    FE 48 FF 01 FF 2D 0E
+8A  crystal                        2F  1       9A3AD       AD05    FE 48 FF 01 FF 2E 0F
+8B  Yang (in Sylph Cave)           06  0       9A3B4       B405    FE 4E FF 3F FE 4D 4E FF E5 FF 3F ("...", 1EF(4D) - Rydia learning Sylph, using the Pan, IEF(4E) - "..."
+8C  Sylph                          41  1       9A3BF       BF05    FF
+8D  Sylph                          41  1       9A3C0       C005    FE 54 FF 01 FE 48 4E FF 08 FE 48 FF 01 4E FF 28 FF 29 0F
+8E  Sylph                          41  1       9A3D3       D305    FE 54 FF 01 FE 48 4E FF 08 FE 48 FF 01 4E FF 2A FF 2B 10
+8F  Sylph                          41  1       9A3E6       E605    FE 54 FF 01 FE 48 4E FF 08 FE 48 FF 01 4E FF 2C FF 2D 11
+90  Sylph                          41  1       9A3F9       F905    FE 54 FF 01 FE 48 4E FF 08 FE 48 FF 02 4E FF F7 FF 01 08 12 (Speaking to Sylph for first time before Yang awakes, IEF(48) - Learning Sylph without Pan, IEF(4E) - Message2, IEF(54) - Nessage2
+91  invisible                      65  1       9A40D       0D06    FF F8 (Obtaining a Grimoire?)
+92  Dwarf                          28  1       9A40F       0F06    FF D9 (Dwarf Castle Dancer's Dance)
+93  invisible                      65  1       9A411       1106    FF 01 0C
+94  Dwarf                          28  1       9A414       1406    4B FF 27 FF 29
+95  Dwarf                          28  1       9A419       1906    4B FF 28 FF 2A
+96  sleeping bubble                32  0       9A41E       1E06    FF 2A
+97  fire                           31  1       9A420       2006    FF 0F (Ouch!)
+98  invisible                      65  1       9A422       2206    FF
+99  invisible                      65  0       9A423       2306    FF 27
+9A  Rosa                           05  0       9A425       2506    FF
+9B  Rydia (grown-up)               0B  0       9A425       2506    FF
+9C  Edge                           0C  0       9A425       2506    FF
+9D  Kain                           01  0       9A425       2506    FF
+9E  Cecil & Rosa kissing           2E  1       9A425       2506    FF
+9F  Elder                          26  1       9A426       2606    FF 27
+A0  Porom                          07  1       9A428       2806    FF 28
+A1  Palom                          08  1       9A42A       2A06    FF 29
+A2  Edward                         04  1       9A42C       2C06    FF 2B
+A3  Cid                            0A  1       9A42E       2E06    FF 2D
+A4  Yang                           06  1       9A430       3006    FF 2C
+A5  Giott                          2A  1       9A432       3206    FF 2A
+A6  Luca                           2C  1       9A434       3406    FF 01 0B
+A7  Engineer                       1D  1       9A437       3706    FF 2E
+A8  Engineer                       1D  1       9A439       3906    FF 01 08
+A9  Cleric                         27  1       9A43C       3C06    FF 01 09
+AA  Cleric                         27  1       9A43F       3F06    FF 01 0A
+AB  Fat Chocobo (top left)         46  1       9A442       4206    FF 4D (Self-explanatory)
+AC  Fat Chocobo (top right)        47  1       9A444       4406    FF 4D
+AD  Fat Chocobo (bottom left)      48  1       9A446       4606    FF 4D
+AE  Fat Chocobo (bottom right)     49  1       9A448       4806    FF 4D
+AF  Zemus                          51  1       9A44A       4A06    FF
+B0  Zemus (fallen)                 3F  1       9A44A       4A06    FF
+B1  wavering flame                 42  1       9A44A       4A06    FF
+B2  FuSoYa                         0D  1       9A44A       4A06    FF
+B3  Golbez                         24  1       9A44A       4A06    FF
+B4  King Giott                     2A  1       9A44A       4A06    FF
+B5  Luca                           2C  1       9A44A       4A06    FF
+B6  Dwarf                          28  0       9A44A       4A06    FF
+B7  Scholar                        1A  0       9A44A       4A06    FF
+B8  Elder                          26  1       9A44A       4A06    FF
+B9  Porom                          07  1       9A44A       4A06    FF
+BA  Palom                          08  1       9A44A       4A06    FF
+BB  Black Mage                     1B  1       9A44A       4A06    FF
+BC  White Mage                     1C  1       9A44A       4A06    FF
+BD  Girl                           17  1       9A44A       4A06    FF
+BE  Boy                            16  0       9A44A       4A06    FF
+BF  Woman                          12  1       9A44A       4A06    FF
+C0  Karate Fighter                 1F  1       9A44A       4A06    FF
+C1  Rosa                           05  1       9A44A       4A06    FF
+C2  Cid                            0A  1       9A44A       4A06    FF
+C3  Paladin Cecil                  09  1       9A44A       4A06    FF
+C4  Man                            11  1       9A44A       4A06    FF
+C5  Old Man                        14  1       9A44A       4A06    FF
+C6  Old Woman                      15  1       9A44A       4A06    FF
+C7  Yang                           06  1       9A44A       4A06    FF
+C8  Edward                         04  0       9A44A       4A06    FF
+C9  Edge                           0C  1       9A44A       4A06    FF
+CA  Rydia (grown-up)               0B  1       9A44A       4A06    FF
+CB  Kain (hair blowing in wind)    43  0       9A44A       4A06    FF
+CC  heart bubble                   30  1       9A44A       4A06    FF
+CD  King                           25  1       9A44A       4A06    FF
+CE  Soldier                        18  1       9A44A       4A06    FF
+CF  Milon / Goblin                 22  1       9A44A       4A06    FF
+D0  Frog                           0F  1       9A44A       4A06    FF
+D1  Palom                          08  1       9A44A       4A06    FF
+D2  Cleric                         27  1       9A44A       4A06    FF
+D3  Dwarf(Ninja Star Seller?)      28  1       9A44B       4B06    FF CE (Shop1E)
+D4  Chocobo                        1E  1       9A44D       4D06    FF 6F (Shop18, normal item store, it looks?)
+D5  Astro Observatory (invisible)  65  1       9A44F       4F06    FF FD (Self-explanatory)
+D6  Yellow Chocobo                 1E  1       9A451       5106    FF 4F (Self-explanatory)
+D7  White Chocobo                  1E  1       9A453       5306    FF 50 (Self-explanatory)
+D8  Black Chocobo                  1E  0       9A455       5506    FF 9C (Self-explanatory)
+D9  Astro Observatory (Scholar)    1A  1       9A457       5706    FF 27
+DA  sleeping bubble                32  1       9A459       5906    FF 29
+DB  Crystal Sword                  63  1       9A45B       5B06    FF 58 (Fight for Crystal Sword)
+DC  Masamune                       37  1       9A45D       5D06    FF 59 (Fight for Masamune)
+DD  Murasame                       37  1       9A45F       5F06    FF A3 (Fight for Murasame)
+DE  White Spear                    59  1       9A461       6106    FF A4 (Fight for White Spear)
+DF  Dwarf(Kokkol's Shop Apprentice)28  0       9A463       6306    FF F1 (Shop09, Smith's Shop)
+E0  Hummingway                     23  0       9A465       6506    FF 29
+E1  Hummingway                     23  0       9A467       6706    FF 2A
+E2  Hummingway                     23  1       9A469       6906    FF 27
+E3  Hummingway                     23  1       9A46B       6B06    FF 07 
+E4  Hummingway (Shop)              23  1       9A46D       6D06    FF B2
+E5  Edward (Troia Hospital)        04  1       9A46F       6F06    FE 1A FF 2E FE 19 FF 2D FE 2F FF 2C FE 25 FF 2B FF 29 (A lot of talking events)
+E6  Edward (playing the harp)      35  1       9A481       8106    FF
+E7  Tellah                         03  1       9A481       8106    FF
+E8  Man                            11  1       9A482       8206    FF 27
+E9  Woman                          12  1       9A484       8406    FF 28
+EA  Soldier                        18  1       9A486       8606    FF 2A
+EB  Black Mage                     1B  1       9A488       8806    FF 01 09
+EC  White Mage                     1C  1       9A48B       8B06    FF 01 0A
+ED  Soldier                        18  1       9A48E       8E06    FF 01 0B
+EE  --                             00  1       9A491       9106    FF
+EF  --                             00  1       9A491       9106    FF
+F0  --                             00  1       9A491       9106    FF
+F1  --                             00  1       9A491       9106    FF
+F2  --                             00  1       9A491       9106    FF
+F3  --                             00  1       9A491       9106    FF
+F4  --                             00  1       9A491       9106    FF
+F5  --                             00  1       9A491       9106    FF
+F6  --                             00  1       9A491       9106    FF
+F7  --                             00  1       9A491       9106    FF
+F8  --                             00  1       9A491       9106    FF
+F9  --                             00  1       9A491       9106    FF
+FA  --                             00  1       9A491       9106    FF
+FB  --                             00  1       9A491       9106    FF
+FC  --                             00  1       9A491       9106    FF
+FD  --                             00  1       9A491       9106    FF
+FE  --                             00  1       9A491       9106    FF
+FF  --                             00  1       9A491       9106    FF

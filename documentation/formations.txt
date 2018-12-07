@@ -1,0 +1,39 @@
+Enemy Formation Table (70200-711FF)
+Each formation is represented by 8 bytes:
+
+Byte 0:
+ Bit 0: ?
+ Bit 1: ?
+ Bit 2: ?
+ Bit 3: Forced Back Attack
+ Bit 4: Enemies Have Boss Death
+ Bit 5: Monster(s) 3 Begin In Eggs
+ Bit 6: Monster(s) 2 Begin In Eggs
+ Bit 7: Monster(s) 1 Begin In Eggs
+
+Byte 1: Monster(s) 1 Type
+
+Byte 2: Monster(s) 2 Type
+
+Byte 3: Monster(s) 3 Type
+
+Byte 4: Qty. of Each Monster Type (max 8 altogether)
+ Bit 0-1: ?
+ Bit 2-3: Monster(s) 3 Qty.
+ Bit 4-5: Monster(s) 2 Qty.
+ Bit 6-7: Monster(s) 1 Qty.
+
+Byte 5: Preset Monster Arrangement
+ -Values 00-91
+ -Total qty. of monsters is limited by arrangement
+
+Byte 6:
+ Bit 0: Can't Run
+ Bit 1: No Game Over (think impossible Dark Elf battle)
+ Bits 2-3: Battle Music (Regular/Boss/Fiend/No Change)
+ Bit 4: Character Battle (Edward v. Tellah, etc.)
+ Bit 5: Auto Battle (not sure where the AI is for these?)
+ Bit 6: Floating
+ Bit 7: Transparent (Breath, Mind)
+
+Byte 7: ?

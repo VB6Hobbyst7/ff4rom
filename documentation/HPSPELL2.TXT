@@ -1,0 +1,106 @@
+The spell power is 1, the HP% parameter (Column E in my table) is 100.  It does 100% of your current HP 
+in damage to the target.  What does it mean for spells that have spell power greater than 1?  There are an 
+awful lot of spells that are hp-based that I didn't know about, and it doesn't seem like the algorithm is 
+as straightforward for these.
+
+There's a Spell Power stat and an HP Factor Stat (whatever you think of calling it).
+
+When both are multiplied, they equal 100%, although I think that's not entirely required.
+
+Hold on.. revising algo first...
+
+For the SNES+GBA version, it is simply this:
+
+Damage = maxHP/ Spell Power * Elemental Multiplier
+
+Elemental Multipliers:
+Weak vs Element = 2
+Strong vs Elemental = 1/2
+
+If you absorb this element and are using the SNES version, then apply against my magic damage algo.
+If you absorb this element and are using the GBA version:
+If single targeted, use my magic damage algo, but substitute the second value in the list as the spell power.
+If multitargeted, simply invert the damage by multiplying by -1.
+
+Maser: 1/10
+Beam: 1/10
+Fire: 1/5
+Blaze: 1/4
+Blitz: 1/2
+Thunder: 1/4
+D.Breath: 1/4
+Big Wave: 1/4
+
+HP Power (HP attack based on caster) = Caster's Current HP
+HP Power (HP attack based on target) = Target's Max HP
+
+Base HP Spell Power = Whatever is normally listed in the spell power slot
+Base HP Absorb Spell Power = Whatever is normally listed next to the spell power data (**default: 100/Base HP Spell Power)
+****Base HP Spell Hit Rate = Whatever is normally listed in the hit rate slot
+
+**Note: Not sure if that always have to be defined like that, but it is there anyways...
+****Note: Make sure to subtract 128 if it uses the boss bit
+
+HP Spell Power Elemental Modifier (HP attack based on target):
+Target is Weak to Element, HP Spell Power = 2
+Target is Resistant to Element, HP Spell Power = 10
+**Target is Immune to Element, HP Spell Power = 10
+**Target Absorbs Element, HP Spell Power = Base HP Spell Power * -1
+Unapplicable, HP Spell Power = Base HP Spell Power
+
+HP Spell Power Elemental Modifier (HP attack based on caster):
+Target is Weak to Element, HP Spell Power = Base HP Spell Power * 2
+Target is Resistant to Element, HP Spell Power = Base HP Spell Power / 2
+**Target is Immune to Element, HP Spell Power = Caster's Current HP
+**Target Absorbs Element, HP Spell Power = Base HP Spell Power * -1
+Unapplicable, HP Spell Power = Base HP Spell Power
+
+**Note: In the SNES version, Immunity has precedence over Absorb. In the GBA version, Absorb has precedence over Immunity.
+
+HP Based Damage Bonus:
+HP attack based on target, HP Damage Bonus = 0
+HP attack based on caster, HP Damage Bonus = (Caster's Current HP/ HP Spell Power * rand (100, 150) / 100) % 256
+
+Basic Formula - Includes Weakness, Resistance, and Immunity (SNES and GBA versions):
+
+//skip loop if using the GBA version...
+
+while (Spell Multiplier > 0)
+{
+ if(Target's Magic Defense Multiplier == 0)
+ {
+  Success = true
+  break;
+ }
+
+ while(Target's Magic Defense Multiplier > 0)
+ {
+  Target's Magic Defense Multiplier--;
+  if (rand(0, 99) > HP Spell Hit Rate) || (rand(0, 99) < Target's Magic Evade))
+  {
+    break;
+  }
+ }
+ Spell Multiplier--;
+}
+
+if (Success) //only applies to SNES version
+{
+ Damage = Base HP Power / HP Spell Power + HP Damage Bonus
+}
+
+
+Absorb Formula (SNES version):
+Use Base HP Absorb Spell Power and plug that into the general magic algo as the Base Spell Power
+
+Absorb Formula (GBA version):
+
+If the spell is single targeted...
+HP Absorb Spell Power = Base HP Absorb Spell Power * 3/2
+Target's Magic Defense = 0
+Target's Magic Evade = 0
+Plug in HP Absorb Spell Power into the general magic algo as the Base Spell Power
+
+If the spell is multitargeted...
+Damage = Base HP Power / HP Spell Power + HP Damage Bonus
+

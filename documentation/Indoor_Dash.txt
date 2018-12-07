@@ -1,0 +1,115 @@
+
+	.mx	0x20
+
+Indoor__FrameStart:
+	jsr	$=Indoor__SprintShoes
+	
+	// Original code and return
+	jsr	$=Indoor__Original_MapFrameCall
+	rtl
+	
+	// ---------------------------------------------------------------------------
+	
+	.mx	0x20
+
+Indoor__SprintShoes:
+	// Original code for comparing end of step
+	lda	$0x06ac
+	tax
+	lda	$0x067b
+	and	$0xaaf0,x
+	bne	$+Indoor__SprintShoes_Exit
+	
+	// Are we outdoor?
+	lda	$0x1700
+	cmp	#0x03
+	bne	$+Indoor__SprintShoes_Outdoor
+
+	// Are we in a cutscene?
+	lda	$0x06b1
+	bne	$+Indoor__SprintShoes_Exit
+
+	// Speed up when pressing Y
+	lda	$0x0109
+	asl	a
+	asl	a
+	lda	#0x00
+	rol	a
+	sta	$0x06ac
+	sta	$=Var_Dashing
+	stz	$0x067b
+	
+Indoor__SprintShoes_Exit:
+	// Return
+	rtl
+	
+Indoor__SprintShoes_Outdoor:
+	// Are we in a behicle?
+	lda	$0x1704
+	bne	$-Indoor__SprintShoes_Exit
+	
+Indoor__SprintShoes_SpeedOne:
+	// Write speed of 1 pixel per frame
+	lda	#0x00
+	sta	$0x06ac
+	sta	$=Var_Dashing
+
+	// Return
+	rtl
+	
+	// ---------------------------------------------------------------------------
+	
+	.mx	0x20
+
+Indoor__FixDashAnimation:
+	lda	$=Var_Dashing
+	beq	$+Indoor__FixDashAnimation_Skip
+
+	lda	$0x7b
+	and	#0x04
+	asl	a
+	
+	// Return
+	rtl
+
+Indoor__FixDashAnimation_Skip:
+	// Original code
+	lda	$0x7b
+	and	#0x08
+
+	// Return
+	rtl
+	
+	// ---------------------------------------------------------------------------
+
+	.mx	0x20
+	
+Indoor__StartCutsceneNpc:
+	// Original code
+	lda	$0x139c01,x
+	bra	$+Indoor__StartCutscene
+
+Indoor__StartCutsceneTile:
+	// Original code
+	lda	$0x12f461,x
+
+Indoor__StartCutscene:
+	beq	$+Indoor__StartCutscene_skip
+
+	// Are we dashing?
+	pha
+	lda	$=Var_Dashing
+	bne	$+Indoor__StartCutscene_skip2
+
+	// Reset dash
+	lda	#0x00
+	sta	$0x06ac
+	sta	$=Var_Dashing
+Indoor__StartCutscene_skip2:
+	pla
+
+Indoor__StartCutscene_skip:
+	// Return
+	rtl
+
+	// ---------------------------------------------------------------------------

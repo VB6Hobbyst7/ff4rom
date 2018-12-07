@@ -1,0 +1,729 @@
+Ok, onto the info. The status description that is displayed in battle is the 
+one that has the greatest priority. I believe 
+status is stored in 4 bytes (since there are 32 different statuses that can 
+possibly occur). The list here starts with 
+the status that has the greatest priority and continues with the one with the 
+least priority... Unless otherwise 
+specified, you cannot inflict a status with a lower priority to a target. For 
+instance, Piggy cannot be inflicted on 
+a target that has Toad status (barring immunity), because of the status 
+priority. However, toad can be inflicted on a 
+target that has Piggy status (barring immunity).
+
+Note: This is mostly complete.
+
+Format:
+Permanent: When this status is set, it lasts even after the battle is over.
+Reversable: If applicable, examples of reversing this status is listed.
+Ignores Priority: If applicable, this status can be set, regardless of other 
+statuses being set (other than Death or Stone).
+In some cases, some statuses can be set outside of battle.
+Visual Cue: This is a description of what one can see inside and/or outside 
+of battle when the status is set.
+Hidden: If applicable, you won't see a status description while the status is 
+inflicted on the character when you are 
+selecting a Cure/Heal item or spell.
+Timer: If applicable, this status has a timer set. It can be influenced by a 
+number of factors, usually from some stat 
+the game uses to determine how the timer progresses. When the timer expires, 
+the status will cause some sort of reaction. 
+All statuses except for Sleep can be reset.
+Description: Explains details of how this status works on characters and the 
+enemy. Miscellaneous details can be found here.
+
+Here we go:
+
+Death/Swoon
+
+Permanent: Yes
+Reversable: Yes. Life1/2, Phoenix Down, Asura (multitargeted Life1).
+Ignores Priority: No (it's the highest)
+Visual Cue: The character uses the "fallen down" look in battle.
+Outside of battle, you will see the status spelled out for the character.
+Hidden: No
+Timer: No
+Description:  When set, it means HP = 0.
+The character is unable to make any commands (ATB bar won't increase).
+Enemies die+disappear when this status is afflicted on them.
+This can occur via a status attack (Deathbringer or Death spell), reducing 
+the target's HP to 0, or Count/Doom reaches 0.
+
+Stone
+
+Permanent: Yes
+Reversable: Yes. Esuna, Golden Needle
+Ignores Priority: No
+Visual Cue: When set, a character is effectively frozen in stone and in a 
+crouching position.
+In the status menu, it is represented by a "rock or stone" and is displayed 
+as the leftmost status sprite.
+Hidden: No
+Timer: No
+Description: When set, the ATB bar does not increase and the character is 
+effectively frozen for the battle.
+Enemies die+disappear when this status is afflicted on them (which is pretty 
+much the same as Death status).
+This can occur via a status attack (Medusa arrows or Break spell) or caused 
+by gradual petrification's timer or attack 
+as the final stage.
+HP is effectively unchanged for the duration of this status.
+
+Note: Either Death or Stone can be set at one time. Both cannot be issued at 
+the same time. Both statuses have the following 
+properties:
+Physical attacks on a target that has this status are automatically 
+retargeted.
+Magical attacks on such a target are not retargeted unless it was on a single 
+enemy.
+Having this status also counts towards the "party death counter/check".
+Both statuses removes all other statuses, except Frog, Mini, Piggy, Silence, 
+Blind, Float.
+
+Frog/Toad
+
+Permanent: Yes
+Reversable: Yes. Esuna, Maiden's Kiss, Frog spell
+Ignores Priority: No
+Visual Cue: When set, the character's sprite becomes a frog. This is viewable 
+in the overworld and status menus.
+Enemies change into a specific Frog graphics (perhaps shared by the 
+TinyToads).
+In the status menu, it is represented by a "frog or toad" and is displayed to 
+the right of Stone status slot.
+Hidden: No
+Timer: No
+Description: This can occur via a status attack (well, there's the spell and 
+the Breath attack).
+While under this status, the target is unable to use any special attacks, 
+most commands, or spells other than Frog or 
+Sing's Frog Song.
+A target afflicted with this has 1 attack power, 0 defense, 0 evasion (or was 
+it a 0 defense multiplier?), and 0 magic 
+defense multiplier.
+
+Mini
+
+Permanent: Yes
+Reversable: Yes. Mini spell, Esuna, Mallet
+Ignores Priority: No
+Visual Cue: When set, the character's sprite becomes tiny. This is viewable 
+in the overworld and status menus.
+Enemies change into into "miniture" targets (probably shared by the 
+TinyMages).
+In the status menu, it is represented by a "small doll" and is displayed to 
+the right of Frog status.
+Hidden: No
+Timer: No
+Description: This can occur via a status attack (the spell and the Breath 
+attack).
+While under this status, the target is unable to use most commands, but still 
+has full access to spells (other than Twin 
+magic) and special attacks.
+A target afflicted with this has 1 attack power, 0 defense, and 0 evasion (or 
+was it a 0 defense multiplier?).
+
+Piggy
+
+Permanent: Yes
+Reversable: Yes. Piggy spell, Diet Food, Esuna
+Ignores Priority: No
+Visual Cue: When set, the character's sprite becomes a pig. This is viewable 
+in the overworld and status menus.
+Enemies change into Pigs (not sure where they get this sprite).
+Hidden: No
+Timer: No
+Description: In the status menu, it is represent by a nice "piggy" and is 
+displayed to the right of Mini status.
+This can occur via a status attack (the spell, the Dark Elf's Whisper and a 
+few version specific weapons).
+While under this status, the target is unable to use a fair number of 
+commands, but allows the last command for a character 
+to be executed.
+Spells other than Piggy and special attacks cannot be used.
+
+
+Note: Any characters afflicted by Piggy, Frog, or Mini can cast Esuna outside 
+of battle.
+
+Silence
+
+Permanent: Yes
+Reversable: Yes. Esuna, Echo Herb
+Ignores Priority: No
+Visual Cue: A character afflicted by this is crouched down with an orangy 
+message bubble hovering over them.
+In the status menu, it is represented by an orangy message bubble and is 
+displayed to the right of Mini status.
+Description: When set, the target is unable to cast any Black, White, Summon, 
+Twin, and Ninja Spell (I wonder if it checks 
+against specific spells in the list...)
+This can occur via a status attack (Slap or Mute spell).
+Hidden: No
+Timer: No
+Enemies are not prevented from using special attacks under this status.
+
+
+Blind/Darkness
+
+Permanent: Yes
+Reversable: Yes. Eyedrop, Esuna
+Ignores Priority: No
+Visual Cue: A character afflicted by this is crouched down with black glasses 
+placed over the character's eyes.
+In the status menu, it is represented by a face with dark glasses over the 
+face and is displayed to the right of Silence status.
+Hidden: No
+Timer: No
+Description: When set, the target's hit rate, evade, and spell hit rate is 
+reduced by 1/2.
+This can occur via a status attack (Darkness arrows or the Moth's Blind 
+attack).
+This status continues to stick whether or not the character has Death or 
+Stone status.
+Strangely enough, the Aim and Peep commands ignore this status's negative 
+effects.
+
+Poison
+
+Permanent: Yes
+Reversable: Yes. Antidote, Esuna
+Ignores Priority: Yes
+Visual Cue: A character afflicted by this is crouched down with a purpleish 
+color over the character's face.
+In the status menu, it is represented by "a bottle of poison" and is 
+displayed to the right of Blind status.
+When walking, the screen blurs a bit (using the mosaic effect).
+Hidden: No
+Timer: Yes. A high Vitality/Stamina stat or a high max HP (for monsters only) 
+slows down the timer to deal poison damage. 
+Slow also slows down the timer. When the timer has elapsed, poison damage is 
+dealt to the target. The timer can be reset 
+by the spell Venom/Poison.
+Description:  When set, the target will lose 1/8 of their HP in battle when 
+the timer for this status has elapsed with 
+minimum damage dealt is 1.
+This can occur via a status attack (Poison arrows or the spell version).
+Outside of battle, the character will lose 1 HP on every step until healed.
+The target cannot die outside of battle due to poison (the character will be 
+stuck at 1HP).
+
+Note: Casting Exit while someone is under this status will at most lose 42HP. 
+This is only applicable in the SNES version.
+
+Curse
+
+Permanent: No
+Reversable: Yes. Cross, Esuna
+Ignores Priority: No
+Visual Cue: A floating "skull" hovers over the crouching character.
+Hidden:  No
+Timer: No
+Description: When set, the target's attack power and defense is reduced by 
+1/2.
+This can occur via a status attack (Curse, a special attack of the same name, 
+ironically, or the Ancient Sword).
+
+Float
+
+Permanent: Yes (only in town or dungeon) / No (overworld)
+Reversable: Yes. Black Hole (the enemy spell only)
+Ignores Priority: Yes
+Visual Cue: Characters will be visually floating in air.
+Hidden: No
+Timer: No
+Description: This status prevents damage tiles from hurting the characters.
+This spell negates the Quake spell (including the enemy variation) from 
+working.
+This status visually masks critical status in the SNES version although you 
+can tell when there are no attack/spell 
+animations being used after giving the character a command.
+This status is automatically removed after a battle on the overworld.
+In a dungeon/town, it is automatically removed when entering/exiting 
+buildings or stairs.
+This status can be inflicted by the spell of the same name. It can be 
+inflicted while a target is dead or petrified while 
+outside of battle in the SNES version.
+
+Note: Casting Exit while someone is not under this status and on a damage 
+tile will at most will lose 2100HP. This is 
+only applicable in the SNES version.
+
+Paralysis
+
+Permanent: No
+Reversable: Yes. Esuna, Unicorn Horn
+Ignores Priority: No
+Visual Cue: Character crouches with rings seemingly bind the character.
+Hidden: No
+Timer: Yes. A high Will Power/Spirit or high Magic stat (for monsters only) 
+reduces the duration of this status. Once 
+the timer ends, the target is released from this status. This status's timer 
+can be reset, but only from the Mage/Mind Flayer 
+summon.
+Description: See the following note...
+This status can be inflicted by status attacks (Hold spell or any Whip).
+Don't confuse this with the "metallic" status that the Magnetic Cave inflicts.
+
+Sleep
+
+Permanent: No
+Reversable: Yes. Esuna, Unicorn Horn, Alarm
+Ignores Priority: No
+Visual Cue: A blue sleep bubble looks like it is coming out of the crouching 
+character's mouth.
+Description: See the following note...
+Hidden: No
+Timer: Yes. A high Will Power/Spirit or high Magic stat (for monsters only) 
+reduces the duration of this status. 
+Once the timer ends, the target is released from this status. This status's 
+timer cannot be reset.
+This can be inflicted by a status attack (Sleep spell and Cat Claw).
+
+Paralysis and Sleep share the same properties:
+When set, the character's ATB bar is frozen. A timer for this status is set.
+This status is reversed when the timer for this status ends or the status is 
+healed.
+Once the status is reversed, the ATB bar is restarted.
+The timer's duration is reduced when the target's Will Power/Spirit or Magic 
+stat (for the monster) is high.
+
+Charm
+
+Permanent: No
+Reversable: Yes. Esuna, Unicorn Horn, Physical Attacks
+Ignores Priority: No
+Visual Cue: A yellowish circle hovers over the character's head and the 
+character moves over to "the other side".
+Hidden: No
+Timer: No
+Description: The target loses complete control of their normal behavior.
+A character under this status will attack a random character or attempts to 
+cast a spell that they have available when 
+their ATB bar is full.
+The spell cast is only limited to Black or White magic and will be single 
+targeted unless the spell is multitargeted by default.
+If the command was issued while under this status, and the status is reversed 
+before the command is executed,
+the character will continue to execute the command.
+All magic spells issued under this status completely ignore normal casting 
+time (in other words, casting Meteor can be 
+virtually instant).
+A monster under this status will use a Charm specific battle script when 
+thenr ATB bar is full.
+Note that this script does not prevent the monster to target the character 
+with physical or magic attacks (see Tinymages 
+and Yellow Dragons).
+If an attack command was issued while under this status, and this status is 
+reversed before the command is executed,
+the monster will continue to execute the command.
+This is inflicted via a status attack (Charm spell or Breath).
+
+Berserk
+
+Permanent: No
+Reversable: Yes. Dispel, Unicorn Horn, Esuna (in FF4A)
+Ignores Priority: No
+Visual Cue: The character is uncontrollable (you'll never see their command 
+menu).
+Hidden: No
+Timer: No
+Description: A target under this status will always issue an attack command 
+when the ATB bar is filled.
+The ATB bar is reset when the status is inflicted.
+The attack power of the target increases by 50%.
+This is inflicted by a status attack (Berserk spell, Power Staff, Pinkpuff's 
+Dance).
+
+Note: The Avenger Sword is a special case weapon that is handled differently 
+depending on the version of the game.
+
+"Gradual Petrification" is dealt differently in the GBA port than it is in 
+the SNES port. The statuses will be described 
+separately.
+
+Petrify (2/3 Stone) - SNES version
+
+Permanent: No
+Reversable: Yes. Golden Needle, Esuna
+Ignores Priority: Yes
+Visual Cue: The character's sprite is primarily in a stone-color.
+Hidden: No
+Timer: Yes. A high Vitality/Stamina stat or high Max HP (for monsters only) 
+slows down the timer's progression. Slow also 
+slows down the timer. Once the timer has elapsed, Stone status is set. The 
+timer cannot reset as it automatically advances 
+to Stone status immediately.
+Description: A timer is started for a transition into Stone status.
+This status can occur via a status attack (Medusa Sword), another partial 
+petrification attack (Black Lizard's Stone Gaze),
+or the timer for transitioning from Stiff to Petrify status has completed.
+
+Stiff (1/3 Stone) - SNES version
+
+Permanent: No
+Reversable: Yes. Golden Needle, Esuna
+Ignores Priority: Yes
+Visual Cue: The clothing/area around character's legs are primarily in stone 
+color.
+Hidden: No
+Timer: Yes. A high Vitality/Stamina stat or high Max HP (for monsters only) 
+slows down the timer's progression. Slow also 
+slows down the timer. Once the timer has elapsed, Petrify status is set. The 
+timer cannot reset as it automatically advances 
+to Petrify status immediately.
+Description: A timer is started for a transition into Petrify status.
+This status can occur via a status attack (Black Lizard's Stone Gaze).
+
+Gradual Petrification (2/3 Stone) - GBA version
+
+Permanent: No
+Reversable: Yes. Golden Needle, Esuna
+Ignores Priority: Yes
+Visual Cue: It looks like paralysis, except with grey/silver rings.
+Hidden: Yes
+Timer: Yes. A high Vitality/Stamina stat or high Max HP (for monsters only) 
+slows down the timer's progression. Slow also 
+slows down the timer. Once the timer has elapsed, Stone status is set. The 
+timer cannot reset as it can only be advanced, 
+although the transition to the next status is not guarenteed to occur on 
+another Gradual Petrification attack.
+Description: A timer is started for transition into Stone status.
+This status can occur via a status attack (Gorgon Sword), another partial 
+petrification attack (Black Lizard's Stone Gaze),
+or the timer for transitioning from 1/3 Stone to 2/3 Stone status has 
+completed.
+
+Gradual Petrification (1/3 Stone) - GBA version
+
+Permanent: No
+Reversable: Yes. Golden Needle, Esuna
+Ignores Priority: Yes
+Visual Cue: It looks like paralysis, except with grey/silver rings.
+Hidden: Yes
+Timer: Yes. A high Vitality/Stamina stat or high Max HP (for monsters only) 
+slows down the timer's progression. Slow 
+also slows down the timer. Once the timer has elapsed, 2/3 Stone status is 
+set. The timer cannot reset as it only be 
+advanced, although the transition to the next status is not guarenteed to 
+occur on another Gradual Petrification attack.
+Description: A timer is started for transition into 2/3 Stone status. Once 
+the time has elapsed, 2/3 Stone status is set.
+This status can occur via a status attack (Black Lizard's Stone Gaze).
+A partial petrification attack appears to advance the timer, but doesn't 
+guarentee the next status to occur.
+
+Note: This isn't confirmed, but it appears that Vitality appears to reduce 
+the rate of petrification.
+
+Metallic Paralysis
+
+Permanent: No
+Reversable: Yes (duh, don't equip metallic equipment)/No (you can't fix this 
+status in battle)
+Ignores Priority: Yes
+Visual Cue: It looks pretty much like Paralysis.
+Hidden: Yes
+Timer: No
+Description: If you equip any sort of metallic equipment in the Dark Elf's 
+Cave (before he is defeated), you will be 
+inflicted with this status in battle.
+This metallic check either occurs in the menus or before battle.
+In battle, you can inflict yourself with the status by equipping a metallic 
+weapon/shield and execute a command.
+This status is part of the "party death check/counter", but doesn't have the 
+same properties as Death and Stone.
+Characters under this status have their ATB bar frozen, but are still able to 
+take all physical and magical attacks.
+
+Stop
+
+Permanent: No
+Reversable: Yes, but only while under Count/Doom. Dispel
+Ignores Priority: Yes
+Visual Cue: The character is unable to take any commands while under this 
+status.
+Hidden: No
+Timer: Yes. The timer can be accelerated via Haste or decelerated via Slow. 
+When the timer ends, the character is released 
+from this status. This status's timer can be altered by the Stop spell or the 
+different Hourglass items. The timer is set 
+to the value of the spell or item.
+Description: When set, the target's ATB bar stops as long as the timer set 
+for this status.
+This can be inflicted by a status attack (Stop spell or any Hourglass item).
+The Hourglass item has longer durations set than the spell.
+
+Statuses with timers affected include Paralysis, Sleep, Gradual 
+Petrification, Regen, HP Leak, Count/Doom, Poison, Reflect/Wall
+
+Note: This status is relatively buggy in the SNES version, when used in 
+conjunction with Gradual Petrification, Sleep, 
+Paralysis, and HP leak (on characters).
+
+Egg
+
+Permanent: No
+Reversable: Yes (when physical or magical damage is dealt).
+Ignores Priority: Yes (I guess, it is a starting status for enemies)
+Visual Cue: The monster uses the Egg image.
+Hidden: Unknown (this is an enemy specific status)
+Timer: No
+Description: Some monster formations start with this status, which is defined 
+by their group data.
+While under this status, the monster will not run any of its battle script.
+Supposedly they can run a special battle script like Charm status does, but 
+most enemies don't have anything so the 
+Eggs do essentially nothing.
+Monsters will use their magic counter script if a non-damaging magic attack 
+is made.
+When physical or magical damage is dealt, the monster in the egg "hatches" 
+and removes Egg status.
+The monster then runs its normal battle script.
+Monsters berserked while under this status will attack you, and also never 
+hatch themselves.
+
+Parry/Defend
+
+Permanent:  No
+Reversable: Yes (when the character's turn comes up, this status ends)
+Ignores Priority: Yes
+Visual Cue: The character is in the command executed motion.
+Hidden: Yes
+Timer: No
+Description: When you choose the command to defend, this status is used.
+While under this status, the defense of the character increases by a factor 
+of 2.
+The status ends when the character's turn comes back up.
+
+Charging
+
+Permanent: No
+Reversable: Yes (when the command is actually executed)
+Ignores Priority: Yes
+Visual Cue: The character uses the special command motion.
+Hidden: Yes
+Timer: Yes. High Agility reduces the duration of this timer. A powered up 
+attack is the result of the timer ending 
+normally. It is impossible to reset this status.
+Description: When you choose the command Build Up/Power/Deadly, this status 
+is used.
+While under this status, the magic multiplier of the character drops to 0.
+The status ends when the character makes the powered up attack.
+
+Twin
+
+Permanent: No
+Reversable: Yes (when the spell to be cast is determined)
+Ignores Priority: Yes
+Visual Cue: The characters involved in this status are casting simultaneously.
+Hidden: Yes
+Timer:  High Agility reduces the duration of this timer. A "dual cast" spell 
+is the result of the timer ending. It 
+is impossible to reset this status.
+Description: This status is set when the Twin command is invoked.
+Regardless of the success or failure of this spell, the status automatically 
+ends.
+This status can be removed when Stop, Silence, Stone, Death, Sleep, 
+Paralysis, Berserk is inflicted on any character 
+involved with the Twin command.
+
+Jump
+
+Permanent: No
+Reversable: Yes (when the command is completed)
+Ignores Priority: Yes
+Visual Cue: The character jumps into the air and eventually lands on the 
+monster.
+Hidden: Yes
+Timer: Yes. High Agility reduces the duration of this timer. A powered up 
+attack is the result of the timer ending normally. 
+It is impossible to reset this status.
+Description: This status is set when the Jump command is executed.
+All physical attacks on this target are redirected.
+All single targeted magical attacks on this target are ignored/missed.
+All multitargeted magical attacks subtract targets with this status in the 
+magic damage algo.
+Any status effect that has a timer is temporarily stopped.
+Once the character lands on the target, the status is removed.
+Any status effect that has a timer continues to run afterwards.
+
+Count/Doom
+
+Permanent: No
+Reversable: No
+Ignores Priority: Yes
+Visual Cue: The character is crouching when a command is not made with the 
+death counter hovering over them.
+Hidden: No
+Timer: Yes. This timer can only be paused by Stop. Once the timer elapses, 
+Death status is inflicted. The timer can be 
+reset by Count/Doom.
+Description: When set, a timer is placed above the character's head denoting 
+the amount of "ATB time" passes before Death 
+status is set.
+This timer only pauses to Stop status.
+Haste/Slow/Agility does not affect this timer.
+
+Hide
+
+Permanent: No
+Reversable: Yes (use Show command)
+Ignores Priority: Yes
+Visual Cue: Character "leaves" the battle.
+Hidden: Yes
+Timer: No
+Description: When executing the Hide command, the status is set.
+All other timers are stopped for the duration of this status.
+The ATB bar proceeds as normal to take only 3 commands (Row/Defend/Show).
+All physical attacks targeting this character are retargeted.
+All single targeted magic will automatically fail on the character.
+All multitargeted magic will subtract this target from the split damage 
+factor.
+This status ends when the Show command is executed.
+
+Note: If the only target left is the hidden character, the target will be 
+immediately attacked after they come out of 
+hiding (assuming the monster ATB are full and that's not a guarentee for 
+slower monsters), since the ATB is not stopped 
+while the character is hidden.
+
+HP Leak
+
+Permanent: No
+Reversable: Yes. Dispel (strangely enough)
+Ignores Priority: Yes
+Visual Cue: HP continues to drop without outside influences.
+Hidden: Yes
+Timer: Yes. Haste reduces the duration of this status and Slow increases the 
+duration. When the timer has elapsed, 
+this status is removed. This status can be reset by another HP leak attack 
+such as Bio.
+Description: This status is inflicted with a spell that inflicts such status 
+(Bio, Holy).
+For Holy's HP leak to occur, the target must be weak vs the elemental for it 
+to succeed.
+In other words, the status is inflicted if the target is weak vs the 
+elemental.
+The timer is set to 60 by design (probably could be changed/hack) and loses 
+as many HP as there are ATB timer "ticks".
+
+Reflect/Wall
+
+Permanent: No
+Reversable: Yes. Black Hole, Dispel
+Ignores Priority: Yes
+Visual Cue: Reflectable magic bounce off a "magical wall".
+Hidden: No
+Timer: Yes. This timer can be stopped via Stopped and be accelerated by 
+Haste. When the timer ends, this status is 
+removed. This status can be reset by a reflected Wall spell (see Evil/Wicked 
+Mask).
+Description: This status is set by magic (Reflect) or item (Lunar/Light 
+Curtain).
+When set, all reflectable magic  set on a target bounce off this "wall" and 
+target the opposing group.
+A timer is set when this status is set, and when the timer ends the status is 
+removed.
+Monsters don't use elemental magic counter scripts with reflected spells 
+(reflected Holy on Behemoths will invoke a 
+physical attack instead of Storm).
+
+Note: It is known that Dispel is reflectable, however it may have been a 
+mistake. Go figure.
+
+Barrier
+
+Permanent: No
+Reversable: Yes. Dispel, Black Hole
+Ignores Priority: Yes
+Visual Cue: All physical attacks automatically miss.
+Hidden: No
+Timer: No
+Description: This status is set by the Lunar Curtain item.
+There are some shared properties with Image...
+
+Image (2)
+
+Permanent: No
+Reversable: Yes. Dispel, Black Hole
+Ignores Priority: Yes
+Visual Cue: Two transparant images are displayed to the right of the 
+character.
+Hidden: No
+Timer: No
+Description: This status is set with spells (Image, Blink) and item 
+(Decoy/Scape Doll).
+After a physical attack fails, Image (1) is set. If Barrier status was set 
+previously, the Image (2) status does not change.
+
+Image (1)
+
+Permanent: No
+Reversable: Yes. Dispel, Black Hole
+Ignores Priority: Yes
+Visual Cue: One transparent image is displayed to the right of the character.
+Hidden: No
+Timer: No
+Description: This status is set with a spell (FF4's Mist Ring+Dragon) and 
+after "an image is hit".
+After a physical attack fails, this status is removed. If Barrier status was 
+set previously, Image (1) status does not change.
+
+Barrier, Image (2), Image (1) share the same property:
+All physical attacks on the target with this status will automatically miss.
+
+Covered
+
+Permanent: No.
+Reversable: Yes. (The Off command removes this status).
+Ignores Priority: Yes
+Visual Cue: The character with the Cover command takes all physical damage 
+from "Covered" target.
+Hidden: Yes
+Timer: No
+Description: When the Cover command is executed, this status is set on the 
+targeted character.
+If the target is a monster or himself, this status does nothing.
+This status is removed when the "Off" command is executed.
+
+Critical
+
+Permanent: No
+Reversable: Yes (increase the current HP of the character over 1/4 their max 
+HP)
+Ignores Priority: Yes
+Visual Cue: The character crouches when animation that hovers over them, 
+showing that they are really really hurt.
+Hidden: Yes
+Timer: No
+Description: This status is automatically set when the current HP of the 
+character is less than 1/4 their max HP.
+This status is automatically removed when the current HP of the character is 
+greater than 1/4 their max HP.
+
+Cover and Critical status share the same properties:
+The character with the Cover command automatically defends all physical 
+attacsk for the character with this status.
+Parry/Defend status on the character with Cover prevents this status from 
+having any impact.
+If the character with the Cover command is indisposed (Death, Stone, Break, 
+Stop, Paralysis, Sleep),
+that character cannot cover targets.
+
+Regen
+
+Permanent: No
+Reversable: No
+Ignores Priority: Yes
+Visual Cue: Healing hits every character at the same time at set intervals.
+Hidden: Yes
+Timer: Yes. The number of intervals of healing decreases with greater 
+Agility. When the timer ends, the status is 
+removed. The timer can be reset when the Regen/Spirit Wave command is 
+executed again (it is officially doable in FF4A, 
+a hack is already available for changing this behavior on the SNES versions).
+Description: This status is set when the Regen/Spirit Wave command is 
+executed.
+A timer is started when this status is applied.
+All characters are healed by 10 points (that can be hacked/changed) over set 
+intervals.

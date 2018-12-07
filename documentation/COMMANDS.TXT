@@ -1,0 +1,446 @@
+Information on the Pray subroutine:
+-----------------------------------------
+This command has a 50% success rate. A random number is generated between
+0x00 and 0xFF, and if it is less than 0x80 then the
+spell is executed. The byte for this comparison is at 1EA41 (FF4j: 1EA59)
+(FF2 1.1: 1EA56).  Change the value of 0x80 to 0xFF for 100% success, 0xC0
+for 75% success, 0x40 for 25% success, etc.
+
+The spell executed is at 1EA4F (FF4j: 1EA67) (FF2 1.1: 1EA64). Change this
+byte to the desired spell number and you can successfully have a
+Cure2/3/4/Esuna/etc. spell executed. A patch for this command will be
+forthcoming as well.
+
+
+Gird/Endure
+---------------------------------------------
+I forgot to post the location of the spell casted by Gird/Endure when I was
+researching commands a few weeks ago.
+The spell casted is at 1E882 (FF2us ROM with header) (FF2 1.1: 1E897 ?).
+The value there should be 05, which refers to the spell number for the
+command.  -reflectable -protect
+
+
+Kick
+----------------------------------------------
+
+Damage to all targets: Attack Power * Attack Multiplier / 4
+Does no damage to monsters of the Flan type
+Factors against target defense
+Attack is not considered physical (nor magical)
+Non-elemental attack, regardless of what is equipped on the arms
+Time to command execution based on Agility.
+
+Hit rate for this command is 100%. However, the behavior of this command is
+"different" when you face off against Yang at Baron.
+If you use Protect to increase defense, Kick starts to miss the targets as
+the defense becomes greater than his attack power.
+
+If Yang's attack power after the randomization (which is 0 to 50% additional
+base attack power which is then divided by 4
+since that is how the attack power is derived) is less than the target's
+defense, the attack misses in the SNES version.
+In the GBA version, the target always takes 1 damage.
+
+
+
+Twin
+----------------------------------------------
+When Twin is chosen, it checks to make sure both twins can cast, then sets
+their status to "twin casting"
+and sets their next battle command to a command for casting a twin spell.
+When their next turn comes up,
+the spell is chosen and the spell subroutine is called.
+
+I couldn't find any references to the wisdom values in the Twin subroutine.
+However, it references the RAM
+locations for the caster, which means that one of the twins is chosen as the
+caster. My pretty confident
+guess is that it's whichever ATB gauge fills up first, since that twin would
+be executing the next battle
+command for casting a twin spell. They would be the caster, and therefore
+their wisdom would be used.
+
+if the character ids of the casters are FuSoYa and Golbez, it chooses W.Meteo
+as the spell. As for the
+percentage chance, it generates a random number between 0x00 and 0xFF, and if
+the value is below 0x40,
+the spell is Comet; otherwise the spell is Flare.
+-However, if the value is 0xFF, then the command fails. So it appears that
+there's a 25% of Comet,
+a 74.6% chance of Flare, and a 0.4% chance of failure.
+
+1. When Palom and Porom are both in the party, any character that uses "Twin"
+causes the twins to start casting.
+   The twins MP is used.
+2. When neither twin is in the party, any character that uses "Twin" causes
+only the character in slot #1
+   (the middle slot) to start casting. If that one character has enough MP,
+they will cast Flare or Comet.
+3. When only one twin is in the party, if there is a character in slot #1,
+any character using "Twin" causes Palom/Porom
+   and the slot #1 character to start casting. The twin's MP and the slot #1
+character's MP is used.
+4. When only one twin is in the party, if there is not a character in slot
+#1, Palom/Porom's "Twin" command is grayed
+   out as if the other twin is dead. However, other character's "Twin"
+commands will not be grayed out, and if you use
+   them the game will freeze. (In my case, Palom started casting, came
+forward with the message "Failed.", then came
+   forward again with "Comet", but the spell animation never started because
+the game froze.)
+
+
+
+
+
+Recall
+-----------------------------------------------
+Common:
+Ice1, Fire1, Lit1
+
+Uncommon:
+Ice2, Fire2, Lit2
+Ice3, Fire3, Lit3
+Toad
+Bio
+Break (Stone), Tornado (Weak)
+Doom/Death/Fatal, Flare (Nuke)
+
+Not Cast Ever:
+Osmose (Psych), Drain
+Quake
+Meteor
+
+Not Sure Of:
+Piggy
+Venom, Sleep, Stop
+
+if Tellah doesn't have enough MP to cast selected spell, he will use the fail
+reaction instead of attempting to cast the spell.
+
+r = random number between 0x00 and 0xA0
+if 0x00 <= r < 0x08 then spell is 0x2A = Stone
+if 0x08 <= r < 0x10 then spell is 0x26 = Virus
+if 0x10 <= r < 0x18 then spell is 0x27 = Weak
+if 0x18 <= r < 0x20 then spell is 0x2B = Fatal
+if 0x20 <= r < 0x38 then spell is 0x1D = Fire1
+if 0x38 <= r < 0x50 then spell is 0x20 = Ice-1
+if 0x50 <= r < 0x68 then spell is 0x23 = Lit-1
+if 0x68 <= r < 0x80 then spell is 0x19 = Toad
+if 0x80 <= r < 0xA0 then fail?
+
+5% each Stone, Virus, Weak, Fatal.  15% each Fire1, Ice-1, Lit-1, Toad.  20%
+fail.
+
+CHANCE OFFSETS
+--------------
+1EC0D
+1EC15
+1EC1D
+1EC25
+1EC2D
+1EC35
+1EC3D
+1EC45
+
+SPELL OFFSETS
+-------------
+1EC11
+1EC19
+1EC21
+1EC29
+1EC31
+1EC39
+1EC41
+1EC49
+
+
+Hide
+-------------------------------------------------
+When executed, the character "hides" from the battle, never to be targeted
+again (kinda like how Jump works when
+Kain is in the air). Statuses like gradual petrification and count are
+temporarily halted (Jump does the same thing).
+
+Edit: New Info
+
+In the GBA version, the Hide command is automatically executed on the very
+next turn according to the ATB bar if
+the character's current HP is less than 1/4 their max HP (which is the
+definition of being weak). The ATB bar is
+reset when the Appear command is executed.
+
+In the SNES version, the Hide command is automatically executed when the
+character is weak, regardless of the
+current allied turn being executed. This effectively takes the character out
+of the battle easily unless you manage
+to heal said character in a really small gap after being told to show
+themselves. The ATB bar is reset when told to Show,
+but that doesn't prevent Hide from being executed.
+
+However, this behavior appears to be averted in a boss themed battle (need to
+complete the battle at Fabul to be sure,
+perhaps it is the boss bit that is being adhered to instead) such as the
+Antlion battle.
+
+the scripted Anna-Waterhag battle forces Edward to not Hide during the battle
+at all (for both GBA+SNES versions). However,
+the similarities end there.
+Edward refuses to auto-hide in the Mombomb+Antlion battle because of the boss
+bit.. but he's free to auto-hide during
+the battle at Fabul since none of the battles involve an enemy with a boss
+bit.
+
+Auto-Hide occurs faster in the SNES version for two reasons..
+
+1) Auto-Hide is executed automatically on the SNES version, like how Berserk
+does for any character/monster.
+
+2) Auto-Hide is executed on Gilbert's turn in the GBA version, so it gives
+one an opportunity to heal him before the
+game attempts to auto-hide on his next turn.
+
+
+
+Dark Wave
+------------------------------------------------
+HP Loss: MaxHP/8
+Damage: Attack Power*Attack Multiplier/2
+Does not factor against defense/magic defense
+Non-elemental based attack
+
+Undead monster types: Damage/4
+Pudding/Flan/Slime monster types are immune to the attack (like Kick).
+-if you use it when Cecil has less than 1/8 of his max HP, it will still
+perform the command, but will kill him.
+
+
+
+Heal/Medicine
+------------------------------------------------
+SNES:
+-It will fail if you use it with just one Potion left, but will still consume 
+the Potion. 
+-If you have multiple groups of Potions, it starts with the group highest up 
+on your list. However, 
+it will consume two Potions, one from the highest group and one from the 
+second highest. So if you have 
+two groups of one Potion each, it will not only fail, but consume both 
+Potions.
+
+1E4D3     Value of CE (Potion) -> This is the item that the subroutine checks 
+against and subtracts 1 of, if there's enough (FF4j: 1E4EB)
+1E51D     Value of CE -> This is the item effect to use. Replacing it with CF 
+makes it a split Hi-Potion, D0 a split X-Potion, and so on (FF4j: 1E535)
+1E528     Value of CE -> This is the item visual effect to use; it 
+corresponds with the item number (FF4j: 1E540)
+
+Just wanted to say the offsets to change for these have changed in FF2us 1.1:
+
+Item Heal/Medicine checks against: 0x1E4E8
+Item effect Heal uses: 0x1E532
+Item visual effect Heal uses: 0x1E53D
+
+
+Throw/Dart
+------------------------------------------------
+Damage dealt is always this formula: Level * Weapon Power + rand (0, 
+255)-BSiron
+Level x Weapon Power + rand(0,98) - Phoenix
+
+Damage ignores target's armor, so Defense = 0 in the calculations.
+
+Ignore all other properties of the weapon, whether beneficial or not.
+
+Row is irrelevent for this attack (Edge's or the enemy).
+
+
+
+Aim
+------------------------------------------------
+This command sets the hit rate to 99%. Since hit rate correlates to damage 
+output, this effectively increases 
+damage UNLESS your hit rate is at or above 99%.
+
+Normally, the attack power for most characters is like this:
+
+Bow Attack Power/2 + Str/4
+
+Aim is supposed to do this (only correctly in FF4A)
+
+Bow Attack Power + Str/4
+Hit Rate = 99%
+
+The attack power change isn't done for the SNES versions of this game
+
+Apparently, in FF4A, Rosa's Fight command is intentionally crippled when she 
+uses a Bow+Arrow.
+You would treat her as if she was blind when she uses the Fight command 
+instead of Aim while equipped with a Bow+Arrow.
+Other characters do not have this penalty, just Rosa.
+
+
+The Aim subroutine decreases the target’s physical defense % to 0, increases 
+the user’s physical attack % to 255, 
+then calls the normal Fight subroutine. (A physical attack % value over 99 is 
+probably reduced to 99 within the 
+Fight subroutine.) This means that it always hits, and has the damage bonus 
+that Deathlike2 mentioned. After Aim 
+hits it restores the original physical defense and physical attack 
+percentages.
+
+
+
+Regen/Spirit Wave
+-----------------------------------------------
+
+Regen healing normally under my group: 10
+Regen healing when FuSoYa under Haste: ~8
+Regen healing when FuSoYa under Slow: 20
+Regen healing when FuSoYa under Slowx2: 26
+Regen healing when FuSoYa under Slowx3: 27
+
+-This suggests Slow being very stackable.. Haste is relatively inconclusive 
+at best.
+
+-Regen healing can last forever if Stop has been casted on FuSoYa while on 
+Regen Status. Regen's timer 
+seems to be messed up under this, and FuSoYa then is allowed to input other 
+commands under this instance.
+
+Executing Regen again resets the timer.
+
+I've finished looking into this subroutine, and have discovered the 
+calculation for how long Regen lasts. 
+It seems very complicated considering how little the command is used, and how 
+little variation it results in. 
+I believe the calculation is:
+
+Timer = (value at A0089 - 0x80) x relative speed x speed modifier / 0x10
+
+This timer counts down about two or three times every character (ally and 
+enemy) turn. HP is restored every 6 
+clicks of the timer. Stop probably uses the same timer, which is why it 
+restores FuSoYa's movements after it's used.
+
+I've also found two ways to make this command more useful. The first is 
+simply increasing the HP recovery. The data 
+to change is at 1E5E9 (FF2us ROM with header) or 1E601 (FF4j ROM with 
+header). This byte is 0x0A = 10 HP, so 
+changing this to 0xFF = 255 HP. Unfortunately, you can't make it any higher 
+than this, at least not that I could 
+discover. The second way I thought would be useful is to let FuSoYa input 
+commands again immediately (i.e. have no 
+delay) and just restore 10 HP for the entire battle. To do this, change the 
+data at 1E601 (FF4j: 1E619) to 01, and 
+change the data at 1E60F (FF4j: 1E627) to 00. 
+
+Just wanted to say the offsets to change for these have changed in FF2us 1.1:
+
+Regen/Spirit Wave HP restoration value: 0x1E5FE
+Values to prevent Regen from freezing FuSoYa: 0x1E616, 0x1E624
+
+
+
+Jump
+------------------------------------------------
+Increases base attack power by 2.
+
+User cannot be targeted physically.
+
+I could be wrong, but Reflected spell attacks can target the user while in 
+Jump status, although this will fail 
+miserably. This implies there may be issues in targeting while under Reflect 
+(like all those hidden spells that
+were dummied out in FF2 US. This is more notable behavior with Evilmasks. Not 
+sure if this is fixed in FF4A.
+
+FF4A Specific: Double Jump seems to consider the attack a result of 2 Jumps.
+
+New Edit: Time to command execution is based on Agility. Consider the effect 
+of the Blood Spear early game.
+
+-spears do NOT effect the dmg dealt.
+
+
+Cover
+------------------------------------------------
+This command is two-fold.
+
+When used as a command, the target of the Cover will always be protected by 
+attacks (unless it is the 
+same character that is initiating the command, which is counter productive).
+
+The command is "automatic" when any target, other than the character with 
+Cover command is low on HP, 
+which is defined by having their current HP being less than 1/4 of their max 
+HP.
+
+Damage taken from the covering character will reflect the row that the 
+covered character is defending... 
+further tests needed to determine if the row of the covering character is 
+factored in as well...
+
+However, the Cover command in either form will not execute if the following 
+are true:
+
+The character is unable to execute the command due to current status.
+The following status attributes will prevent Cover from working:
+Stop
+Berserk
+Charm
+Sleep
+Paralysis
+Petrification (the final stage, which is essentially death according to the 
+game)
+Death
+
+Other reasons why Cover will fail to work:
+The character doing the covering is low on HP.
+The character doing the covering is using their turn to defend.
+Another character is attacking the weak character, including the weak 
+character themselves... this doesn't 
+matter if any/all of the characters are charmed/confused.
+
+The row of the character that is doing the covering is used in the damage 
+algo, not the character that is 
+being covered (in order words, Cecil's current row is used in the damage 
+algo).
+
+
+Power/Deadly
+--------------------------------------------------
+Increases base attack power by 2.
+
+Time to command execution most likely based on Agility.
+
+This command is most effective vs Flan/Pudding, even though it isn't a 
+targeted weakness, but a 
+complementary command to Kick.
+
+FF4A Specific: Deadly increases base attack power by 3.
+
+-The enemy type multiplier probably only applies against the calculated 
+damage (even though defense is considered 0).
+
+-The elemental type multiplier applies against the attack power when 
+calculated against defense.
+-This command is affected by the back row (unless perhaps a back row 
+compatible weapon is equipped).
+
+
+The following commands are not considered physical attacks, even though they 
+are technically physical attacks:
+Jump/Double Jump
+Aim (only in the SNES versions)
+Kick
+Build Up (only in the SNES versions)
+
+SING
+----
+
+1EB1D: "Nothing"
+1EB2A: "Mute"
+1EB37: "Charm"
+1EB40: "Sleep"

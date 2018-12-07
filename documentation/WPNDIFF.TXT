@@ -1,0 +1,9 @@
+Lunar Staff: Casts "Dispel" in FF4j, casts nothing in FF2us
+Defense Sword: Casts "Protect" in FF4j, casts nothing in FF2us
+Murasame: Casts "Protect" in FF4j, casts nothing in FF2us
+Ogre Axe: Attack % is bumped from 19% in FF4j to 35% in FF2us
+Dreamer Harp: Not a long range weapon in FF4j
+Charm Harp: Not a long range weapon in FF4j
+Elven Bow: Casts "Shell" in FF4j, casts nothing in FF2us
+Crystal Helm: Not strong vs. Undead in FF4j
+Black Robe: Wisdom+5 in FF4j, Will+5 in FF2us

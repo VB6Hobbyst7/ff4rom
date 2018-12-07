@@ -1,0 +1,137 @@
+======================================================================================
+Event Triggers                                             Phoenix Hacks
+                                                            12/22/09
+
+======================================================================================
+
+Map tile triggers reference event triggers. The pointers for these triggers
+are located from 97460 to 9765F. To find where these point, reverse the
+bytes and add 0x97660. The event trigger data is located from 97660 to
+9785F.
+
+======================================================================================
+FFxx = Load event xx
+FEaa = If event flag aa is set...
+aa = If event flag aa is clear...
+
+Examples:
+aaFFxxFFyy = If event flag aa is clear, then load event xx, else load
+             event yy
+FEaabbFFxxFEccFFyyFFzz = If event flag aa is set and bb is clear, then load
+                         event xx, else if event flag cc is set, load event
+                         yy, else load event zz
+
+The event trigger data, like the NPC speech data, utilizes events numbers
+01-03, which are EE message calls: "Show message [hex data xx following
+event call] (from bank 2)" For example, the Old Man wandering in the town
+of Baron has the following data (at 99EDE-99EEA):
+
+   FE 06 FF 03 FE 0B FF 02 FF 01 03 04 05
+
+This translates to:
+
+   Data      Meaning
+   --------   ------------------------
+   FE 06      If event flag 06 is set,
+   FF 03      load event 03 (i.e. message call EE 02 = message 05 of bank 2)
+   FE 0B      (else) if event flag 0B is set,
+   FF 02      load event 02 (i.e. message call EE 01 = message 04 of bank 2)
+   FF 01      (else) load event 01
+               (i.e. message call EE 00 = message 03 of bank 2)
+   03 04 05   [Hex data following event call]
+======================================================================================
+
+
+##   Offset   Pntr   Data
+--   ------   ----   -----
+00   97660   0000   FF 0B
+01   97660   0000   FF 0B
+02   97662   0200   FF 00
+03   97664   0400   FE 0B 09 FF 1A FF 00
+04   9766B   0B00   22 FF 14 FF 00
+05   97670   1000   04 FF 15 FF 68
+06   97675   1500   0B FF 1C FF 1E
+07   9767A   1A00   FE 06 FF 00 FF 17
+08   97680   2000   08 FE 3F FF 19 28 FF 18 FF 00
+09   9768A   2A00   0D FF 27 FF 00
+0A   9768F   2F00   0D FF 28 FF 00
+0B   97694   3400   0D FF 2F FF 00
+0C   97699   3900   0E FF 30 FF 00
+0D   9769E   3E00   0F FF 39 FF 00
+0E   976A3   4300   13 FF 3C FF 3E
+0F   976A8   4800   13 FF 3D FF 00
+10   976AD   4D00   14 FF 42 FF 00
+11   976B2   5200   27 FF 43 FF 00
+12   976B7   5700   12 FF 45 FF 00
+13   976BC   5C00   FE 11 15 FF 46 FF 00
+14   976C3   6300   16 FF 47 FF 00
+15   976C8   6800   1B FF 48 FF 00
+16   976CD   6D00   FE 03 FF 00 FF 11
+17   976D3   7300   17 FF 31 FF 00
+18   976D8   7800   FF 0B
+19   976DA   7A00   FE 1B 2C FF 52 FF 00
+1A   976E1   8100   FE 1C 1D FF 5F FF 00
+1B   976E8   8800   1E FF 60 FF 00
+1C   976ED   8D00   1F FF 27 FF 00
+1D   976F2   9200   1F FF 28 FF 00
+1E   976F7   9700   1F FF 61 FF 00
+1F   976FC   9C00   0B FF 62 FF 00
+20   97701   A100   FF 65
+21   97703   A300   20 FF 63 FF 00
+22   97708   A800   FE 06 FF 6B FF 69
+23   9770E   AE00   FE 06 FF 6C FF 6A
+24   97714   B400   24 25 FF 71 FE 23 25 2F FF 72 FF 00
+25   97720   C000   57 FF F2 FF 00
+26   97725   C500   2A FF 79 FF 00
+27   9772A   CA00   2F FF 7A FF 00
+28   9772F   CF00   FE 0C FF 7C FF 00
+29   97735   D500   02 FF 51 FF 00
+2A   9773A   DA00   2D FF 7F FF 00
+2B   9773F   DF00   FE 2C 18 FF 83 FF 00
+2C   97746   E600   31 FE 23 FF 4A FF 00
+2D   9774D   ED00   0C 26 FE 31 FF 66 0C FE 26 FE 31 FF 8D FF 00
+2E   9775C   FC00   FE 05 FF 93 FF 00
+2F   97762   0201   07 32 FF 8B FF 00
+30   97768   0801   FE 3B 3D FF C5 FE 38 3A FF A6 07 FF 8C FF 00
+31   97777   1701   FF 8E
+32   97779   1901   FF 67
+33   9777B   1B01   33 FF 94 FF 00
+34   97780   2001   19 FF 95 FF 00
+35   97785   2501   FE 19 0A FF 96 FF 00
+36   9778C   2C01   0A FF FE FF 00
+37   97791   3101   34 FF 9A FF 00
+38   97796   3601   FF 9B
+39   97798   3801   FF A0
+3A   9779A   3A01   53 FF A1 FF 00
+3B   9779F   3F01   FF A2
+3C   977A1   4101   FE 48 FF F5 FF F4
+3D   977A7   4701   FF F6
+3E   977A9   4901   FF A5
+3F   977AB   4B01   FE 38 39 FF A7 FF 00
+40   977B2   5201   3F FF A9 FF 00
+41   977B7   5701   FF B0
+42   977B9   5901   FF B1
+43   977BB   5B01   FF B5
+44   977BD   5D01   FF B3
+45   977BF   5F01   FF B4
+46   977C1   6101   FF B5
+47   977C3   6301   FE 40 41 FF AA FF 00
+48   977CA   6A01   FE 40 3B FF B6 FF 00
+49   977D1   7101   FE 3D 43 FF 9E FF 00
+4A   977D8   7801   47 FF D0 FF 00
+4B   977DD   7D01   FF 7D
+4C   977DF   7F01   FF 7E
+4D   977E1   8101   FE 48 FF DD FF DC
+4E   977E7   8701   FE 47 48 FF 9D FF 00
+4F   977EE   8E01   49 FF ED FF 00
+50   977F3   9301   55 FF FC FF 00
+51   977F8   9801   FF E6
+52   977FA   9A01   FF E4
+53   977FC   9C01   FF EB
+54   977FE   9E01   FF E8
+55   97800   A001   FF E7
+56   97802   A201   51 FF 04 FF 00
+57   97807   A701   52 FF 05 FF 00
+58   9780C   AC01   FE 3B FF 00 FF 06
+59   97812   B201   50 FF F3 FF 00
+5A on   97817   B701   FF

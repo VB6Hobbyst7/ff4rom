@@ -1,0 +1,36 @@
+The Pinkpuff aka Flan Princess seems to have relocated in the Lunar 
+Subterrain. Its normal "breeding ground" is that 
+little side cave on floor B5. However, I don't think that monster group 
+exists there... instead.. I've actually encoutered 
+it in a different location... In the area where you have three openings along 
+a row.. one is a save point, the other is 
+the Holy Spear area, and the other is the dual Ribbon area. I've found the 
+Pinkpuff in the dual Ribbon area...
+
+You're absolutely correct, JCE and I never found this data but Zyrthofar has 
+it in the new version of his editor. 
+The Flan Princesses are now in the Ribbon room instead of the "P" room. 
+They're also slightly more common, they now occupy 
+the second to rarest slot in addition to the rarest.
+
+You know, those rooms are where the White/Holy Robe and Minerva Robes are... 
+which might actually make "some" sense in 
+terms of enemy placement (pretty much the "Flan Princesses" guard the women's 
+ultimate equipment)...
+
+Offset -  Monster name -  Lv - HP - Attack -  Defense -  Magic Defense - 
+Special bit - Item drop - Attack sequence - 
+Extra bit - Attack statuses - Status defenses/immunities - Weakness - Spell 
+power - Monster type - Counter attack
+
+731BD PinkPuff (FF2us) 60 10 27 5F 99 C0 25 68 7D 58 00 00 08 7F 20
+731BD Flan Princess (FF4ET) 60 10 27 5F 99 C0 25 A8 7D 58 00 00 08 7F 20
+
+Not all monsters have all of these fields, but up until the Attack sequence 
+they are all the same data.
+
+Well there are three groups of the drop rate.  Each 64 bytes $40 adds a 25% 
+extra chance to drop the items.  Unless all 
+four possible items are the same in which case the monster will always drop 
+said item regardless.  *see "Tower" Key
+

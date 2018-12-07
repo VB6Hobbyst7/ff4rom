@@ -1,0 +1,234 @@
+
+Physical Attacks:
+
+The best examples of an elemental physical attack are Yang's Claws.
+
+Note: Elemental physical weakness for Fire+Ice equipment combinations have also been "corrected" in FF4A as well 
+to not be weak
+vs Fire+Ice physical attacks. This is an equipment specific attribute, not an monster attribute.
+
+If the target is weak any of the elements in the attack, the attacker's base attack power is multiplied by 2. It is 
+multiplied by 
+4 instead if the target (a monsters only attribute) has the Weak+ bit set.
+
+The above rule has total precedence over all physical elemental attacks for the SNES version. Weakness has precedence 
+over absorb/resistance,
+but not Immunity in the GBA version.
+
+For example if Yang has an IceClaw and FireClaw and attacks a FlameDog, the fact that it is weak vs ice has precedence over 
+the fact it absorbs Fire.
+
+If the target is immune to any of the elements in the attack, the attacker's base attack power is multiplied by 0.
+
+This is most notable with Cecil's Darkness elemental sword vs Zombie monsters (and others).
+
+Note: In the SNES version of the game if you manage to make a critical hit or deal "weird" damage to zombies with 
+Cecil's Darkness
+elemental swords, the base attack power of the attack is 25.
+
+Immunity has precedence over absorb and resistance, but not weakness in the SNES version. Immunity has total precedence 
+over all
+physical elemental attacks for the GBA version.
+
+If the target is resistant or absorbs any of the elements in the attack, the attacker's base attack power is multiplied by 1/2.
+
+For example is Yang has a FireClaw and attacks a FlameDog, the base attack power of Yang is multiplied by 1/2 and the 
+FlameDog takes less
+damage as a result.
+
+Here's a quick reference order of which has priority:
+FF4A (GBA)
+Immunity > Weakness > Absorb/Resistance
+FF2/4 (SNES)
+Weakness > Immunity > Absorb/Resistance
+
+Magical Attacks:
+
+Note: In the SNES version of the game, elemental immunity has precedence over elemental absorb. In the GBA version of 
+the game, elemental absorb
+has precedence over elemental immunity. Absorb/Immunity has precedence over every magic attack.
+
+The best example for this is how the Adamant Armor+Cursed Ring react when both are equipped at the same time  in both 
+versions of the game.
+
+Note: An interruptable attack is an attack sequence that doesn't end until the damage or status effects are displayed 
+(which implies the sequence
+has completed).
+
+Examples of uninterruptable attack sequences include FF4A's ZeromusEG's multi-elemental attack, the ToadLady's Toad attack, 
+and the
+Dark Elf's multi-elemental attack.
+
+If the target is able to absorb any elementals in the magic attack whether in a solo or uninterruptable attack, all the 
+damage is inverted
+after being applied against magic defense. If a physical attack is in this sequence, the attack is converted as "healing". 
+This rule has precedence
+over an entire attack sequence.
+
+If the target is immune to any of the elementals in the magic attack whether in a solo or uninterruptable attack, the base 
+spell power of the
+attack is multiplied by 0, therefore all damage taken by the target is effectively equal to 1.
+
+If the target is ONLY resistant to any of the elementals in the magic attack whether in a solo or uninterruptable attack, 
+the spell power of the
+attack is multiplied by 1/2. If this is included in an uninterruptable attack sequence, damage intake will be 1/2 for all 
+the other attacks.
+
+In FF4A, three of the summons in Rydia's Trial are resistant to their notable elementals. They will take far less damage 
+by their favorable elementals.
+
+If the target is ONLY weak to any of the elementals in the magic attack whether in the solo or uninterruptable attack, 
+the spell power of the
+attack is multiplied by 2. If the target has the "Weak+" attribute (only affects attacks on monsters), the spell power 
+of the magic attack is 
+multiplied by 4 instead. If this is included in an uniterruptable attack sequence, damage intake increase will match 
+whether or not the target has 
+the Weak+ attribute.
+
+Here's a quick reference order of which has priority:
+FF4A (GBA)
+Absorb > Immunity > Resistance > Weakness
+FF2/4 (SNES)
+Immunity > Absorb > Resistance > Weakness
+
+Notes:
+Darkness Elemental - There is no Darkness magic (the Dave Wave attack is non-elemental for those that are wondering), 
+but it is still absorbable
+by equipment. You generally notice this in the form of elemental immunity through Zombies and Cecil's Darkness elemental 
+swords.
+
+Aerial Elemental - There is no enemy that has immunity to (or absorb) this elemental, but it still works properly. Also, 
+FF4A's description of
+this elemental being "resistant" for the Blue Dragon doesn't tell the complete story. This is because there is no 
+Aerial elemental spell. However, 
+a spell given the Aerial Elemental will behave just like Fire/Ice/Lightning elementals does for absorb, immunity, 
+and resistance. Weakness vs Aerial 
+though means immunity to Quake type spells... the equivalent of having the target have Float status.
+
+Drain Elemental - This is a more peculiar elemental. Resistance (1/2 attack power) is applied when the Drain/Absorb 
+bit on the target is enabled
+(it serves a dual purpose function). If a different offensive spell is given this elemental, the target is directly 
+healed by it (which shouldn't be 
+too \
+much of a surprise) if it has the Drain/Absorb bit is set.
+
+Spells given the Drain elemental don't heal undead targets or hurt you.
+
+Drain+Osmose has no effect, but that's because they are hardcoded, even if you change their elemental properties.
+
+The Drain elemental given to weapons are very consistant at least. Immune+Absorb/Drain bit will make Drain 
+weaponry/attacks deal 1 damage. Drain
+weakness will allow 2x damage dealt to Drain weaponry. Drain healing is inverted vs Undead...
+
+Weak+/Immune "Elemental" - Believe it or not, this also serves a dual purpose.
+
+Defensively:
+
+Monsters that have this as a weakness increases the power of the spell/weapon by 4x. Monsters that have this as an 
+immunity make other physical
+and magical attacks reduces the power of the spell/weapon to 0. Armor doesn't have it as a "weakness", which is good.
+
+Offensively:
+
+Weapons that have this as an attribute have their attack power increase by 4x. This is because the Weak+ bit is ALSO 
+the Immune "elemental weakness
+bit". So let's say we have a weapon that has the Immune bit set. We know that Zombies have the Immune bit. If this 
+"Immune elemental" weapon were to 
+attack the Zombie, the attacker will have his attack power increase by 4x. This has no effect if the monster has this 
+attribute since there is no 
+"Immune elemental weakness" for armor.
+
+FF4A lists doesn't quite list "immunity", but only that a target is resistant (and technically the target is very 
+resistant in this case).
+
+Important note: Elemental multipliers do not stack. If one were to expose the Ice+Aerial weakness of the Arachne monster 
+with the Blizzard Spear
+or Ice Arrows (which contains both elementals), the character will have his attack power increase only by 4 because of 
+the Weak+ bit. You would be doing 
+the same damage if Fire arrows or the Icebrand is used instead.
+
+1. The first form of Zeromus, fought by FuSoYa and Golbez (enemy set B4), reacts to any dark-elemental spell/item. It 
+doesn't need to be the 
+Crystal to have him kill your party and end the battle. As Deathlike2 stated, dark-elemental weapons don't work.
+
+2. The second form of Zeromus (enemy set B7), reacts only to the Crystal, and only when the Crystal is dark-elemental. 
+Other spells/items/weapons
+do not work, and changing the element on the Crystal makes it not work.
+
+
+I thought a bit about this and did a little testing on this, and I came to these conclusions (feel free to correct 
+me if I'm wrong):
+
+1) Elemental Resistance Against Physical Attacks:
+If an enemy is resistant to your elemental based physical attack, you will deal 1/2 as much damage as normal... or 
+in the worst case, Dark Knight (Darkness) weaponry vs Zombies (is there a specific multiplier/divider?).
+
+If your weapon's elemental is effective against the enemy, you will deal 2x damage (sometimes 4x, unless there's something 
+specific I'm missing here?).
+
+If your weapon has an enemy type property, a specific "enemy type multiplier" is in use? In other words, all anti-Dragon 
+weaponry will deal 4x damage, regardless (Whip, Spear, Arrows)...
+
+If you are two handed (Yang/Edge), or your weapon has both an elemental+enemy type attribute... the target that has a 
+weakness to the any of the attacks will take precedence over the resistance (if it even applies).
+
+For instance, if you attack a FlameDog with a FireClaw+IceClaw, the Ice Claw takes precedence over the Fire Claw, 
+therefore dealing awesome damage.
+
+In FF4A, the Apollo Harp has the Fire attribute (I think) and the Dragon attribute. Attacking the Blue Dragon will 
+allow the Dragon attibute to take precedence over the Fire resistance. Similar thing would occur with the Dragon Claw+any 
+of the elemental Claws...
+
+2) Elemental Resistance Against Magical Attacks:
+If you are weak to an elemental, you will take 2x (or 4x in some instances?) damage.
+
+If you are resistant to an elemental, you will take 1/2 damage (rare for enemies, usually applicable to character equipment).
+
+If you can absorb an elemental, invert damage intake (though, some attacks seem to do 1 point of healing).
+
+If there is an uninterrupted sequence of attacks, any elemental based attack that you can absorb or resist (absorbing 
+taking precedence), all further attacks will accumulate against applied absorption/resistance.
+
+Regarding the immune flag on the Glass Helm/Adamant Armor and the absorb flag (is that even the correct name?) on the 
+Hero Shield (FF4A only), Cursed Ring, and Ribbon (FF4ET)...
+
+The immune flag is consistant on all ports (FF2/4/4ET/A):
+
+By itself with the Glass Helm, it provides zero additional protection, even if other equipment provides elemental protection.
+
+On the Adamant Armor, elemental damage (specifically Fire, Ice, and Lightning) is 1 damage except if the elemental attack 
+is maxHP based, where you take damage as if you were resistant to the attack which usually has a different formula calculation.
+
+The absorb flag is applied completely differently between the SNES ports (FF2/4/4ET) and GBA ports (FF4A):
+
+The Cursed Ring and Hero Shield (FF4A) work the same way when there is no additional elemental protection provided by other
+equipment... there is no protection provided at all.
+
+If elemental protection is provided (the Ribbon in FF4ET has it built in), then take all elemental damage (including Holy, 
+and perhaps others) and invert it as healing. The behavior though is completely different across ports... as described here:
+
+SNES/GBA: If the elemental attack does not rely on maxHP, but rather by enemy magic power, the attack must be calculated 
+against your magic defense. This is why the Cursed Ring reduced your stats... it is to increase the impact of the elemental 
+healing. The Hero Shield technically does the opposite by reducing the healing.
+
+SNES specific: If the elemental attack relies on maxHP, all elemental damage is 1 and inverted meaning that you will always 
+get healed by 1 pt.
+
+GBA specific: If the elemental attack relies on maxHP, the damage dealt depends on said attack (attacks will deal randomized 
+damage based on the enemy's magic power applied against your magic defense or it will deal full damage as if you were not resistant to the elemental)  and damage is inverted.
+
+There is only one clear difference between FF2/4/4ET (SNES) and FF4A (GBA). The Immune flag takes precedence over the Absorb 
+flag in FF2/4/4ET. It is the opposite in FF4A (Absorb flag takes precedence over the Immune flag).
+
+If anyone needs examples, feel free to ask. Enemies used in testing include the Gold Dragon (King-Ryu in FF2) for it's maxHP 
+lightning attack, Silver Dragon (Ging-Ryu in FF2) for its multitargeted Ice Blaze attack (when it has a partner), and Red 
+Dragon for its multitargeted unavoidable Fire attack (when it is alone).
+
+Exposing enemy type (race) modifiers implies enemy defense = 0 and a 4x damage multiplier.
+Exposing enemy elemental weakness via physical attacks implies attack power boost of 2x or 4x multiplier if Weak+ attribute is in use.
+Exposing enemy elemental resistance/absorb via physical attacks implies attack power reduction of 2x is in play.
+Exposing enemy elemental immunity (Darkness only though and only physical attacks) implies attack power = 0 (except in the case of the SNES version, it is probably 1 since more than 1 damage can be dealt on occasion).
+Exposing enemy elemental weakness via magical attacks implies enemy magic defense = 0 and a 2x or 4x multiplier if Weak+ attribute is in use.
+Exposing enemy elemental absorb via magical attacks (only) implies inverted damage and technically it is applied against the enemy's magic defense.
+
+It is unknown what elemental immunity does against magical attacks though (it needs testing).

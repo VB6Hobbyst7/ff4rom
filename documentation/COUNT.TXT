@@ -1,0 +1,39 @@
+                                    Count
+This status inflicts countdown-induced death, very much like in Final Fantasy
+5 and 6.
+
+Status:
+
+This status counts down from whatever the initiated value happens to be
+(which is 10 for the Count/Doom spell).
+
+Count can be affected by Stop (and Dispel can remove Stop under this
+instance).
+
+Count is totally unaffected by Haste and Slow, so those of you that assume
+that the Plague "hurts you" by casting Haste on you are totally wrong.
+
+Spell:
+
+The attack itself has a perfect hit rate of 100%, but it's completely
+unblockable. It is has the boss-bit set, so it can't be used on bosses.
+
+Interestingly enough, though, it is reflectable. FF2/4ET has the
+Fataleye/Ahriman monsters that don't have the boss bit set, so you can see
+the monster die from Count.
+
+Other details:
+
+Testing Count status on enemies is interesting, only two "designated"
+monsters are able to be declared as "Count inflictable". There are some odd
+bugs that go with this, as when there are 2 or less monsters with the status
+inflicted, the game could freeze in attempting to remove them. The game is
+actively waiting for a command (by either monster or character) to be
+executed so Count's auto-death stuff can be done. You will also notice that
+the monsters inflicted with this status eventually don't attack anymore. The
+only safe commands to use are Magic, Item, and Change/Row commands.
+
+**Note that the 2 monster limitation seems to be specific to the monster
+groups that can cast it, which is a pair of Fataleye/Ahriman.**
+
+online stats

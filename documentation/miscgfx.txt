@@ -1,0 +1,9 @@
+Text             ?       2bpp
+Monsters         58200   3bpp
+Misc battle gfx  67B00~  3bpp
+Summons          68A00~  3bpp
+Battle chars     D0200   4bpp
+Map chars        D8200   3bpp
+Portraits        ED500~  3bpp
+Weapons          E5B00   3bpp
+Some map gfx     ED580~  3bpp

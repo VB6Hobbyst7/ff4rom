@@ -1,0 +1,395 @@
+All offsets are in unheadered SNES LoROM SlowROM format:
+
+(Format 1: Positioning Byte 1, Positioning Byte 2, Width, Height - Windows)
+(Format 2: Positioning Byte 1, Positioning Byte 2 - Text)
+(Format 3: Y Position - Cursors)
+(Format 4: Durr, it's a pointer - Equip Menu Transition)
+
+01/D81E: Main Menu Party Window (1)
+
+01/D822: Main Menu GP Window (1)
+
+01/D826: Main Menu Time Window (1)
+
+01/D82A: Main Menu Selection Window (1)
+01/D82E: Main Menu Item Selection Text (2)
+01/D835: Main Menu Magic Selection Text (2)
+01/D83D: Main Menu Equip Selection Text (2)
+01/D845: Main Menu Status Selection Text (2)
+01/D84E: Main Menu Form Selection Text (2)
+01/D855: Main Menu Change Selection Text (2)
+01/D85E: Main Menu Custom Selection Text (2)
+01/D867: Main Menu Save Selection Text (2)
+
+01/D8CC: Namingway Menu "ABC" Cursor (3)
+01/D8CD: Namingway Menu "END" Cursor (3)
+01/D8CE: Namingway Menu "ABC" Text (2)
+01/D8D4: Namingway Menu "END" Text (2)
+
+01/D8E0: Item Menu Inventory Window (1)
+
+01/D8E4: Main Menu to Item Menu Transition (1)
+
+01/D8E8: Item Menu Description Window (1)
+
+01/D8ED: Item Menu "No Need" Window (1)
+01/D8F0: Item Menu "Ne Need" Text (2)
+
+01/D906: Item Menu "Item" Window (1)
+01/D90A: Item Menu "Item" Text (2)
+
+01/D911: Item Menu Unused "Recover HP." Text (2)
+01/D91F: Item Menu "Whom?" Text (2)
+01/D927: Item Menu "Cannot use here." Text (2)
+01/D93A: Item Menu "Nothing here." Text (2)
+
+01/D94A: Item Usage Menu Left Party Window (1)
+01/D94E: Item Usage Menu Right Party Window (1)
+
+01/D952: Main Menu "Cannot Use" Window (1)
+01/D956: Main Menu "Cannot Use" Text (2)
+
+01/D963: Magic Menu Magic Window (1)
+
+01/D967: Main Menu to Magic Menu First Character Status Window Transition (1)
+01/D96B: Main Menu to Magic Menu Second Character Status Window Transition (1)
+01/D96F: Main Menu to Magic Menu Third Character Status Window Transition (1)
+01/D973: Main Menu to Magic Menu Fourth Character Status Window Transition (1)
+01/D977: Main Menu to Magic Menu Fifth Character Status Window Transition (1)
+
+01/D97B: Magic Menu Category Selection Window (1)
+
+01/D97F: Magic Usage Menu Party Window (1)
+
+01/D983: Magic Usage Menu "Whom?" Window (1)
+
+01/D987: Magic Usage Menu "Need MP" Window (1)
+01/D98B: Magic Usage Menu "Need MP" Text (2)
+
+01/D995: Magic Usage Menu "Whom?" Text (2)
+
+01/D99D: Main Menu to Equip Menu First Character Transition (4)
+01/D99F: Main Menu to Equip Menu Second Character Transition (4)
+01/D9A1: Main Menu to Equip Menu Third Character Transition (4)
+01/D9A3: Main Menu to Equip Menu Fourth Character Transition (4)
+01/D9A5: Main Menu to Equip Menu Fifth Character Transition (4)
+
+01/D9A7: Equip Menu (Hidden) First Character Status Window (1)
+01/D9AB: Equip Menu (Hidden) Second Character Status Window (1)
+01/D9AF: Equip Menu (Hidden) Third Character Status Window (1)
+01/D9B4: Equip Menu (Hidden) Fourth Character Status Window (1)
+01/D9B7: Equip Menu (Hidden) Fifth Character Status Window (1)
+
+01/D9BB: Equip Menu Equipment Window (1)
+
+01/D9BF: Equip Menu "RHand" Text (2)
+01/D9C7: Equip Menu "LHand" Text (2)
+01/D9CF: Equip Menu "Head" Text (2)
+01/D9D6: Equip Menu "Body" Text (2)
+01/D9DD: Equip Menu "Arms" Text (2)
+
+01/D9E4: Equip Menu (Unused?) "Items full." Text (2)
+01/D9F6: Equip Menu " To equip" Text (2)
+01/DA02: Equip Menu Unused "with both" Text (2)
+01/DA0E: Equip Menu Unused "hands." Text (2)
+
+01/DA17: Status Menu Character Status Window (1)
+
+01/DA1B: Status Menu "Status" Window (1)
+01/DA1F: Status Menu "Status" Text (2)
+
+01/DA28: Status Menu "Lv." Text (2)
+01/DA2E: Status Menu "Exp." Text (2)
+01/DA35: Status Menu "HP" Text (2)
+01/DA3A: Status Menu "MP" Text (2)
+01/DA3F: Status Menu "Ability" Text (2)
+01/DA49: Status Menu "Str." Text (2)
+01/DA50: Status Menu "Agil." Text (2)
+01/DA58: Status Menu "Vit." Text (2)
+01/DA5F: Status Menu "Wis." Text (2)
+01/DA66: Status Menu "Will" Text (2)
+01/DA6D: Status Menu "Attack" Text (2)
+01/DA76: Status Menu "Attack%" Text (2)
+01/DA80: Status Menu "Defence" Text (2)
+01/DA8A: Status Menu "Defence%" Text (2)
+01/DA95: Status Menu "Mag Def" Text (2)
+01/DA9F: Status Menu "Mag Def%" Text (2)
+01/DAAA: Status Menu Attack "x" Text (2)
+01/DAAE: Status Menu Defence "x" Text (2)
+01/DAB2: Status Menu Mag Def "x" Text (2)
+01/DAB6: Status Menu "For level up" Text (2)
+
+01/DAC5: Shop GP Window (1)
+
+01/DAC9: Shop Selection Window (1)
+
+01/DACD: Shop Type Window (1)
+
+01/DAD1: Shop Dialogue Window (1)
+
+01/DAD5: Shop Items Window (1)
+
+01/DAD9: Shop Party Window (1)
+
+01/DAF5: Shop "May I help you?" Text (2)
+01/DB07: Shop "Buy  Sell Exit" Text (2)
+01/DB18: Shop "Which one?" Text (2)
+01/DB25: Shop "Qty.   1" Text (2)
+01/DB30: Shop "GP" Text (2)
+
+01/DB35: Shop "Your bag is full." Window (1)
+01/DB39: Shop "Your bag is full." Text (2)
+01/DB4D: Shop "Sort it out first!" Text (2)
+
+01/DB62: Shop "Not enough GP!" Window (1)
+01/DB66: Shop "Not enough GP!" Text (2)
+01/DB77: Shop "Well, good-bye." Text (2)
+
+01/DB89: Shop "Thank you." Window (1)
+01/DB8D: Shop "Thank you." Text (2)
+
+01/DB9A: Shop Sell Window (1)
+01/DB9E: Shop Sell Window "That's " Text (2)
+01/DBA8: Shop Sell Window "GP" Text (2)
+01/DBAE: Shop Sell Window "x" Text (2)
+01/DBB2: Shop Sell Window "Yes  No" Text (2)
+
+01/DBD6: Save Menu File Windows (1)
+
+01/DBDA: Save Menu Save/New Game Window (1)
+01/DBDE: Save Menu "New Game" Text (2)
+01/DBE9: Save Menu Unused "Battle Speed" Text (2)
+
+01/DBF8: Save Menu "This Data?" Window (1)
+
+01/DBFC: Save Menu Time Window (1)
+
+01/DC00: Save Menu GP Window (1)
+
+01/DC04: Save Menu "This" Text (2)
+01/DC0B: Save Menu "data?" Text (2)
+01/DC13: Save Menu "Yes" Text (2)
+01/DC19: Save Menu "No" Text (2)
+
+01/DC1E: Save Confirm Menu "Time" Text (2)
+
+01/DC25: Save Confirm Menu "Empty" Text (2)
+
+01/DC2D: Save Menu "Save" Text (2)
+01/DC34: Save Menu "Canceled." Text (2)
+
+01/DC41: Save Confirm Menu "Done!" Text (2)
+01/DC49: Save Confirm Menu "Save" Text (2)
+01/DC50: Save Confirm Menu "here?" Text (2)
+01/DC58: Save Confirm Menu "Cancel" Text (2)
+
+01/DC61: Save Confirm Menu "Done!" Window (1)
+
+01/DC65: Namingway "Yes    No" Window (1)
+
+01/DC69: Namingway "Namingway:Change name?" Text (2)
+01/DC82: Namingway "Who's name?" Text (2)
+01/DCA1: Namingway "Very well." Text (2)
+01/DCAF: Namingway Dialogue Window (1)
+
+01/DCB2: Namingway Name Window (1)
+
+01/DCB6: Fat Chocobo Dialogue Window (1)
+
+01/DCBA: Fat Chocobo Inventory Window (1)
+
+01/DCBE: Fat Chocobo "Give  Take" Window (1)
+01/DCC2: Fat Chocobo "Give  Take" Text (2)
+
+01/DCCF: Fat Chocobo "What do you want?" Text (2)
+01/DCE3: Fat Chocobo Unused "Did you call me?" Text (2)
+01/DCF6: Fat Chocobo "What'll you give me?" Text (2)
+01/DD0D: Fat Chocobo "What are you taking?" Text (2)
+01/DD24: Fat Chocobo "I'm full!" Text (2)
+01/DD30: Fat Chocobo "Clean your bag!     " Text (2)
+
+01/DD47: Custom Menu "Customizer" Window (1)
+01/DD4B: Custom Menu "Customizer" Text (2)
+
+01/DD58: Custom Menu Options Window(1)
+01/DD5C: Custom Menu Battle Speed "Fast" Text (2)
+01/DD63: Custom Menu Battle Speed "Slow" Text (2)
+01/DD6A: Custom Menu Battle Message "Fast" Text (2)
+01/DD71: Custom Menu Battle Message "Slow" Text (2)
+01/DD78: Custom Menu "Battle Speed" Text (2)
+01/DD87: Custom Menu "Battle Message" Text (2)
+01/DD98: Custom Menu "Window Color" Text (2)
+01/DDA7: Custom Menu "Sound" Text (2)
+01/DDAF: Custom Menu "Stereo Mono" Text (2)
+
+01/DDC9: Treasure Menu Select Window (1)
+
+01/DDCD: Treasure Menu Treasure Window (1)
+
+01/DDD1: Treasure Menu "Treasure" Window (1)
+01/DDD5: Treasure Menu "Treasure" Text (2)
+
+01/DDE0: Treasure Menu "Exit" Text (2)
+01/DDE7: Treasure Menu "Take all" Text (2)
+01/DDF2: Treasure Menu "Exchange" Text (2)
+-----------------------------------------------------------------
+
+$00 is the upper left corner, $02 is one tile to the right, $04 is two tiles, etc. Once the end of the screen is reached it drops to the next line and continues. Once $FE is reached the second byte becomes $01 and the process repeats. Pretty simple:
+
+$0000-$3E00: First line
+$4000-$7E00: Second line
+
+And so on.
+
+Edit: Here's an example of what I mean, pay attention to the positioning of the "RHand" text:
+
+
+The is at $0000. As you can see it's in the top left corner.
+
+
+Here it is at $4200. It's on the second line and indented one tile.
+
+
+And here's what it looks like at $FE00. The game automatically starts printing any spilled over text on the next line.
+
+
+Lastly, $0001.
+
+-----------------------------------------------------------------
+
+01/9000 - Something to do with the job class names.
+
+(offsets with 200 byte header) [pointers in LoROM format]
+
+91E9 - pointer for job class text
+9211 - pointer for the character portraits
+9234 - pointer for item names [item menu]
+9249 - pointer for item names [battle treasure menu]
+3241 - pointers for item names [event item select popup menu--aka Tail Collector]
+355A - pointer for item names [get item in event/treasure]
+1204C - pointer for item names [battle R-hand/L-hand equip menu (when you press up)]
+12214 - pointer for item names [battle item menu?]
+127A3 - pointer for item names [?]
+14D80 - pointer for item names [use equipped weapon/shield in battle (when you press up)]
+9308 - pointer for party sprites in the shop menu
+11F41 - pointer for battle command names
+
+-----------------------------------------------------------------
+
+01/88A1: Pointer to main menu party window.
+01/8920: Pointer to main menu time window.
+01/8926: Pointer to main menu GP window.
+01/892F: Pointer to main menu selection window.
+01/8B2D: Pointer to main menu "Swoon" text.
+
+-----------------------------------------------------------------
+
+09234 = Item Menu, Selection, Pointers Item offset Icon start.     BF, 00 80 (78000 nonheader(78200 header)). Seems to effect icons.
+  0923D = Item Menu, Selection, effect on Beginning icons.           05 (DB) [34].
+  09246 = Item Menu, Selection, Value for Item Length in Item Menu.--08 to 0A (A9)   Characters in length to show.  true
+              This value only allows letters to show from 8 to 10. Effects Shop, Items won, and Main Menu Items.
+              I would like to find Generate every 11(0B) letters.                                         
+  09249 = Item Menu, Selection, Pointers Item Name Offset Chr$.      BF, 00 80 (78000 nonheader(78200 header)).
+
+  0B307/0B507 = Magic Menu, Spell list, starting position of Icon 1st                 40 (9F)
+  0B318/0B518 = Magic Menu, Spell list,  " position of Icon (shaded)                    40 (9F)
+  0B31D/0B51D = Magic Menu, Spell list, Length of Spell letters displayed after Icon.                 --05 to 07 (A9) [85 45]
+  0B32C/0B52C = Magic Menu, Spell list, starting position Spell letters 1st        40 (9F)
+  0B337/0B537 = Magic Menu, Spell list,  " position of Spell letters (shaded)     40 (9F)
+  
+  ---------------------------------------------------------------
+  
+  111A9 = Battle, Graphics, Enemy Pointer.                            BF, 5E FF
+      111DB = Battle, Graphics, Enemy Pointer.                            BF, 5E FF
+      1121C = ????  09 (69)  seems to be apart of enemy graphics.
+      112A4 = ? 10 (A9) effects mp needed box graphics.
+      112BC = ? 0A (A9) effects mp needed box graphics.
+      1133D = ? 0A (A9) effects menu graphics.
+      11620 = ? 06
+      11887 = ????  Pointer to BF, 96 96 ()
+  
+      11E31 = Battle, Main Windows, seems to offset window borders?       (69) 40 00 [85]
+      11E3F = Battle, Main Windows, seems to offset left window borders?  (A5) 06 [9D 00 00]
+      11E44 = Battle, Main Windows, seems to offset left window borders?  (A5) 02 [9D 01 00]
+      11E73 = Battle, Main Windows, seems to offset window borders?       (69) 40 00 [85]
+  
+      11EB8 = ? (C9) 05 messes with item menu?
+      11EDE = Battle, Command Menu, seems to offset the command by ??     (A9) 05 [8D]
+      11F1E = Battle, Command Menu, Select every #.                     --05 to 07 (A9) true.
+      11F41 = Battle, Command Menu, Pointer to Commands.                  BF, C6 A7 (7A7C6, 7A9C6)
+      11F4B = Battle, Command Menu, Length value??                        07 (C0)           05
+      11F63 = Battle, Command Menu, Length value??                        07 (C0)           05
+      11F6C = Battle, Command Menu, setter?.                              5D to 7D?
+      11F8E = ? 05 messes with commands, show multiple of one command.
+  
+      12023 = Battle, Item Equip Menu, select every # Item.               09 to 0B (A9)  true?.
+      1202F = Battle, Item Equip Menu?, effects Length/Group?             06
+      1204C = Battle, Item Equip Menu, Pointers for Item Names.           BF, 00 80 (78000 nonheader(78200 header)).
+      12061 = Battle, Item Equip Menu, Value Length?                      08  unknown
+      12064 = Battle, Item Equip Menu, OffPointers for Item Names.        BF, 01 80 (over 1 to eliminate icon).
+  
+      121F8 = Battle, Item Select Menu, Every # Item.                     09 to 0B (A9)  true.
+      12214 = Battle, Item Select Menu, Item Pointer.                     BF, 00 80 (78000 nonheader(78200 header)).  true.
+      12229 = Battle, Item Select Menu, Value Position?                   08 to 0A (A9) ??
+      1222C = Battle, Item Select Menu, Item Offsetter.                   BF, 01 80 does something relative to items 
+  
+      1229D = ????  Battle, Spell Select Menu, offset displayed.          06 to 08
+      122E3 = ????  06       does something to spells in battle.
+      122EB = Battle, Spell Select Menu, Every # Spell.                   06 to 08 (A9)   true.
+      12307 = Battle, Spell Select Menu, Spell Pointer.                   BF, 00 89 (78900 nonheader(78B00 header)).  BF, 00 8B   true.
+      1231F = Battle, Spell Select Menu, Spell Offset.                    BF, 01 89 does something relative to spells.
+      1233F = ????  06       does something to spell mp ###/### in battle.
+      12755 = Battle?, Monster Spell Menu?, generate every #?             08 (A9) 
+      12758 = Battle?, Pointers for Monster Spells.                       BF, B0 8A (78AB0 nonheader(78CB0 header)).  BF, 40 8D
+      1275F = ? 08 (F0) ?Ditto?
+      1275F = Battle?, Monster Spell Menu?,length value?                  08 (C0) ?Ditto
+      1276C = ? 06 (A9)
+      12774 = Battle, Pointers for Spell Names, ??                        BF, 00 89 (78900 nonheader(78B00 header)).  BF, 00 8B
+      1277F = Battle, Spell Select Menu, Spell Offset.                    BF, 01 89 does something relative to spells.
+      12796 = ? 09 seems to be something?.    (A9) 09 [85]
+      127A3 = Pointers for Item Names, ??                                 BF, 00 80 (78000 nonheader(78200 header)).
+  
+      14D46 = Battle, Used Command Window, every Command #.             --05 to 07 (A9) true
+      14D51 = Battle, Used Command window, Command name Pointer.          BF, C6 A7    (7A7C6 nohead(7A9C6 head)).
+      14D5A = Battle, Used Command Window, length value.                  05 to 07 (C0 ## 00 D0 F2 99 FD 74 4C A0 BC)  true.
+      14D74 = Battle. Used Item window, every Item #.                   --09 to OB (A9) true.
+      14D80 = Battle, Used Item window, Item name pointer.                BF, 00 80    (78000 nohead(78200 head)).
+      14D89 = Battle, Used Item window, value length.                     08 to 0A (C0 ## 00 D0 F2 99 FD 74 4C A0 BC)  true.
+      14DA4 = Battle, Casted Monster Spell, generate every #.           --08       (A9) true.
+      14DAF = Battle, Casted Monster Spell, M-Spell name Pointer.         BF, B0 8A    (78AB0 nohead(78CB0 head)).
+      14DB8 = Battle, Casted Monster Spell, given length value.           08 (C0 ## 00 D0 F2 99 FD 74 4C A0 BC)  true.
+      14DC9 = Battle, Casted Spell Window, every Spell #.               --06 to 08 (A9) true
+      14DDA = Battle, Casted spell window, Spell name Pointer.            BF, 00 89    (78900 nohead(78B00 head)).
+      14DE3 = Battle, Casted Spell Window, length value.                  07 to 09 (C0 ## 00 D0 F2 99 FD 74 4C A0 BC)  true.
+      14E04 = Battle, BF, 00 B0
+    14E0E = Battle, 0F (A9)
+    
+    
+    -----------------------------------------------------------------------------
+    
+    FF2us 1.1 Offsets  
+    
+    Pointers, these are headered, parts of larger subroutines but I found them the "traditional" way as it's faster:
+    
+    0x0A4D9      Item menu "Nothing here." pointer.
+    0x0A548      Item menu "Cannot use here." pointer.
+    0x0A610      Item menu "Whom?" pointer.
+    0x0AAC3      Status menu "For level up" pointer.
+    0x0B1B6      Magic menu "Ninja" pointer.
+    0x0C615      Shop menu "Which one?" pointer.
+    0x0C9BB      Shop menu sell "Qty?   1" pointer.
+    0xF801E      Menu Japanese DTE Table - Starts at $0F.
+    
+    Subroutines:
+    
+    $01/83D5   Character Name Printing Routine
+    $01/8B41   Character Class Loading Routine
+    $01/B29A  Magic Menu Spell Name Multiplier and Loading Routine
+    $01/B326  Magic Menu Spell Name Printing Routine
+    $01/BFF0   Character Class Printing Routine
+    $02/9DD8 Battle Item Menu Item Name Multiplier Routine
+    $02/9E29  Battle Item Menu Item Name Loading and Printing Routine
+    $02/9FBE  Battle Item Menu Equipped Item Name Multiplier Routine
+    $02/9FFE  Battle Item Menu Equipped Item Name Loading and Printing Routine
+    
+   

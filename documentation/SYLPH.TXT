@@ -1,0 +1,11 @@
+The Sylph are significantly more powerful than originally thought..
+
+Spell Power is listed at 15 so they are effectively powered at 60.
+
+Other than the healing property that avoids the Undead check+penalty... there is one other property worth pointing out.
+
+Part of the magic damage algo factors in magic defense... but it cuts the magic defense by a factor of 2!
+
+Yes, I tried to use this summon vs higher magic defense targets... and other than those that have the maximum magic 
+defense to start with (254),
+the spell really cuts though the Ging-Ryu (Yellow Dragon in FF4A) and Blue Dragon.

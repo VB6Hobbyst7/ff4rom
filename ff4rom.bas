@@ -2,7 +2,6 @@
 #include once "../common/range.bas"
 #include once "../common/set.bas"
 #include once "../common/functions/pad.bas"
-#include once "rominterface/rominterface.bas"
 #include once "gameobjects/attributetable.bas"
 #include once "objectlists/attributetablelist.bas"
 #include once "gameobjects/spell.bas"
@@ -51,24 +50,40 @@
 #include once "objectlists/ailist.bas"
 #include once "gameobjects/monster.bas"
 #include once "objectlists/monsterlist.bas"
+#include once "gameobjects/autoscriptentry.bas"
+#include once "objectlists/autoscriptlist.bas"
 #include once "gameobjects/formation.bas"
+#include once "objectlists/formationlist.bas"
 #include once "gameobjects/encounter.bas"
+#include once "objectlists/encounterlist.bas"
 #include once "gameobjects/instruction.bas"
+#include once "objectlists/instructionlist.bas"
 #include once "gameobjects/event.bas"
+#include once "objectlists/eventlist.bas"
+#include once "gameobjects/callcomponent.bas"
+#include once "objectlists/callcomponentlist.bas"
 #include once "gameobjects/eventcall.bas"
+#include once "objectlists/eventcalllist.bas"
 #include once "gameobjects/trigger.bas"
+#include once "objectlists/triggerlist.bas"
 #include once "gameobjects/tile.bas"
+#include once "objectlists/tilelist.bas"
 #include once "gameobjects/tileset.bas"
-#include once "gameobjects/tilegrid.bas"
+#include once "objectlists/tilesetlist.bas"
+#include once "gameobjects/layout.bas"
+#include once "objectlists/layoutlist.bas"
 #include once "gameobjects/npc.bas"
+#include once "objectlists/npclist.bas"
 #include once "gameobjects/placement.bas"
+#include once "objectlists/placementlist.bas"
 #include once "gameobjects/placementset.bas"
+#include once "objectlists/placementsetlist.bas"
 #include once "gameobjects/map.bas"
 #include once "objectlists/maplist.bas"
 
 type FF4Rom extends Object
  public:
-  'Arrays of game object pointers
+  '---- Arrays of game object pointers
   attribute_tables as AttributeTableList = AttributeTableList(total_attribute_tables)
   spells as SpellList = SpellList(total_spells)
   spell_sets as SpellSetList = SpellSetList(total_spell_sets)
@@ -98,17 +113,16 @@ type FF4Rom extends Object
   lunar_scripts as ScriptList = ScriptList(total_lunar_scripts)
   ais as AIList = AIList(total_ais)
   monsters as MonsterList = MonsterList(total_monsters)
-'  formations(total_formations) as Formation ptr
-'  encounters(total_encounters) as Encounter ptr
-'  events(total_events) as Event ptr
-'  event_calls(total_event_calls) as EventCall ptr
-'  triggers(total_triggers) as Trigger ptr
-'  tiles(total_tiles) as Tile ptr
-'  tile_sets(total_tile_sets) as TileSet ptr
-'  tile_grids(total_tile_grids) as TileGrid ptr
-'  npcs(total_npcs) as NPC ptr
-  maps as MapList
-  'Lists and ranges
+  formations as FormationList = FormationList(total_formations)
+  encounters as EncounterList = EncounterList(total_encounters)
+  events as EventList = EventList(total_events)
+  event_calls as EventCallList = EventCallList(total_event_calls)
+  tile_sets as TileSetList = TileSetList(total_tile_sets)
+  layouts as LayoutList = LayoutList(total_layouts)
+  npcs as NPCList = NPCList(total_npcs)
+  placement_sets as PlacementSetList = PlacementSetList(total_placement_sets)
+  maps as MapList = MapList(total_maps)
+  '---- Lists and ranges
   condition_hps(total_condition_hps) as Integer
   player_spell_range as Range
   menu_spell_range as Range
@@ -140,8 +154,9 @@ type FF4Rom extends Object
   declare constructor(filename as String)
   declare function ConvertText(asciitext as String) as String
   declare function DisplayText(ff4text as String) as String
+  declare sub DisplayBytes(start as Long, finish as Long)
  private:
-  'Direct interface with ROM
+  '---- Direct interface with ROM
   romdata as String
   unheadered as Boolean
   if_patch as Boolean
@@ -153,7 +168,7 @@ type FF4Rom extends Object
   declare function DecompressDTE(text as String) as String
   declare function MessageParameter(symbol as UByte) as Boolean
   declare function ScriptParameter(action as UByte) as Boolean
-  'Read and write various game object lists
+  '---- Read and write various game object lists
   declare sub  ReadAttributeTables()
   declare sub WriteAttributeTables()
   declare sub  ReadSpells()
@@ -202,6 +217,26 @@ type FF4Rom extends Object
   declare sub WriteAIs()
   declare sub  ReadMonsters()
   declare sub WriteMonsters()
+  declare sub  ReadFormations()
+  declare sub WriteFormations()
+  declare sub  ReadEncounters()
+  declare sub WriteEncounters()
+  declare sub  ReadEvents()
+  declare sub WriteEvents()
+  declare sub  ReadEventCalls()
+  declare sub WriteEventCalls()
+  declare sub  ReadTriggers()
+  declare sub WriteTriggers()
+  declare sub  ReadTileSets()
+  declare sub WriteTileSets()
+  declare sub  ReadLayouts()
+  declare sub WriteLayouts()
+  declare sub  ReadNPCs()
+  declare sub WriteNPCs()
+  declare sub  ReadPlacementSets()
+  declare sub WritePlacementSets()
+  declare sub  ReadMaps()
+  declare sub WriteMaps()
 end type
 
 constructor FF4Rom()
@@ -220,6 +255,7 @@ end constructor
 #include once "rominterface/writebyte.bas"
 #include once "rominterface/readfromfile.bas"
 #include once "rominterface/writetofile.bas"
+#include once "rominterface/displaybytes.bas"
 #include once "readwrite/attributetables.bas"
 #include once "readwrite/spells.bas"
 #include once "readwrite/spellsets.bas"
@@ -244,4 +280,13 @@ end constructor
 #include once "readwrite/conditionsets.bas"
 #include once "readwrite/ais.bas"
 #include once "readwrite/monsters.bas"
-
+#include once "readwrite/formations.bas"
+#include once "readwrite/encounters.bas"
+#include once "readwrite/events.bas"
+#include once "readwrite/eventcalls.bas"
+#include once "readwrite/triggers.bas"
+#include once "readwrite/tilesets.bas"
+#include once "readwrite/layouts.bas"
+#include once "readwrite/npcs.bas"
+#include once "readwrite/placementsets.bas"
+#include once "readwrite/maps.bas"

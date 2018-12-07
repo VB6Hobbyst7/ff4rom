@@ -1,0 +1,52 @@
+63A - Town map tile formation pointer
+
+14D6 - Character starting stats pointer []
+14E7 - "                    "
+14F8 - "                    "
+18C3 - Town trigger data pointer
+1B53 - Town trigger pointer to pointers
+1B81 - Town trigger data pointer
+1C34 - Town trigger pointer to pointers
+1C42 - Town trigger data pointer
+1D7E - World trigger pointer to pointers
+1D8C - World trigger data pointer
+
+616C - Event pointer to pointers
+6189 - Event data pointer []
+61B3 - Event data pointer []
+61BB - Event data pointer []
+61C2 - Event data pointer []
+61E3 - Event data pointer []
+61EC - Event data pointer []
+61F5 - Event data pointer []
+61FE - Event data pointer []
+64D6 - Event data pointer []
+6823 - "                    "
+
+7CEC - World map row pointer to pointers
+7CFA - World map row data pointer
+7E4E - Town map pointer to pointers
+
+10F53 - Enemy size/graphic/palette pointer to pointers []
+12307 - Spell name pointer []
+12532 - Abnormal status text pointer []
+12720 - "                  "
+12758 - Enemy attack name pointer[]
+12774 - Spell name pointer []
+
+14DAF - Enemy attack name pointer []
+14DDA - Spell name pointer []
+14E04 - Battle message pointer []
+
+14B07 - Battle dialogue pointer
+191ED - Monster data/stats pointer
+1920A - Monster data length (A9 20 default--32 bytes)
+194AF - Enemy AI pointer group #1
+19608 - "               "
+194C1 - Enemy AI pointer group #2
+1961A - "               "
+
+4F967 - World map tile formation pointer?
+
+AACB8 - World map tile formation pointer?
+AB498 - World map tile palette pointer to pointers

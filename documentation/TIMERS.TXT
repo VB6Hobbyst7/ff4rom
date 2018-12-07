@@ -1,0 +1,57 @@
+Here's a list of timers that exist:
+Poison
+Gradual Petrification
+Count/Doom
+Reflect/Wall
+HP Leak
+Stop
+Regen
+Paralysis
+Sleep
+
+Stop affects the following status timers:
+Regen (healing becomes a constant in the SNES version)
+Paralysis (timer stops - there are bugs in the SNES version when used with this status)
+Sleep (timer stops - there are bugs in the SNES version when used with this status)
+Stop (resets the Stop timer)
+HP Leak (timer stops - there are bugs in the SNES version when used with this status - only affects characters though, enemies are unaffected)
+Gradual Petrification (timer stops - there are bugs in the SNES version when used with this status)
+Count/Doom (timer stops)
+Poison (timer stops)
+Reflect (timer stops)
+
+Haste affects the following status timers:
+Gradual Petrification (time to petrification is accelerated)
+Regen (number of healing intervals is reduced)
+Stop (time to being released from this status is reduced)
+Poison (time to take poison damage is accelerated)
+HP Leak (timer is reduced from 60 to 48, then 44) - note that haste is +3, so the timer adjustment is 4 HP
+Reflect/Wall (time before status removal is reduced)
+
+Summary: Haste accelerates most timers.
+
+Slow affects the following status timers:
+Gradual Petrification (time to petrification is slowed)
+Regen (number of healing intervals is increased)
+Stop (time to being released from this status is reduced)
+Poison (time to take poison damage is slowed)
+HP Leak (timer is increased from 60 to 90, then 120) - note that slow is -8, so the timer adjustment is 50% slower, then 100% slower...
+Reflect/Wall (time before status removal is increased)
+
+Summary: Slow decelerates most timers.
+
+Edit: This list should be mostly complete, unless I forgot something major.
+
+Second Edit: Additionally, all statuses other than Sleep can be reinflicted to reset/update/change the timer.
+
+
+All timers stop... Poison, Sleep, Paralysis, Regen, HP Leak, Count/Doom, Reflect/Wall, Poison, Gradual Petrification.
+
+These timers continue when Stop status is removed.
+
+However, in the SNES version, Sleep, Paralysis, Regen, HP Leak (for characters), and Gradual Petrification timers are 
+not restarted. Regen benefits most from this bug. However the other statuses, excluding HP Leak and Regen, will cause the 
+game to act strangely and/or freeze when used on enemies.
+
+Inflicting Stop status on Stop resets/changes the timer.
+

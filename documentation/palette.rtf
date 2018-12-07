@@ -1,0 +1,88 @@
+{\rtf1\ansi \deff4\deflang1033{\fonttbl{\f4\froman\fcharset0\fprq2 Times New Roman;}{\f5\fswiss\fcharset0\fprq2 Arial;}}{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;
+\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;\red0\green128\blue128;\red0\green128\blue0;\red128\green0\blue128;\red128\green0\blue0;\red128\green128\blue0;\red128\green128\blue128;
+\red192\green192\blue192;}{\stylesheet{\widctlpar \f4\fs20 \snext0 Normal;}{\s1\sb240\sa60\keepn\widctlpar \b\f5\fs28\kerning28 \sbasedon0\snext0 heading 1;}{\*\cs10 \additive Default Paragraph Font;}}{\info{\author Tenn}{\operator Tenn}
+{\creatim\yr1998\mo4\dy24\hr10\min16}{\revtim\yr1998\mo4\dy24\hr11\min2}{\version14}{\edmins45}{\nofpages2}{\nofwords532}{\nofchars3037}{\*\company  }{\vern57431}}\widowctrl\ftnbj\aenddoc\formshade \fet0\sectd \linex0\endnhere {\*\pnseclvl1
+\pnucrm\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl2\pnucltr\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl3\pndec\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl4\pnlcltr\pnstart1\pnindent720\pnhang{\pntxta )}}{\*\pnseclvl5
+\pndec\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl6\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl7\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl8\pnlcltr\pnstart1\pnindent720\pnhang
+{\pntxtb (}{\pntxta )}}{\*\pnseclvl9\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}\pard\plain \s1\qc\sb240\sa60\keepn\widctlpar \b\f5\fs28\kerning28 SNES Palette Format
+\par \pard\plain \qc\widctlpar \f4\fs20 {\f5 By Jay
+\par 
+\par }\pard \widctlpar {\f5\ul 
+\par }{\f5 1) 15-Bit BGR format
+\par 2) Converting a 24-Bit RGB colour to a 15-Bit BGR colour
+\par 3) Converting a 15-Bit BGR colour to a 24-Bit colour
+\par 4) Palconv.exe}{\f5\ul 
+\par 
+\par }\pard \widctlpar {\f5\ul 1) 15-Bit BGR format}{\f5 
+\par }\pard \widctlpar {\f5 If you can find one, SNES stores it's palette in 512 bytes in a 15-bit BGR format. Each BGR word is 2 bytes, thus it is 512 bytes for 256 colours (256 x 2). The format for each BGR word looks like this:
+\par }\pard \widctlpar {\f5 
+\par \tab 0BBBBBGG GGGRRRRR
+\par 
+\par }\pard \widctlpar {\f5 Bit 15 is unused and should be set to 0. Each colour value can range from 0 - 31\'85
+ So a R, G, B value of 31, 31, 31 represents white. As you can see this is quite different from the usual 24-bit RGB where the colours range from 0 - 255.
+\par }\pard \widctlpar {\f5 
+\par }{\f5\ul 2) Converting a 24-Bit RGB colour to a 15-Bit BGR colour
+\par }\pard \widctlpar {\f5 In order to convert a 24-bit RGB value into the 15-Bit BGR format, the 8-bit colour value of the 24-Bit RGB colour must be scaled down to 5-bits. Then the 3 colour values must be packed into 2 bytes. This ca
+n be achieved by the following formula:
+\par }\pard \widctlpar {\f5 
+\par R = R DIV 8\tab (DIV means }{\i\f5 integer}{\f5  division: Same as division but any decimals are truncated)
+\par G = G DIV 8
+\par B = B DIV 8
+\par 
+\par colour = B x 1024 + G x 32 + R
+\par 
+\par The following example show how to convert white (255,255,255) to the 15-bit format:
+\par 
+\par R = 255 DIV 8 = 31
+\par G = 255 DIV 8 = 31
+\par B = 255 DIV 8 = 31
+\par 
+\par colour = B x 1024 + G x 32 + R
+\par colour = 31 x 1024 + 31 x 32 + 31 = 32767
+\par 
+\par }\pard \widctlpar {\f5 So white as a 15-bit BGR colour is 32767 or 0x7FFF in hex. And to clear up any confusion, YES, this value will be stored in LSB order (otherwise known as 'bits reversed'). So you will see this as FF 7F in the hex editor.
+\par }\pard \widctlpar {\f5 \page }{\f5\ul 3) Converting a 15-Bit BGR colour to a 24-Bit colour
+\par }\pard \widctlpar {\f5 To convert a 15-BGR value into 24-RGB values, is simply the reverse operation. The formula is:
+\par 
+\par R = (colour MOD 32) x 8\tab (MOD mean modulus: Means divide the number and take the remainder)
+\par G = ((colour DIV 31) MOD 32) x 8
+\par B = ((colour DIV 1024) MOD 32) x 8
+\par 
+\par The following example shows how to convert white (32767) to it's respective RGB values:
+\par colour = 32767
+\par 
+\par R = (colour MOD 32) x 8
+\par R = (32767 MOD 32) x 8 = 31 x 8 = 248
+\par G = ((colour DIV 31) MOD 32) x 8
+\par G = ((32767 DIV 31) MOD 32) x 8 = (1023 MOD 32) x 8 = 31 x 8 = 248
+\par B = ((colour DIV 1024) MOD 32) x 8
+\par B = ((32767 DIV 1024) MOD 32) x 8 = (31 MOD 32) x 8 = 31 x 8 = 248
+\par 
+\par }\pard \widctlpar {\f5 So the final output is (248, 248, 248). Uh-oh, 24-bit RGB white is (255, 255, 255) not (248, 248, 248). Apparently, what happened is there was a precision loss during the conversion. Think about it\'85
+ if you convert a 24-bit value into 
+a 15-bit you would have loss some precision. Thus, when you reverse the procedure from 15-bit to 24-bit, the precision is still lost and is unrecoverable. There is nothing you can do about this precision loss; however, the loss is so minimal you probably 
+won't notice the difference between (248, 248, 248) and (255, 255, 255) anyways.
+\par 
+\par }{\f5\ul 4) Palconv.exe}{\f5 
+\par 
+\par Disclaimer:
+\par I'm not responsible for anything that happens to your computer when using this program. Use at your own risk.
+\par 
+\par Palconv.exe is a tool bundled in with this tutorial that converts a palette from one format to another. The formats supported are RAW 24-bit RGB format, 15-Bit BGR CG format, ZST save states, MS-RIFF format, and JASC (Paint Shop Pro) palette
+ format. To use, in DOS prompt type:
+\par 
+\par palconv <input format> <input file> <output format> <output file>
+\par 
+\par Where the input and output formats can be:
+\par rgb     24-bit RGB Raw format
+\par cg      15-bit BGR SNES format
+\par zst     *ZSNES Save State file
+\par rif     MS-Riff palette format
+\par jsc     JASC (Paint Shop Pro) Palette
+\par 
+\par For example, if you wanted to convert a zsnes savestate call "game.zst" into a JASC palette "output.pal", then you'd type this:
+\par 
+\par palconv zst game.zst jsc output.pal
+\par 
+\par }\pard \widctlpar {\f5 And voila, palette converted.}
+\par }

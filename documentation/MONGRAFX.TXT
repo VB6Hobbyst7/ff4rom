@@ -1,0 +1,225 @@
+Monster size/palette/gfx pointer data (offsets with header):
+010003C1   Imp
+06017C8B   Basilisk
+030263C1   Eagle
+04035084   FloatEye
+01049881   Larva
+03054092   Cave Bat
+02064890   Treant
+0307D092   SwordRat
+00080080   TinyMage
+0209B091   Sand Man
+060A0C8C   SandMoth
+050BDC85   Sandpede
+070C2895   SandWorm
+030D8892   CaveToad
+010E3881   EvilShel
+020FD890   Zombie
+03101893   Pike
+05111C88   TrapRose
+03128892   Mad Toad
+01130881   Jelly
+01140881   Cream
+0215B091   WaterHag
+0516FC86   Weeper
+01179881   RocLarva
+011803C1   Dark Imp
+06197C8B   BlackLiz
+061ABC8D   Turtle
+011B03C1   Imp Cap.
+011C0881   Slime
+021D0090   Soldier
+021E0090   Officer
+031FD092   Needler
+012003C1   Tricker
+05211C88   Cannibal
+0122A880   Spirit
+02239090   Skelton
+032463C1   Cocktric
+0625DC8E   Gargoyle
+032663C1   Roc Baby
+0627DC8E   Hooligan
+0928589B   Raven   
+01297880   WaterBug
+062A9C8C   Aligator
+032B1893   Piranha
+022C0090   Fighter
+022D0090   General
+012EA880   Soul   
+022F9090   Red Bone
+0230D890   Ghoul
+02319090   Skull   
+0232D890   Revenant
+05334C85   VampGirl
+0534AC88   CaveNaga
+0735E895   D.Bone 
+03361893   ElecFish
+06379C8C   Crocdile
+06384C8E   Hydra   
+07392895   AquaWorm
+043A3482   Guard
+063B2C8D   Lamia   
+033CD092   StingRat
+063D4C8E   Python
+053EFC86   Grudger
+043FABC1   Mage
+0540AC88   Naga
+0541BC84   Ogre   
+04427883   Panther
+0443C881   SwordMan
+05448C87   Centaur
+05454C85   VampLady
+0246F891   Marion
+01476881   Puppet 
+06480C8C   GlomWing
+01493881   FangShel
+054AFC86   Screamer
+044BC881   Warrior
+064C5C8A   Armadilo
+044DA082   EpeeGirl
+044E3482   BladeMan
+054FAC88   HugeNaga
+06506C8F   Medusa 
+0751E895   D.Fossil
+0652BC8D   Tortoise
+02532091   Dummy
+0154A880   Ghost
+015533C1   Bomb   
+015633C1   GrayBomb
+0757A893   Chimera
+0658BC8D   Carapace
+06595C8A   Ironback
+065AEC8A   FlameDog
+065B6C8F   Gorgon
+075CE898   Stoneman
+065D2C8D   Lilith
+065E2C8D   Q.Lamia
+005F0C80   TinyToad
+01607880   HugeCell
+0961589B   Roc   
+0262F891   Sorcerer
+0563BC84   Mad Ogre
+01646881   EvilDoll
+03654092   GiantBat
+05666C86   Arachne
+04673482   FlameMan
+03686093   Beamer
+016933C1   Ballon
+016A33C1   Grenade
+046B5084   Plague 
+016CD880   Last Arm
+046D7883   BlackCat
+096E309C   D.Machin
+056F6C86   Talantla
+02702091   Gremlin
+0571DC85   Centpede
+07722895   Red Worm
+04735084   Red Eye
+01749881   Crawler
+06757C8B   Ice Liz
+06760C8C   RockMoth
+03774092   Were Bat
+0678EC8A   IceBeast
+0279F891   Conjurer
+047A0C83   Witch   
+077B6897   TrapDoor
+047C0C83   ToadLady
+027D4890   DarkTree
+077EA893   Mantcore
+017F7880   MoonCell
+07802898   Breath
+01810881   Tofu   
+01820881   Pudding
+07832898   Mind   
+0784E898   Ironman
+07856894   Green D.
+01860881   PinkPuff
+0187D880   Alert
+02886891   Machine
+0889809A   MacGiant
+048AA082   Kary 
+068BCC89   Molbol
+088CA899   Ging-Ryu
+078D6894   Yellow D
+028E2091   Fiend   
+048FE483   Juclyote
+05903C89   EvilMask
+05918C87   Horseman
+0892809A   RedGiant
+0793E898   Staleman
+04945084   FatalEye
+0795E895   D. Lunar
+0196D880   Searcher
+04970C83   Warlock
+BB0068C8   Wyvern
+0499E483   Procyote
+BD0024C7   Ogopogo
+099B309C   Blue D.
+089CA899   King-Ryu
+089DA899   Clapper
+079EA896   Pale Dim
+099F309C   Red D.
+09A0089D   Behemoth
+80A144C5   D. Mist
+84A200A0   Octomamm
+8C000EA1   Antlion
+A40095A1   MomBomb
+8E0049A2   Milon 
+8F0049A2   Milon Z
+A100C3AC   Baigan 
+A200C3AC   RightArm
+A300C3AC   Left Arm
+920043A5   Kainazzo
+97AB34A8   Dark Elf
+97AB34A8   Dark Elf
+9800A0A8   Sandy
+9900A0A8   Cindy
+9A00A0A8   Mindy
+A900B2AE   Golbez 
+950043A5   Valvalis
+01B26881   Cal     
+9B009CA9   Calbrena
+A900B2AE   Golbez
+08B5A899   Shadow 
+A50059AD   Dr.Lugae
+A60059AD   Balnab 
+A50059AD   Dr.Lugae
+9D007CAB   K.Eblan
+9E007CAB   Q.Eblan
+900049A2   Rubicant
+AA00F8C5   Odin   
+AE0024C7   Leviatan
+AF0068C8   Bahamut
+9C0053AA   EvilWall
+B600CAC9   Asura   
+8F0049A2   Elements
+B30043A5   Elements
+07C3A896   Dark Elf
+0215B091   WaterHag
+B8C500B0   CPU     
+BAC5F3B0   Defender
+BE002CB1   Zemus 
+BF001CB2   Zeromus
+B900DF32   Zeromus
+41010080   Dragoon
+44040080   Bard 
+46060080   Karate
+40000080   D.Knight
+42020080   Girl
+82CF84C4   Titan   
+04035084   FloatEye
+0928589B   Raven
+01D36881   Brena
+0232D890   Ghast 
+A70059AD   Balnab-Z
+BCC5F3B0   Attacker
+BB00DF32   Dummy
+015533C1   Dummy 
+BF001CB2   Zeromus
+0279F891   Dummy
+00DA0080   Dummy
+022D0090   Dummy
+06DC2C8D   Dummy
+05DDBC84   Dummy
+01B26881   Dummy
+????????   Egg

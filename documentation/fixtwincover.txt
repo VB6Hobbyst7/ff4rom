@@ -1,0 +1,301 @@
+*******************************************************************************
+THE LUNARIAN SHUFFLE - TWIN/COVER VOODOO PATCH DETAILS
+*******************************************************************************
+
+1. ORIGINAL GAME BEHAVIOR
+
+TWIN MAGIC: at the start of battle, the game runs a subroutine (03:959E) that
+searches your party for "twin characters" and stores their slot numbers in
+7E:3539 and 7E:353A. This check looks for hard-coded actor numbers. Palom and 
+Porom are obviously considered twins. Fusoya and Golbez are also considered 
+twin characters (for casting W. Meteo in the Zemus fight). If no twins are
+found, then the "twin slots" remain unchanged in memory from their previous
+values.
+
+The Twin command has a special routine to check whether it should be disabled
+in battle; it checks the status flags of both Twins and disables the command
+if either Twin has a status that invalidates it.
+
+COVER: at the start of battle, the game runs a loop (starting around 03:8D4E)
+looking for Cecil in your party (in order to use his agility value as the
+reference value for scaling each other entity's agility). The check for Cecil
+uses hard-coded actor numbers, checking for both Dark Knight and Paladin Cecil.
+As a side effect, if the loop finds Paladin Cecil, it stores his slot number
+as the "cover slot" (7E:355E). Note that unlike the "twin slots", the "cover
+slot" is initialized to #$FF at the start of battle and will remain so if
+Paladin Cecil is not found.
+
+
+
+2. ISSUES PRESENTED BY THE LUNARIAN SHUFFLE ("TLS")
+
+In the original game, Paladin Cecil and the twin characters are associated
+with exactly one actor. In TLS, any of these characters may now be associated 
+with multiple actors, so simply replacing the actor numbers in the above checks 
+is insufficient.
+
+In TLS it is possible for a twin and Fusoya to be in the party at the same time, 
+possibly causing Fusoya to be erroneously reported as part of the twin pair.
+
+In TLS it is possible to have only one twin in your party; this was impossible
+in the original game, so the enabled/disabled check on the Twin command doesn't
+account for the possibility of a missing twin.
+
+The original game flags the cover slot in the Cecil-search loop because it
+assumes the "main character" and the "covering actor" are one and the same
+(Paladin Cecil). This is no longer true in TLS, so whichever actor is used for
+cover also becomes the character used for the reference agility value.
+
+
+
+3. SOLUTION OVERVIEW
+
+The Cecil-search loop no longer populates the cover slot.
+
+The twin-search loop checks by job number rather than actor number.
+
+In order to avoid Fusoya confusion but also make the Zemus fight work, the
+twin-search loop ignores Fusoya, but populates both twin slots with hard-coded 
+values if it finds Golbez. (Note that this assumes Golbez and Fusoya always
+occupy the same formation slots in the Zemus battle.)
+
+If the twin-search loop finds Paladin Cecil, it will populate the cover slot.
+
+The twin-search loop initializes the second twin slot to #$FF before scanning
+the party, and the Twin command enabled/disabled check looks for this value to 
+determine if both twins are present.
+
+
+
+4. DETAILED CODE CHANGES w/ANNOTATIONS
+
+In this section, the original game code is presented on the left, and where
+applicable, the altered game code is shown on the right.
+
+-------------------------------------------------------------------------------
+Cecil-search loop patch (cecilLoopPatch)
+-------------------------------------------------------------------------------
+83/8D4E:    7B          TDC 
+83/8D4F:    AA          TAX 
+83/8D50:    A8          TAY 
+83/8D51:    86C7        STX $C7
+83/8D53:    B94035      LDA $3540,Y
+83/8D56:    D011        BNE $8D69
+83/8D58:    A5C7        LDA $C7
+83/8D5A:    D028        BNE $8D84
+83/8D5C:    BD0020      LDA $2000,X
+83/8D5F:    291F        AND #$1F
+83/8D61:    C901        CMP #$01
+83/8D63:    F01F        BEQ $8D84
+83/8D65:    C90B        CMP #$0B
+83/8D67:    F018        BEQ $8D81       >   F01B        BEQ $8D84           (1)
+83/8D69:    C220        REP #$20
+83/8D6B:    8A          TXA 
+83/8D6C:    18          CLC 
+83/8D6D:    698000      ADC #$0080
+83/8D70:    AA          TAX 
+83/8D71:    7B          TDC 
+83/8D72:    E220        SEP #$20
+83/8D74:    C8          INY 
+83/8D75:    C00500      CPY #$0005
+83/8D78:    D0D9        BNE $8D53
+83/8D7A:    E6C7        INC $C7
+83/8D7C:    7B          TDC 
+83/8D7D:    AA          TAX 
+83/8D7E:    A8          TAY 
+83/8D7F:    80D2        BRA $8D53
+83/8D81:    8C5E35      STY $355E                                           (2)
+83/8D84:    BD1520      LDA $2015,X                                         (3)
+                        ...
+
+(1) Both Dark Knight Cecil and Paladin Cecil proceed to the same logic for
+    agility scaling when found, the difference being that Dark Knight Cecil
+    will bypass the instruction at (2) that sets the cover slot. This is just
+    a branch offset adjustment to make Paladin Cecil also bypass that
+    instruction.
+
+(2) This is the instruction that normally populates the cover slot.
+
+(3) The agility-scaling logic begins here (continuation not shown).
+
+-------------------------------------------------------------------------------
+Twin-search loop patches (twinLoopPatch1, twinLoopPatch2, and the first 41 
+bytes of twinCoverCodePatch)
+-------------------------------------------------------------------------------
+83/959E:    A20020      LDX #$2000
+83/95A1:    8680        STX $80
+83/95A3:    7B          TDC                                                 (1)
+83/95A4:    A8          TAY 
+83/95A5:    AA          TAX 
+83/95A6:    84A9        STY $A9
+83/95A8:    B180        LDA ($80),Y     >   A9FF        LDA #$FF            (2)
+83/95AA:    291F        AND #$1F        >   8D3A35      STA $353A
+83/95AC:    C908        CMP #$08        >   B180        LDA ($80),Y         (3)
+83/95AE:    F00C        BEQ $95BC       >   291F        AND #$1F
+83/95B0:    C909        CMP #$09        >   F00F        BEQ $95C2           (4)
+83/95B2:    F008        BEQ $95BC       >   C8          INY                 (5)
+83/95B4:    C913        CMP #$13        >   B180        LDA ($80),Y
+83/95B6:    F004        BEQ $95BC       >   88          DEY 
+83/95B8:    C915        CMP #$15        >   20E3FE      JSR $FEE3           (6)
+83/95BA:    D006        BNE $95C2       >   F006        BEQ $95C2           (7)
+83/95BC:    A5A9        LDA $A9
+83/95BE:    9D3935      STA $3539,X
+83/95C1:    E8          INX 
+83/95C2:    C220        REP #$20
+83/95C4:    18          CLC 
+83/95C5:    A580        LDA $80
+83/95C7:    698000      ADC #$0080
+83/95CA:    8580        STA $80
+83/95CC:    7B          TDC 
+83/95CD:    E220        SEP #$20
+83/95CF:    E6A9        INC $A9
+83/95D1:    A5A9        LDA $A9
+83/95D3:    C905        CMP #$05
+83/95D5:    D0D1        BNE $95A8       >   D0D6        BNE $95AD           (8)
+83/95D7:    60          RTS 
+................................................................................
+83/FEE3:                                >   290F        AND #$0F            (9)
+83/FEE5:                                >   C90F        CMP #$0F            (10)
+83/FEE7:                                >   D00A        BNE $FEF3
+83/FEE9:                                >   5A          PHY 
+83/FEEA:                                >   A00304      LDY #$0403
+83/FEED:                                >   8C3935      STY $3539
+83/FEF0:                                >   7A          PLY 
+83/FEF1:                                >   8017        BRA $FF0A
+83/FEF3:                                >   C909        CMP #$09            (11)
+83/FEF5:                                >   D007        BNE $FEFE
+83/FEF7:                                >   A5A9        LDA $A9
+83/FEF9:                                >   8D5E35      STA $355E
+83/FEFC:                                >   800C        BRA $FF0A
+83/FEFE:                                >   C907        CMP #$07            (12)
+83/FF00:                                >   F004        BEQ $FF06
+83/FF02:                                >   C908        CMP #$08
+83/FF04:                                >   D004        BNE $FF0A
+83/FF06:                                >   A901        LDA #$01
+83/FF08:                                >   8001        BRA $FF0B
+83/FF0A:                                >   7B          TDC 
+83/FF0B:                                >   60          RTS                 (13)
+
+
+(1) TDC is used often throughout the code as a one-byte instruction to zero
+    the A accumulator.
+
+(2) Two instructions to initialize the second twin slot to FF before we start
+    the search loop. If we don't find Palom and Porom, this slot will remain
+    FF and the Twin-check routine can look for this value.
+
+(3) The start of the search loop has been relocated down here from its original
+    position to accomodate the added instructions in (2).
+
+(4) Instead of checking for a specific actor number as before, here we check
+    to make sure the actor is non-zero, ie. if we actually have a party member
+    in this slot; this is necessary because job numbers are not necessarily 
+    erased from empty party slots.
+
+(5) These three instructions load the next byte of the character's record, which
+    contains the job number. (This step would conceptually make more sense in
+    our added code routine, but we have extra space here so we might as well
+    use it so our added code is smaller.)
+
+(6) We need more code space than we have available in the ROM here, so jump
+    to a routine we've added at the end of the bank (9).
+
+(7) Our added routine returns with the Zero bit set iff the slot is not a twin.
+    Check for that bit here, and proceed with the original game logic for
+    twin vs. not twin accordingly.
+
+(8) This is the instruction that returns to the top of the loop. Since we moved
+    the start of the loop to (3), we have to adjust the branch offset here.
+
+(9) This routine begins assuming A contains the second byte of the character
+    record (which we did in (5)). The job number occupies bits 0-3 of this data,
+    so apply a mask here.
+
+(10) Check for Golbez's job number. If this is Golbez, then set the twin slots
+     to 03 and 04. (This is the hard-coding for the Zemus fight.) Then jump to
+     the end of the routine, returning "not a twin".
+
+(11) Check for Paladin Cecil's job number. If this is Paladin Cecil, then load
+     the current slot number from $A9 and store it in the cover slot. Then
+     jump to the end of the routine, returning "not a twin".
+
+(12) Check for Palom and Porom's job numbers. If a match, return "twin" (Zero
+     bit clear). Otherwise return "not a twin" (Zero bit set).
+
+(13) As indicated above, this routine returns with the Zero bit set iff the
+     character is not a twin. The exact value of A at this point could be
+     one of several things and should not itself be relied upon as a result
+     value.
+
+-------------------------------------------------------------------------------
+Twin enable/disable check patches (twinCheckPatch and the last 17 bytes of
+twinCoverCodePatch)
+-------------------------------------------------------------------------------
+83/A339:    DA          PHX             >   4C0CFF      JMP $FF0C           (1)
+83/A33A:    AE3635      LDX $3536       >   EA          NOP                 (2)
+83/A33D:    DA          PHX                                                 (3)
+83/A33E:    A6A6        LDX $A6
+83/A340:    BD0320      LDA $2003,X
+83/A343:    293C        AND #$3C
+83/A345:    D02A        BNE $A371
+83/A347:    A20100      LDX #$0001
+83/A34A:    A5D0        LDA $D0
+83/A34C:    CD3935      CMP $3539
+83/A34F:    F001        BEQ $A352
+83/A351:    CA          DEX 
+83/A352:    BD3935      LDA $3539,X
+83/A355:    208984      JSR $8489
+83/A358:    A6A6        LDX $A6
+83/A35A:    BD0320      LDA $2003,X
+83/A35D:    29FC        AND #$FC
+83/A35F:    D010        BNE $A371
+83/A361:    BD0420      LDA $2004,X
+83/A364:    293C        AND #$3C
+83/A366:    D009        BNE $A371
+83/A368:    BD0520      LDA $2005,X
+83/A36B:    2940        AND #$40
+83/A36D:    D002        BNE $A371
+83/A36F:    C6B3        DEC $B3
+83/A371:    FA          PLX 
+83/A372:    8E3635      STX $3536
+83/A375:    FA          PLX 
+83/A376:    86A6        STX $A6
+83/A378:    E6B3        INC $B3                                             (4)
+83/A37A:    60          RTS 
+...............................................................................
+83/FF0C:                                >   AD3A35      LDA $353A           (5)
+83/FF0F:                                >   C9FF        CMP #$FF
+83/FF11:                                >   D003        BNE $FF16
+83/FF13:                                >   4C78A3      JMP $A378           (6)
+83/FF16:                                >   DA          PHX                 (7)
+83/FF17:                                >   AE3635      LDX $3536
+83/FF1A:                                >   4C3DA3      JMP $A33D           (8)
+
+(1) This is the very start of the twin-check routine. We need some extra space
+    for code here, so we replace the first two instructions with a jump to
+    our added code (5). We relocate the replaced instructions to (7) to make
+    sure they are still executed before returning to the rest of the routine.
+
+(2) The 3-byte jump instruction is overwriting the first instruction and only
+    part of the second instruction (due to different instruction lengths),
+    leaving a byte of data dangling. Overwrite that dangling byte with a NOP
+    so that disassemblers don't get confused.
+
+(3) The original twin-check routine proceeds as normal from this point; our
+    added code will return here (unless it decides to bypass the check).
+
+(4) The twin-check routine returns with $B3 != 0 iff the command should be
+    disabled.
+
+(5) Check the second twin slot for the FF value we initialized it to in the
+    twin-search loop.
+
+(6) If we found FF in the second twin slot, then the party does not contain
+    both twins, so here we bypass the remainder of the original twin-check
+    routine and jump directly back to the "command should be disabled" (4).
+
+(7) These are the two relocated instructions from the start of the original
+    twin-check routine; we still need to execute them before proceeding back
+    to the original code via (7).
+
+(8) This jumps us back to proceed with the original twin-check routine (3).

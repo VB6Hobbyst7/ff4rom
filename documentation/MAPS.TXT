@@ -1,0 +1,399 @@
+Normal
+------
+
+00: Baron Town - Outside
+01: Mist - Outside
+02: Kaipo - Outside
+03: Mysidia - Outside
+04: Mythril - Outside
+05: Troia Town - Outside
+06: Agart - Outside
+07: (??) - Inn (400 Gil)
+08: (Troia?) - Weapon store
+09: (Kaipo?) - Armor store
+0A: (Baron Town?) - Item store
+0B: Baron Town - Inn
+0C: Baron Town - Equipment store
+0D: Baron Town - Cid's house
+0E: Baron Town - Rosa's house
+0F: Mist - Rydia's house
+10: Kaipo - Inn, main floor
+11: Kaipo - Inn, upstairs
+12: Kaipo - Hospital
+13: Mysidia - Inn, main floor
+14: Mysidia - Inn, upstairs
+15: Mount Ordeals - Mirror Room
+16: Mysidia - Tower of Wishes, main floor
+17: Mysidia - Tower of wishes, top floor
+18: Troia Town - Cafe main floor
+19: Troia Town - Cafe upstairs
+1A: Troia Town - Dancers' stage
+1B: Glitch world
+1C: Troia Town - Chocobo stable, upstairs
+1D: Troia Town - Chocobo stable, downstairs
+1E: Agart - Astro Tower, main hall
+1F: Agart - Astro Tower, Observatory
+20: Agart - Inn
+21: Large chocobo forest near Troia
+22: Random floor with sprites from Baron Town
+23: Random floor with sprites from Baron Town
+24: Baron Castle - Outside
+25: Damcyan - Outside
+26: Fabul - Outside
+27: Troia Castle - Outside
+28: Eblan - Outside
+29: Lots of sand
+2A: Baron Castle - Lobby
+2B: Baron Castle - Outer court (room w/Kain)
+2C: Baron Castle - Throne room
+2D: Baron Castle - Hall where Rosa greets Cecil
+2E: Baron Castle - Hall with treasure
+2F: Baron Castle - Hall leading to dungeon
+30: Baron Castle - Dungeon
+31: Baron Castle - Soldiers' quarters
+32: Baron Castle - West tower, first floor
+33: Baron Castle - West tower, second floor
+34: Baron Castle - West tower, Cecil's room
+35: Baron Castle - East tower, first floor
+36: Baron Castle - East tower, second floor
+37: Baron Castle - East tower, top floor
+38: Baron Castle - East tower, downstairs
+39: Baron Castle - East tower, Odin's room
+3A: Sewer - First floor
+3B: Sewer - Second floor
+3C: Sewer - Fourth floor
+3D: Sewer - Save point room
+3E: Sewer - Third floor
+3F: Damcyan - Second floor
+40: Damcyan - Third floor
+41: Damcyan - Top floor
+42: Damcyan - Treasury, main floor
+43: Damcyan - Treasury, downstairs
+44: Baron Town - Room leading to sewer
+45: Agart - Weapon store
+46: Agart - Armor store
+47: Fabul - Lobby
+48: Fabul - Second floor
+49: Fabul - Throne room
+4A: (Fabul?) - Crystal room
+4B: Fabul - Equipment store
+4C: Fabul - Inn
+4D: Fabul - East tower, main floor
+4E: Fabul - East tower, second floor
+4F: Fabul - East tower, king's room
+50: Fabul - West tower, main floor
+51: Fabul - West tower, hostpital
+52: Fabul - West tower, Yang's room
+53: Forest where you lose Kain
+54: Watery Pass - Save point room
+55: Troia Castle - Lobby
+56: Troia Castle - Clerics' room
+57: (Troia Castle?) - Crystal room
+58: Troia Castle - Hospital
+59: Troia Castle - Room with 3 staircases
+5A: Troia Castle - Hall leading to treasury
+5B: Troia Castle - Room w/ random pots
+5C: Troia Castle - Room w/ rubyring chests
+5D: Troia Castle - Main treasury
+5E: Eblan - Central tower, main floor
+5F: Eblan - Central tower, second floor
+60: Eblan - Central tower, throne room
+61: Eblan - (West?) tower, main floor
+62: Eblan - (West?) tower, upstairs
+63: Eblan - (East?) tower, main floor
+64: Eblan - (East?) tower, upstairs (w/hole)
+65: Eblan - Basement
+66: Baron Castle - Black magic school
+67: Baron Castle - White magic school
+68: Lots of sand
+69: Empty classroom
+6A: Falling water (waterfall during plot scene?)
+6B: Lots of mist
+6C: Misty cave
+6D: Screwed up mirror room
+6E: Background image for Watery Pass
+6F: Watery Pass - First floor
+70: Watery Pass - Second floor
+71: Watery Pass - Third floor
+72: Watery Pass - Fourth floor
+73: Watery Pass - Top floor
+74: Waterfall - Introduction
+75: Waterfall - First floor
+76: Waterfall - Second floor (Octomammoth)
+77: Antlion Cave - First floor
+78: Antlion Cave - Second floor
+79: Antlion Cave - Antlion's nest
+7A: Antlion Cave - Save point room
+7B: Antlion Cave - Treasure room (w/harp)
+7C: Pitch black room
+7D: Lots of mist
+7E: Mount Hobs - First floor
+7F: Mount Hobs - Second floor (summit)
+80: Mount Hobs - Third floor (descending)
+81: Mount Hobs - Save point floor
+82: Mountain background
+83: Watery Pass - Room behind waterfall
+84: Mount Ordeals - First floor
+85: Mount Ordeals - Second floor
+86: Mount Ordeals - Third floor
+87: Mount Ordeals - Top floor
+88: Mysidia - Tower of Wishes, crystal room
+89: Mysidia - Devil's Road
+8A: Baron Castle - Hall leading to throne room
+8B: Agart - Well
+8C: Cave Magnes - First floor
+8D: Cave Magnes - Second floor
+8E: Cave Magnes - First treasure room (w/pit)
+8F: Cave Magnes - Third floor
+90: Cave Magnes - Second treasure room (w/torch)
+91: Cave Magnes - Fourth floor
+92: Cave Magnes - Save point room
+93: Cave Magnes - Top floor
+94: Cave Magnes - Crystal room
+95: Lots of grey dirt
+96: Watery Pass campsite (during plot scene)
+97: Baron Town - Devil's Road
+98: Tower of Zot - First floor
+99: Tower of Zot - Second floor (w/flamesword)
+9A: Tower of Zot - Third floor
+9B: Pitch black room
+9C: Tower of Zot - Fourth floor
+9D: Tower of Zot - Fifth floor
+9E: Tower of Zot - Golbez/Tellah showdown room
+9F: Tower of Zot - Rosa's prison
+A0: Adamant Grotto
+A1: (Cave Magnes?) - Save point room (two boxes)
+A2: (Tower of Zot?) - Save point room
+A3: Cid's Airship (Giant of Babil sequence)
+A4: Twins' Airship (Giant of Babil sequence)
+A5: Edward's Airship (Giant of Babil sequence)
+A6: (Tower of Babil?) - Save point room
+A7: Tower of Babil - B1
+A8: Tower of Babil - B2
+A9: Tower of Babil - B3
+AA: Tower of Babil - B4
+AB: Tower of Babil - Crystal room
+AC: Tower of Babil - B5
+AD: Scrolling mountains (Cid falling?)
+AE: Glitch world
+AF: Empty room w/ glass floor
+B0: Glitch world
+B1: Training room - Main floor
+B2: Training room - Upstairs
+B3: Glitch world
+B4: Glitch world
+B5: Giant of Babil - Mouth
+B6: Giant of Babil - Neck
+B7: Giant of Babil - Chest
+B8: Glitch world
+B9: Giant of Babil - Stomach
+BA: Giant of Babil - Passage
+BB: Glitch world
+BC: Giant of Babil - Lung
+BD: Giant of Babil - CPU
+BE: Moving gears / Giant background
+BF: Glitch world
+C0: Moving airship with soldiers (Cecil's?)
+C1: Boat docked
+C2: Boat sailing
+C3: Airship docked
+C4: Joined airships
+C5: Empty airship
+C6: Airship flying over underworld
+C7: Cave Eblan - First floor
+C8: Cave Eblan - Settlement
+C9: Cave Eblan - Second floor
+CA: Cave Eblan - Third floor
+CB: Cave Eblan - Inn
+CC: Cave Eblan - Equipment store
+CD: Cave Eblan - Save point room
+CE: Cave Eblan - Hospital
+CF: Chocobo forest
+D0: Empty airship
+D1: Chocobo forest
+D2: Chocobo forest
+D3: Chocobo forest
+D4: Chocobo forest
+D5: Empty throne room (Baron?)
+D6: Empty airship (black bg)
+D7: Empty airship
+D8: Empty airship (underground)
+D9: Empty airship (black bg)
+DA: Tower of Wishes (final battle)
+DB: Lots of sky
+DC: Empty dock
+DD: Glitch world
+DE: Glitch world
+DF: Lots of black
+E0: Inn (50 Gil) w/ Namingway
+E1: Mist - Weapon store
+E2: Mist - Armor store
+E3: (Kaipo?) - Weapon store
+E4: (Kaipo?) - Armor store
+E5: Mysidia - Weapon store
+E6: Mysidia - Armor store
+E7: (Mysidia?) - Item store
+E8: Mythril - Inn
+E9: Mythril - Weapon store
+EA: Mythril - Armor store
+EB: Mythril - Item store
+EC: (Baron?) - Item store
+ED: Tower of Wishes (ending sequence?)
+EE: Field (Palom's ending scene)
+EF: Eblan Castle throne room (Edge's ending)
+F0: Leviathan's room (Rydia's ending)
+F1: Damcyan (Edward's ending)
+F2: Dwarf Castle (Giott's ending)
+F3: Mount Ordeals (Kain's ending)
+F4: Astro Tower (Kory's ending)
+F5: Cecil's room preparing for wedding
+F6: Baron throne room (wedding reception)
+F7: Fabul throne room (Yang's ending)
+F8: Glitch world
+F9: Glitch world
+FA: Glitch world
+FB: Overworld
+FC: Underworld
+FD: Moon surface
+FE: Baron Town - Outside
+FF: Glitch world
+
+Under/Moon
+----------
+
+00: Smithy's house - Outside
+01: Tomra - Outside
+02: Smithy's house - Main floor
+03: Smithy's house - Smithy's room
+04: Tomra - Inn
+05: Tomra - Equipment store
+06: Tomra - Treasury
+07: Dwarf Castle - Outside
+08: Dwarf Castle - Lobby
+09: Dwarf Castle - Throne room
+0A: Dwarf Castle - Fat Chocobo room
+0B: Dwarf Castle - Basement tunnel
+0C: Glitchy glass room with girl and frogs
+0D: Dwarf Castle - Crystal room
+0E: Dwarf Castle - Equipment room
+0F: Dwarf Castle - Basement w/ recovery pot
+10: Dwarf Castle - East tower, first floor
+11: Dwarf Castle - Inn
+12: Dwarf Castle - Hospital
+13: Dwarf Castle - West tower, first floor
+14: (Tower of Babil?) - Save point
+15: Tower of Babil - Treasure room (Icebrand)
+16: Tower of Babil - Treasure room (Blizzard)
+17: Tower of Babil - Treasure room (Ice shield)
+18: Tower of Babil - Treasure room (Ice mail)
+19: Dwarf Castle - East tower, top floor
+1A: Dwarf Castle - West tower, top floor
+1B: Dwarf Castle - West tower, second floor
+1C: Lots of mist, sprites from Porom's ending
+1D: Tower of Babil - Floor w/ Lugae (redux)
+1E: Tower of Babil - Floor w/ Ice mail (redux)
+1F: Tower of Babil - Floor w/ Airship (redux)
+20: Dwarf Castle - Cafe
+21: Tower of Babil - Entrance
+22: Tower of Babil - Second floor
+23: Tower of Babil - Third floor 
+24: Tower of Babil - Fourth floor
+25: Tower of Babil - Floor w/ cannon
+26: Tower of Babil - Floor w/ airship
+27: Tower of Babil - Floor w/ Ice mail
+28: Tower of Babil - Floor w/ Lugae
+29: Glitch world
+2A: Glitch world, sprites from training room
+2B: Glitch world, sprites from training room 2F
+2C: Lunar whale
+2D: Tower of Babil - Cannon room
+2E: Dwarf tank
+2F: Lunar whale
+30: Dark room, sprites from Porom's ending
+31: Field from Palom's ending, sprites from Porom's
+32: Tomra - Item store
+33: Tower of Wishes - Top floor, after Giant
+34: Empty floor, sprites from Porom's ending
+35: Lots of water, sprites from Porom's ending
+36: Cave of Summons - First floor
+37: Cave of Summons - Second floor
+38: Cave of Summons - Third floor
+39: Glitch world, sprites from Porom's ending
+3A: Town of Summons - First floor
+3B: Town of Summons - Treasury
+3C: Town of Summons - Second floor
+3D: Town of Summons - House w/ save point
+3E: Town of Summons - Library, first floor
+3F: Town of Summons - Library, second floor
+40: Town of Summons - Leviathan's room
+41: Town of Summons - Weapon room
+42: Town of Summons - Armor room
+43: Town of Summons - Inn
+44: Sealed Cave - Entrance
+45: Sylvan Cave - First floor
+46: Sylvan Cave - Second floor
+47: Sylvan Cave - Third floor
+48: Sylvan Cave - Treasury
+49: Sylvan Cave - Yang's room
+4A: Sealed Cave - First floor
+4B: Sealed Cave - Room w/ katana & ether
+4C: Sealed Cave - Second floor
+4D: Sealed Cave - Third floor
+4E: Sealed Cave - Room w/ katana & ninja hat
+4F: Sealed Cave - Room w/ ninja star, elixir
+50: Sealed Cave - Room w/ Light sword
+51: Sealed Cave - Fourth floor
+52: Sealed Cave - Fifth floor
+53: Sealed Cave - Sixth floor
+54: Sealed Cave - Room w/ many boxes
+55: Sealed Cave - Seventh floor
+56: Sealed Cave - Save point room
+57: Sealed Cave - Room w/ Demon Wall
+58: Sealed Cave - Empty room
+59: Sealed Cave - Crystal room
+5A: Bahamut's Cave - First floor
+5B: Bahamut's Cave - Second floor
+5C: Bahamut's Cave - Bahamut's floor
+5D: Glitch world
+5E: Glitch world
+5F: Glitch world
+60: Lunar Palace - Lobby
+61: Lunar Palace - Crystal room
+62: Lots of glass floor
+63: First lunar passage
+64: Second lunar passage
+65: Hummingway land
+66: Glitch world, sprites from Porom's ending
+67: Lunar Subterran - First floor
+68: Lunar Subterran - Second floor
+69: Lunar Subterran - Third floor
+6A: Lunar Subterran - Fourth floor
+6B: Lunar Subterran - Fifth floor
+6C: Lunar Subterran - Sixth floor
+6D: Lunar Subterran - Seventh floor
+6E: Lunar Subterran - Core, first floor
+6F: Lunar Subterran - Core, second floor
+70: Lunar Subterran - Core, third floor
+71: Lunar Subterran - Core, fourth floor
+72: Lunar Subterran - Core, Zemus' room
+73: Lunar Subterran - Room w/elixir
+74: Lunar Subterran - Tunnel w/ 2 Cure3s
+75: Lunar Subterran - Tunnel w/ Protect ring
+76: Lunar Subterran - Tunnel w/ White robe
+77: Lunar Subterran - Pinkpuff room
+78: Lunar Subterran - Save point room before Ragnarok
+79: Lunar Subterran - Tunnel w/ Minerva
+7A: Lunar Subterran - Room w/ Holy lance
+7B: Lunar Subterran - Save point room
+7C: Lunar Subterran - Room w/ Ribbons
+7D: Glitch world, sprites from Porom's ending
+7E: Glitch world
+7F: Glitch world, sprites from Porom's ending
+80: Glitch world
+81: Glitch world w/ ghost
+82: Glitch world w/ ghosts
+83: Glitch world w/ monster ghosts
+84: Glitch world
+85: Glitch world
+86: Glitch world, ghosts of Porom's ending sprites
+

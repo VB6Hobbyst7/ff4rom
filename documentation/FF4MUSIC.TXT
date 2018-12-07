@@ -1,0 +1,118 @@
+SPC Instrument Index (without header) - 2400F
+BRR Samples (without header) - 2498A
+
+
+SPC Song sequences (offsets with header):
+
+3770E-      Nothing [00]
+37727-      Final Fantasy [01]
+37AE8-      Wishing Tower    [02]
+37BE6-      Fanfare (Dummy) [03]
+37D0F-      Yellow Chocobo [04]
+3804A-      Black Chocobo [05]
+3830C-      Underworld [06]
+38871-      Zeromus [07]
+393E4-      Victory Fanfare [08]
+3963C-      Town [09]
+39837-      Rydia [0A]
+39C1C-      Boss Music [0B]
+3A435-      Mt. Ordeals [0C]
+3A7D0-      Overworld [0D]
+3ABDB-      Big Whale [0E]
+3B092-      Sad Music [0F]
+
+3B1FA-      Tent/Cabin [10]
+3B2BC-      Golbez [11]
+3B5A3-      Sorrow [12]
+3B785-      Rosa [13]
+3BAF5-      Baron Castle [14]
+3BDAF-      The Prelude [15]
+3C361-      Suspicions [16]
+3C503-      Tower of Zot [17]
+3C8CE-      Airship [18]
+3CC15-      Tower of Bab-il [19]
+3CFA3-      Fight 2 [1A]
+3D463-      Within the Giant [1B]
+3D8AD-      Cave of Summoned Monsters [1C]
+3DAEA-      Destruction [1D]
+3DD10-      Lunar Path [1E]
+3DF4D-      Surprise! [1F]
+
+3E043-      Dwarf Castle [20]
+3E255-      Palom/Porom [21]
+3E508-      Calcobrena [22]
+3E6A7-      Hurry! [23]
+3E8F7-      Cid [24]
+3EC78-      Into the Darkness [25]
+3F13A-      Dancing Music [26]
+3F411-      Fight 1 [27]
+3F8D4-      Castle Eblan [28]
+3FAE4-      Character Joined! [29]
+3FBFF-      Character Died [2A]
+3FCE3-      Chocobo Forest [2B]
+3FDC7-      Opening [2C]
+40139-      Sad 2 [2D]
+40227-      Castle Fabul [2E]
+40435-      Fanfare (Became a Paladin) [2F]
+
+40666-      Lard Ass Chocobo [30]
+407A2-      Moon's Surface [31]
+40A84-      Toroia [32]
+40E4C-      Mysidia [33]
+41163-      Lunar Subterrane [34]
+41462-      Ending Part 1 [35]
+41F76-      Ending Part 2 [36]
+42E5C-      Ending Part 3 [37]
+
+
+SPC Song Sequence info:
+Header:
+01-02 = Length of sequence
+03-18 = Channel pointer
+
+Commands:
+D2 xx yy zz   Fade in tempo, the higher the xx yy the slower the song, zz is the rate in which it fades in
+
+DA xx      set octave to xx
+DB xx      change instrument to xx
+DC xx      Set transpose
+DD xx      Increment transpose
+DE xx      change volume of current instrument to xx
+DF      
+E0 xx      Length of the next following note(s) is xx?      
+E1      
+E2   
+
+EA      
+
+F0      Repeat last measure?
+   
+F2 xx yy   
+F3 xx yy   
+
+==========================================================
+
+Samples:
+
+01   Strings
+02   Harp?
+03   Grand Piano
+04   Harp
+05   Pipe Organ
+06   Trumpet
+07   Flute
+08   Xylophone
+09   Bass Guitar
+0A   Timpani
+0B   Electric Piano
+0C   Snare Drum
+0D   Kick Drum
+0E   Snare Drum (hard)
+0F   Conga Drum
+10   Cymbals (loop)
+11   Hihat
+12   Cowbell
+13   Shaker
+14   Whistle
+15   Conga Drum
+16   Chocobo

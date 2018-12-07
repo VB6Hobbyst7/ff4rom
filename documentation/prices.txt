@@ -1,0 +1,23 @@
+I was editing an inn price for my hack this evening, and I noticed that my changes definitely did not fit the formula suggested by Yousei's FF4 data for event code DCxx (Inn: costing 50 * 2^xx). I started getting some wacky numbers after a value of 08, so I jotted them down, converted them to hex, reversed the bytes, and did a search for that data. It turns out that there's actually a GP cost table located from 06C83-06C94 (in a FF2us headered ROM). There's only 9 entries; after that is ASM code, which is why the values are so weird. Here's an example of the first 16:
+
+##	GP Value
+--	--------
+00	50
+01	100
+02	200
+03	400
+04	500
+05	600
+06	700
+07	300
+08	1200
+09	12453
+0A	63629
+0B	42248
+0C	36145
+0D	2297
+0E	12965
+0F	64141
+
+
+I have a list of all possible values for xx, if anyone wants it. 9 entries is actually fine, but in case someone wants to go crazy with Inns...

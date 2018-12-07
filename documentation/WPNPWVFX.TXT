@@ -1,0 +1,15 @@
+Power
+-----
+79270 Headered [79070 (Unheadered)]: 1 byte per weapon, if byte is non-zero 
+the weapon will use its spell, byte is the spell's power.
+
+Animation
+---------
+The visual effects for using items in battle is specified from 7D6E0 to 7D7DF 
+(ROM with header). There's 1 byte per item, with the value corresponding to 
+the spell number (e.g. 0E is Cure1, 1E is Fire2). When I found this I 
+originally thought it was the spell cast by the item, but that clashed with 
+someone else's information, so I tested it today and the visual effects are 
+indeed what I had found earlier. You can make a Fire-casting item look like a 
+Cure spell, a healing-type item look like an elemental spell, etc. It's kind 
+of fun, actually. 

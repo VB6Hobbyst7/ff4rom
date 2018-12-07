@@ -1,0 +1,426 @@
+==============================================================================
+Enemy Attack Sequences (76B00-773FF & 738C0-73CBF)		Phoenix Hacks
+								6/20/2008
+[second byte of enemy attack group sets]
+==============================================================================
+
+=============================================================
+Attack Byte Meanings (based on the Tower of Bab-il document)
+=============================================================
+00-30: Spell number
+31-5E: Spell number + 30
+5F-BF: Enemy spell/special attack number
+C0-E7: Battle Command + C0. So C0 is Fight, C2 is magic, C6 is Jump, etc.
+    E1 is a special "do nothing" command
+E8 xx: Change the enemy's creature type byte to xx
+E9 xx: Change the enemy's physical attack index to xx
+EA xx: Change the enemy's physical defense index to xx
+EB xx: Change the enemy's magical defense index to xx
+EC xx: The 16-bit number at offset 60-61 in the enemy's data record that is
+    derived from it's agility and determines its base speed is modified. The
+    lower seven bits of xx are multiplied by the existing speed value, and
+    divided by 10. This is added to the existing value, or subtracted if the MSB
+    of xx is set. (Remember, lower values at offset 60-61 mean a faster speed.)
+ED xx: Set the enemy's elemental defenses xx
+EE xx: Set the enemy's spell power to xx
+EF xx: Set the enemy's elemental weaknesses to xx
+F0 xx: Change the enemy graphic to xx
+F1 xx: Display battle dialogue xx
+F2 xx: Display battle dialogue xx while performing next attack?
+F3 xx: Change music to xx
+F4 xx:
+	If xx = 01, increment condition flag by 01
+	If xx = 8#, set condition flag to 0#
+F5 xx:
+	If xx = 8#, set reflex flag to 0#
+F6 xx: ? (not used)
+F7 xx: ?
+F8 xx: ? (not used)
+F9 xx: Set the target(s) of the next attack as per xx:
+    00-15 the character with that character id
+    16 self
+    17 all enemies
+    18 all other enemies
+    19 all enemies of the first enemy type in the encounter
+    1A all enemies of the second enemy type in the encounter
+    1B all enemies of the third enemy type in the encounter
+    1C front row of the party
+    1D back row of the party
+    1E one paralyzed enemy
+    1F one sleeping enemy
+    20 one charmed enemy
+    21 one critically injured enemy
+    22 one random enemy or character
+    23 one random enemy or character other than self
+    24 random enemy
+    25 random enemy other than self
+    26 random front row party member
+    27 random back row party member
+    28 whole party
+    29 all dead enemies
+FA: ?
+FB: Separates the attack codes in an attack chain
+FC: Ends an attack chain
+FD: Starts an attack chain
+FE: Stop attacking and wait for the next turn
+FF: Ends the sequence, and repeat from the beginning; also has the effect of FE
+
+======================================================
+Attack Sequence Data for Normal Enemies (76B00-773FF)
+======================================================
+
+#	Attack Sequence Data
+--	--------------------
+00	E1 FF
+01	C0 FF
+02	F9 24 C0 FF
+03	C0 FE C0 FE A0 FF
+04	A0 FF
+05	82 FF
+06	F9 24 6C FF
+07	C0 FE C0 FE 6C FF
+08	6C FF
+09	F9 24 21 FF
+0A	F9 22 2B FF
+0B	21 FF
+0C	F9 24 6B FF
+0D	6B FF
+0E	F9 24 2B FF
+0F	C0 FE C0 FE 61 FF
+10	F9 28 6A F9 16 2C FF
+11	6A FF
+12	F9 24 1D FF
+13	1D FE C0 FF
+14	F9 24 29 FF
+15	1E FE C0 FE 29 FF
+16	F9 24 88 FF
+17	88 FF
+18	0D F2 8B F2 8C FE F9 16 0D F2 8D F2 8E F2 90 FE F2 91 F2 92 F2 93 92 FF
+19	2C FF
+1A	F9 24 09 FF
+1B	09 FF
+1C	F9 24 A7 FF
+1D	A7 FF
+1E	2B FF
+1F	23 FE 20 FE 1D FF
+20	2E FF
+21	01 FF
+22	C0 FE 64 FF
+23	C0 FE A3 FF
+24	F9 17 A1 FF
+25	C0 FE A1 FF
+26	A1 FF
+27	C0 FE 6E FE C0 FF
+28	F9 17 9E FF
+29	9E FF
+2A	F9 17 9D FF
+2B	9D FF
+2C	F9 16 92 FF
+2D	88 FF
+2E	F9 24 27 FF
+2F	C0 FE C0 FE C0 FE 27 FF
+30	27 FE C0 FF
+31	19 FF
+32	8A FF
+33	FD F4 81 E1 FB 90 FC FE FD 7F FB F4 80 E1 FC FE E1 FE E1 FF
+34	F2 8A AD FF
+35	07 FF
+36	23 FF
+37	24 FF
+38	E1 FF
+39	E1 FE E1 FE C0 FE 92 FF
+3A	AC FF
+3B	F9 18 8E F2 52 FF
+3C	F1 B3 F1 B4 F9 16 29 FE AE FF
+3D	C0 FE C0 FE C0 FE 85 FF
+3E	C0 FE 24 FE C0 FE 65 FF
+3F	F9 17 96 FF
+40	96 FF
+41	F9 17 99 FF
+42	99 FF
+43	1A FF
+44	15 FF
+45	0A FF
+46	26 FF
+47	66 FF
+48	63 FF
+49	F9 24 66 FF
+4A	C0 FE C0 FE 71 FF
+4B	0D FF
+4C	6D FE 2D FF
+4D	67 FF
+4E	02 FF
+4F	F9 24 62 FF
+50	62 FF
+51	85 FF
+52	68 FF
+53	69 FF
+54	F9 24 03 FF
+55	C0 FE 03 FE C0 FF
+56	03 FF
+57	97 FF
+58	F9 16 83 FF
+59	F9 17 9C FF
+5A	9C FE C0 FF
+5B	49 FF
+5C	8D FF
+5D	F9 24 2D FF
+5E	F9 24 1B FF
+5F	1D FF
+60	20 FF
+61	F9 18 8E F2 51 FF
+62	F9 24 94 FF
+63	94 FF
+64	F9 17 A2 FF
+65	A2 FF
+66	F9 24 08 FF
+67	07 FE 02 FF
+68	F9 16 19 FE 19 FE 19 FE F9 16 19 FE 92 FF
+69	F9 18 8E F2 89 FF
+6A	F9 24 2A FF
+6B	C0 FE 30 FF
+6C	1E FE 2E FE 2D FE 2B FF
+6D	F9 16 0A FF
+6E	89 FF
+6F	FD C0 FB C0 FC FF
+70	C0 FE 99 FF
+71	90 FE 81 FE 90 FE 94 FF
+72	F2 08 E1 FF
+73	8C FF
+74	6F FE C0 FE 89 FE C0 FF
+75	C0 FE C0 FE 98 FF
+76	98 FF
+77	1E FF
+78	F9 22 9F FF
+79	9F FF
+7A	96 FE C0 FE C0 FE C0 FE C0 FF
+7B	81 FF
+7C	91 FF
+7D	F2 67 E1 FE F2 67 E1 FE F2 67 E1 FE F2 67 E1 FE F2 67 E1 FE F2 67 E1 FE F2 67 E1 FE C0 FF
+7E	E1 FF
+7F	E1 FF
+80	C0 FE C0 FE C0 FE FD F1 00 E1 FB F0 01 A9 FB F4 81 E1 FC FE E1 FE E1 FE E1 FE FD F1 01 E1 FB F0 00 AA FB F4 80 E1 FC FF
+81	74 F1 02 F1 03 F1 04 FF
+82	F2 13 8D FF
+83	FD F0 43 A1 FB AE FC FF
+84	F0 05 EC 09 F4 01 E1 FF
+85	F0 06 EC 08 F4 01 E1 FF
+86	F0 07 EC 07 F4 01 E1 FF
+87	F0 08 EC 06 F4 01 E1 FF
+88	F0 09 EC 05 F4 01 E1 FF
+89	F0 0A EC 04 F4 01 F1 48 F1 49 E1 FF
+8A	F0 0B EC 03 F4 01 E1 FF
+8B	F4 01 E1 FF
+8C	F2 05 E1 FE F2 05 E1 FE F2 05 E1 FE F2 05 F4 80 E1 FF
+8D	F4 81 E1 FF
+8E	A8 FF
+8F	F1 16 F1 17 F4 81 E1 FF
+90	F1 18 F1 19 F4 82 E1 FF
+91	F1 1A F1 1B F4 83 E1 FF
+92	F1 1C F1 1D F1 15 AE FF
+93	B3 F1 40 F1 41 F1 42 F4 81 FF
+94	F1 43 B8 F1 44 F4 82 EA 60 FF
+95	F2 45 F9 16 7B FF
+96	F2 3F E1 FE FD 75 FB AD FC FF
+97	F0 0D F4 81 E1 FF
+98	E1 FE F2 07 F9 18 8E FE E1 FF
+99	23 FE C0 FF
+9A	F1 06 F9 16 7B FF
+9B	2D FF
+9C	F1 14 F1 23 F4 81 E1 FF
+9D	F1 AA 76 FF
+9E	C5 FE C5 FE C5 FE F1 20 F1 21 F1 22 F1 94 F9 16 7B FF
+9F	C5 F1 1E FE C5 F1 1F F4 80 FF
+A0	C0 FE 71 FE C0 FF
+A1	C0 FE 88 FF
+A2	C0 FE C0 FE C0 FE C0 FE F9 18 08 FE C0 FF
+A3	F9 29 AB FF
+A4	F9 16 0A FF
+A5	FD F5 81 E1 FB F1 46 E1 FB F0 13 E1 FB EF 04 E1 FC FE 9D FE F9 16 08 FF
+A6	F9 16 84 FE EA 7A F4 81 E1 FF
+A7	C0 F4 81 FF
+A8	FD F4 80 E1 FB F5 80 E1 FB F0 12 E1 FB EF 02 E1 FB F1 74 E1 FC FF
+A9	FD F4 82 E1 FB F5 80 E1 FB F0 14 E1 FB EF 02 E1 FB F1 47 E1 FC FF
+AA	E1 FE E1 FE E1 FE F1 09 FD 4E FB 54 FB 51 FC FE 57 FE F1 0A F1 0B F1 0C AE FF
+AB	F1 2C C0 FE C0 FE C0 FE C0 FE C0 FE C0 FE 58 FF
+AC	FD 4E FB 54 FB 51 FC FE 27 FE 70 FF
+AD	FD F1 0D E1 FB F3 1A E1 FB AD FC FF
+AE	C0 FE 9A FF
+AF	F2 64 F9 1A 0A FF
+B0	03 FE 09 FE 07 FE F9 17 0F FF
+B1	F2 65 F2 66 F9 1A 1E FE F2 65 F2 66 F9 1A 24 FE F2 65 F2 66 F9 1A 21 FE F2 65 F2 66 F9 1A 26 FF
+B2	1D FE 23 FE 20 FE 1C FF
+B3	F2 2D C0 FF
+B4	C0 FE F9 29 AC FF
+B5	FD 27 FB 69 FC FE C0 FF
+B6	C0 FE E1 F4 80 FF
+B7	FD EA 90 EB DE E1 FB F4 81 E1 FB F0 16 E1 FC FF
+B8	F0 15 F4 82 EA 60 EB B0 C0 FF
+B9	F2 2E F2 2F E1 FF
+BA	F2 0E F9 01 C0 FE F2 0F CE FE F2 10 F9 01 C0 FE F2 11 CE F4 81 FF
+BB	F2 12 AE FF
+BC	F2 7E F3 22 AD FF
+BD	F2 7D F3 1A AD FF
+BE	F1 69 F1 6B F0 11 A4 FF
+BF	FD F0 11 E1 FB ED 00 EF 82 E1 FC FE E1 FE A4 FE FD F0 10 E1 FB ED 42 EF 42 E1 FC FE C0 FE FD F0 11 E1 FB ED 00 EF 82 E1 FC FE E1 FE A4 FE FD F0 10 E1 FB ED 42 EF 42 E1 FC FE E1 F4 81 FF
+C0	F9 28 13 FF
+C1	F9 28 1E FF
+C2	F1 8F F1 6A F1 05 F9 16 7B FF
+C3	F1 30 F1 31 E1 FE 1E FE F1 32 F1 33 E1 FE 1E FE 1E FE F1 34 E1 FE F7 00 F3 0F F9 1A 8E F0 1F F4 81 FE F1 36 E1 FE F1 37 E1 FE F1 38 E1 FE F1 39 E1 FE F1 6C E1 FE F1 6D E1 FE F1 6E E1 FE F1 6F E1 FE F1 70 E1 FE F9 16 7B FF
+C4	F1 71 F1 72 F1 73 F9 16 7B FF
+C5	F0 60 F1 35 E1 FF
+C6	FD F1 57 E1 FB F1 58 E1 FB F4 81 E1 FC FF
+C7	E1 FE FD F2 5F E1 FB F9 1A 86 FB F2 58 E1 FC FE E1 FF
+C8	F1 5C F1 5D F1 5E AD F4 80 FF
+C9	F1 59 F1 5A F1 58 F1 5B F4 82 E1 FF
+CA	F1 60 A0 FF
+CB	F9 19 C0 F4 82 FF
+CC	C0 FE C0 FE F1 63 A0 FF
+CD	F1 61 E1 FE FD F1 62 E1 FB F0 28 E1 FB F3 1A E1 FB F4 81 79 FC FF
+CE	94 FE 9F FE A2 FE F9 28 86 FF
+CF	78 FF
+D0	8B FE E1 FF
+D1	FD AF FB C0 F4 01 FC FF
+D2	6C FF
+D3	C0 FE C0 FE C0 FE F0 2B E1 FE E1 FE A5 FE C0 FE C0 FE F0 2B E1 FE E1 FE A5 FE C0 FE FD F0 2B E1 FB F4 81 E1 FC FE F4 80 A5 FF
+D4	F2 68 F9 16 7B FF
+D5	FD F0 2D E1 FB 9B FC FE F0 2E E1 FE 21 FE 21 FE E1 FE FD F0 2D E1 FB 9B FC FE F0 2E E1 FE 21 FE E1 FF
+D6	F9 28 7A FF
+D7	F9 19 84 FF
+D8	F2 78 E1 FE F2 79 E1 FE F2 7A E1 FE F2 7B E1 FE F2 7C E1 FE FD F0 30 E1 FB A6 FC FE F0 2F E1 FF
+D9	F1 3A F1 3B C6 FE E1 FE F1 3C F1 3D C6 F4 81 FF
+DA	C6 FF
+DB	FD F2 3E C6 FB AE FC FF
+DC	F1 2A F1 2B E1 FF
+DD	F1 24 F1 25 F1 26 F1 27 F1 28 E1 FF
+DE	F1 29 F9 16 7B FF
+DF	E1 FE E1 FE FD F1 4A E1 FB F1 4B E1 FB F1 4C F9 28 77 FB F1 4D E1 FB F1 4E E1 FB F1 4F 8D FB F4 81 E1 FC FF
+E0	E1 FF
+E1	F1 53 F1 B0 F9 28 93 F1 54 F1 55 FE F3 0B B1 F4 82 FF
+E2	26 FE 25 FE 1E FF
+E3	F1 56 F9 16 7B FF
+E4	FD F9 0D 7C FB F9 0F 7C FB F9 10 7C FC FE FD F1 50 E1 FB AA FB B0 FB BC FC FF
+E5	F0 36 F9 16 11 F4 81 FF
+E6	F0 35 F9 16 10 F4 82 FF
+E7	F0 37 F9 16 13 F4 80 FF
+E8	F0 37 F0 35 F0 36 F0 37 F4 82 C0 FF
+E9	F0 36 F0 37 F0 35 F0 36 F4 80 C0 FF
+EA	F0 35 F0 36 F0 37 F0 35 F4 81 C0 FF
+EB	FD ED 7E E1 FB EF 81 E1 FB E8 80 E1 FC FE C0 FE C0 FE C0 FE C0 FE 68 FF
+EC	F4 81 F0 11 ED 7D EF 82 E8 40 E1 FF
+ED	F9 28 1E FE F9 28 1F FE F9 28 A4 FF
+EE	AD FF
+EF	FD F4 82 E1 FB ED 7B E1 FB EF 84 E1 FB E8 00 E1 FC FE C0 FE C0 FE C0 FE C0 FE 9B FF
+F0	F4 83 F0 74 ED 00 EF 10 E8 00 E1 FF
+F1	C0 FE 69 FE C0 FE 69 FE C0 FE 80 FF
+F2	F9 16 0A FF
+F3	95 FE 95 FE F9 29 AB FF
+F4	C0 FE 65 FE C0 FE C0 FE 01 FE C0 FF
+F5	FD C0 FB C0 FC FE E1 FE F4 80 E1 FF
+F6	F9 16 21 FF
+F7	F9 16 0A F4 81 FF
+F8	97 FE C0 FE C0 FF
+F9	F1 AD F1 AE A0 FF
+FA	F1 96 F1 97 F1 98 AE FF
+FB	F3 2E F7 00 F1 B5 E1 FE E1 FE E1 FE F1 B6 F9 16 7B FF
+FC	F1 B7 F1 B8 F1 B9 AE FF
+FD	F2 76 63 FF
+FE	FF
+FF	FF
+
+============================================================
+Lunar Subterrane/Cave Bahamut Attack Sequences (738C0-73CCF)
+============================================================
+
+#	Attack Sequence Data
+--	--------------------
+00	1E FE 2E FE 2D FE 24 FE 21 FF
+01	F9 24 2A FF
+02	C0 FE 27 FF
+03	C0 FF
+04	F9 22 6E FF
+05	C0 FE 6E FE 92 FF
+06	C0 FE F9 28 A2 FF
+07	94 FF
+08	A0 FF
+09	C0 FF
+0A	96 FF
+0B	C0 FE C0 FE C0 FE 97 FF
+0C	F9 22 71 FE F9 22 C0 FF
+0D	9E FF
+0E	C0 FE 9C FE C0 FE C0 FE 9C FF
+0F	F9 22 C0 FF
+10	9C FF
+11	6A FF
+12	C0 FF
+13	08 FE 09 FE 03 FF
+14	C0 FE 68 FE C0 FF
+15	96 FF
+16	C0 FE 98 FE C0 FF
+17	99 FF
+18	71 FF
+19	C0 FE C0 FE FD C0 FB C0 FC FF
+1A	F9 16 1F FE F9 16 C0 FF
+1B	C0 FE A3 FE C0 FF
+1C	62 FF
+1D	C0 FF
+1E	80 FF
+1F	F9 16 0A FE F9 28 0A FE F4 81 E1 FF
+20	F9 16 0B FE F9 16 30 FE F9 16 26 FE F9 16 0B FE F9 28 10 FE F9 23 08 FE F9 16 0A FF
+21	F9 16 0D FF
+22	F9 28 25 FF
+23	F1 AF F1 B2 F9 16 08 F4 82 FF
+24	F1 99 F4 81 E1 FF
+25	A6 FE E1 FE E1 FE F4 81 F9 16 0A FF
+26	EE 0C F9 16 30 EE 08 FE EE 0C F9 16 30 EE 08 FE EE 0C F9 16 30 EE 08 FE E1 FF
+27	EE 06 A6 FF
+28	FD 9B FB 9B FC FE C0 FE C0 FE C0 FE 9B FE C0 FE C0 FF
+29	72 FF
+2A	97 FF
+2B	C0 FE 96 FE C0 FE C0 FE C0 FE C0 FE F9 28 6F FF
+2C	F9 25 26 FF
+2D	F9 17 0A F4 81 FF
+2E	96 FF
+2F	F9 16 84 FF
+30	C0 FE C0 FE C0 FE C0 FE C0 FF
+31	A1 FF
+32	07 FF
+33	A4 FF
+34	9C FF
+35	98 FF
+36	F9 28 6A FF
+37	F9 28 08 FF
+38	C0 FE C0 FE F9 28 03 FE C0 FF
+39	F9 16 05 FF
+3A	F9 16 06 FF
+3B	F2 95 0D FF
+3C	6D FF
+3D	F9 16 84 FE F9 16 0A FF
+3E	E1 FF
+3F	F1 B2 F1 B3 F1 B4 F1 B5 AE FF
+40	F1 B6 F1 B7 F1 B8 F3 1A AD FF
+41	E1 FF
+42	F1 7F F1 80 F1 81 F4 81 E1 FF
+43	F1 82 F1 83 F9 16 7B FF
+44	F1 84 F1 85 E1 FF
+45	F1 86 F1 87 F1 88 F1 AB F9 28 2F FF
+46	8F FF
+47	FD B5 FB F1 9D F1 9E F1 9F BF FB F9 28 BA FB B8 FC FE FD B4 FB F1 9A F1 9B F1 9C BF FB F9 10 BE FB F9 11 BE FB B8 F4 81 FC FF
+48	FD B6 FB F1 A0 F1 A1 F1 A2 BF FB F9 12 BE FB F9 14 BE FB B8 FC FE FD B7 FB F1 A3 BF FB F9 28 BE FB F1 A4 F1 A5 F1 A6 F1 A7 B8 FB F4 82 BB FC FF
+49	FD 73 FB BB FC FF
+4A	F1 AC F7 00 F3 00 F1 A9 F3 07 AD F7 80 FF
+4B	AA FE BB FE 87 F4 83 FF
+4C	E1 FE BB FE EE 1F 87 FE 7D F1 75 FE E1 FE BB FE EE 20 87 FE EE 24 F9 28 26 FE 7D F1 75 FE E1 FE BB FE EE 20 87 FE 7D F1 75 FF
+4D	EE 0E 30 FF
+4E	EE 0E 30 FF
+4F	72 FF
+50	7E F3 05 FE C0 FE C0 FE 7E F3 04 FE C0 FE C0 FE 7E F3 30 FE C0 FE C0 FE 7E F3 33 FE C0 FE 66 FF
+51	F2 78 E1 FE F2 79 E1 FE F2 7A E1 FE F2 7B E1 FE F2 7C E1 FE FD F0 30 E1 FB A6 FC FE F0 2F E1 FF
+52	F9 16 0A F4 81 FF
+53	C0 FF
+54	F4 84 8F FF
+55	E1 FE BB FE EE 1F 87 FE 7D F1 75 FE EE 0E 30 FE E1 FE E1 FE BB FE EE 20 87 FF
+56	F4 85 E1 FF
+57	FD EE 03 E1 FB F9 28 2F FC FE E1 FF
+58	EE 24 F9 28 26 FF
+59	26 FF

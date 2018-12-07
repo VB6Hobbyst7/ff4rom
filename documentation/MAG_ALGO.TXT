@@ -1,0 +1,210 @@
+Spell Targets Only All Enemies or All Allies = 1
+Every Other Spell = 1/number of targets
+List of spells that ignore split damage can be found here: http://slickproductions.org/forum/index.php?topic=359.0
+
+Undead Modifier:
+Drain Elemental (Osmose/Psych and Drain) vs Undead = -1
+Unapplicable = 1
+
+Note: Sylph works against Undead w/o this penalty for its "special" Drain attack.
+
+Absorb Modifier:
+Target Absorbs vs Element = -1
+Unapplicable = 1
+
+Note: If the target reacts to any of the elemental attacks, continue using the multiplier during an uninterrupted attack such as one given by Zeromus EG from FF4A. Stop using the multiplier when the uninterrupted attack ends. Elemental multipliers do not stack.
+
+Appendix: Refer to this for how the game deals with elemental magic attacks - http://slickproductions.org/forum/index.php?topic=426.0
+
+Healing Modifier:
+Target is Ally = -1
+Target is Undead = 1
+Unapplicable = 1
+
+Magic Defense:
+
+Base Magic Defense (character) = sum of all armor magic defense values
+Note: Unequipped sections have a magic defense of 0.
+Base Magic Defense (monster) = Whatever is listed by the game
+
+Magic Defense Modifier:
+Healing Spell Targeted On Ally = 0
+Unapplicable = 1
+
+Note: If Magic Defense > 255 in your equipment, Magic Defense = 255. This is here just so you know.
+
+Magic Defense = Base Magic Defense * Magic Defense Modifier
+
+Magic Evade:
+
+Base Magic Evade (character) =  (Wisdom (Intelligence) + Will (Spirit))/8 + all the armor magic evade values
+Base Magic Evade (monster) = 0
+
+Magic Evade Modifier:
+Target is Monster and its Magic Defense is 255 sets Base Magic Evade = 99
+Target is Blind = 1/2
+Unapplicable = 1
+Note: The Monster has 99 Magic Evade, regardless of Blind status...
+
+If Base Magic Evade > 99, Base Magic Evade = 99.
+
+Magic Evade = Base Magic Evade * Magic Evade Modifier
+
+Note: When Monster Magic Defense is naturally at 255 (with no help from Shell), they are intentionally "invincible" to magic.
+
+Magic Defense Multiplier:
+
+Base Magic Defense Multiplier (character) = Agility/32 + (Wisdom (Intelligence) + Will (Spirit))/32
+Base Magic Defense Multiplier (monster) = irrelevent
+
+Note: Since monster magic evade = 0, it doesn't matter what the magic evade value is, except when monster magic defense = 255.
+
+Magic Defense Multiplier Modifer:
+Target is Monster and its Magic Defense is 255 sets Magic Defense Multiplier = 99
+Target has Toad status sets Magic Defense Multiplier = 0
+Unapplicable = Magic Defense Multiplier = Base Magic Defense
+Note: When Monster Magic Defense is naturally at 255 (with no help from Shell), they are intentionally "invincible" to magic.
+
+Spell Hit Rate:
+
+Base Spell Hit Rate = Whatever is stored internally
+If Base Spell Hit Rate > 128, Base Spell Hit Rate -= 128.
+
+Spell Hit Rate Modifier:
+Weapon Used As Item Magic sets Spell Hit Rate = 100
+Caster is Blind = 1/2
+**Caster is in Slot 1 (the Middle position) = 5/4
+Unapplicable = 1
+
+Note: Spells cast by a weapon used as an item have a 100% hit rate, regardless of blind status or the original spell's hit rate.
+
+Spell Hit Rate = (Base Spell Hit Rate + (Wisdom (Intelligence) or Will (Spirit) or Monster''s Magic Stat)/2) * Spell Hit Rate Modifier
+
+Spell Power:
+
+Base Spell Power (for most spells) = Whatever is listed internally for that spell * 4
+Base Spell Power (Summon spells) = Whatever is listed internally for that spell * 8
+
+Elemental Power Multiplier:
+Weak vs Element and Weak+ = 4
+Weak vs Element = 2
+Resist vs Element = 1/2
+Immune vs Element = 0
+Unapplicable = 1
+
+Note: If the target reacts to any of the elemental attacks, continue using the multiplier during an uninterrupted attack such as one given by Zeromus EG from FF4A. Stop using the multiplier when the uninterrupted attack ends. Elemental multipliers do not stack.
+
+Spell Power = Base Spell Power * Elemental Power Multiplier * (rand (100, 150)/100) - Target's Magic Defense
+If Spell Power < 0, Spell Power = 0
+
+Or... you could also say:
+
+Spell Power = Base Spell Power * Elemental Power Multiplier * (rand (100, 150)/100)
+If Spell Power < Target's Magic Defense, then Spell Power = 0.
+Else Spell Power -= Target's Magic Defense.
+
+Note: You only need to randomize once for the algo to work properly.
+
+Spell Power Multiplier:
+
+Spell Power Multiplier (White) = Will (Spirit) /4 + 1
+Spell Power Multiplier (Black) = Wisdom (Intelligence) /4 + 1
+Spell Power Multiplier (Ninja) = Wisdom (Intelligence) /4 + 1
+Spell Power Multiplier (Summon) = Wisdom (Intelligence) /4 + 1
+Spell Power Multiplier (Monster) = Whatever their magic stat says /4 + 1
+Spell Power Multiplier (Weapon Magic) = Whatever that value is listed
+**Spell Power Multiplier (Status Effects) = 1
+
+Note: Blind status does not hurt the weapon magic's spell multiplier.
+
+-----------------------------------------------------------------------------------------------------------------
+
+/Multiplier Madness! - These checks redo the spell power multiplier based on spell hit rate and target's magic evasion.
+
+New Spell Power Multiplier = Caster's Spell Power Multiplier; // initial
+
+while (Caster's Spell Power Multiplier > 0)
+{
+ if (rand (0, 99) <= Spell's Hit Rate) // check if individual spell hit is successful due to spell hit rate
+ {
+  while (Target's Magic Defense Multiplier > 0)
+  // consider the Magic Defense Multiplier the number of chances to evade magic hits
+  // we try again on failure and stop when there is no more
+  {
+   Target's Magic Defense Multiplier--;
+   if (rand (0,99) < Target's Magic Evade) // see if the target evades the magic hit
+   {
+    New Spell Power Multiplier--;
+    break; // exit this loop since target has evaded successfully
+   }
+ }
+ else // executed when individual spell hit fails to hit target and ignores magic evade - think of Tellah's suckage
+ {
+  New Spell Power Multiplier--;
+ }
+ Caster's Spell Power Mulitplier--;
+}
+
+-------------------------------------------------------------------------------------------------------------------
+
+Damage = New Spell Power Multiplier * Spell Power * Split Damage Modifier * Undead Modifer * Absorb Modifier * Healing Modifier;
+
+If Damage = 0, then Damage = 1;
+
+It is worth pointing out that monster magic evade = 0. Attack magic generally has a hit rate of 100%, although Venom/Poison is "the exception",
+since it does both inflict a status and "deal damage".
+
+--------------------------------------------------------------------------------------------------------------------
+
+Non-Damage Magic Algo (for most, if not all other spells, generally applicable to status changing magic)
+
+Target Count:
+Single = 1
+All Targets = number of targets
+
+SNES Version:
+
+while (Target Count > 0)
+{
+  reset Spell Type Multiplier();
+  Succesful Hit = false;
+  while (Spell Type Multiplier > 0)
+  {
+   if ((rand(0, 99) <= Spell Hit Rate) || ((Level Check == true) && (rand(0, Target's Level) <= rand(0, Caster's Level)))
+   {
+     Successful Hit = true;
+     break;
+   }
+   Spell Type Multiplier--;
+  }
+  if(Successful Hit == false)
+  {
+   return false;
+  }
+  Target Count--;
+}
+return true;
+
+If Success = true, then apply status afflication to target(s) unless immune/resistant to status.
+
+GBA:
+
+while (Target Count > 0)
+{
+  if((attack type == status effect)&&(!target.isresistant(status effect))
+  {
+   reset Spell Type Multiplier();
+   while (Spell Type Multiplier > 0)
+   {
+    if ((rand(0, 99) <= Spell Hit Rate) || ((Level Check == true) && (rand(0, Target's Level) <= rand(0, Caster's Level)))
+    {
+     apply status effect(); // if immune/resistant, silently fail? probably won't matter
+     break; // success
+    }
+    Spell Type Multiplier--;
+   }
+  }
+  Target Count--;
+}
+
+If Success = true, then apply status afflication to target(s) unless immune/resistant to status.

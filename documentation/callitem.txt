@@ -1,0 +1,14 @@
+So far all I can do is change who gets the spell.  The instruction is found at
+$1a8b3 - simply change the second byte to the RAM location of the first slot
+of the target spell list (for instance, changing from "99 C0 15" to "99 D8 15"
+makes Tellah learn the spell in his White list).
+A couple of frustrating points about this, though:
+1. It still says "Rydia learned..." This is easy enough to fix, though...
+2. The game still checks to make sure Rydia is in the party, so I can't make
+Tellah learn Imp unless Rydia is there.
+3. Seems all four call items execute the same instruction, so if Tellah learns
+Imp, he'll also be the one learning Mage, Cockatrice and Bomb.
+
+and, of course,
+
+4. Still haven't figured out how to change which spell is learned.

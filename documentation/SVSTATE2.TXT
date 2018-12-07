@@ -1,0 +1,781 @@
+
+Final Fantasy II: Save State Hacking Guide by PKT_Paladin
+Last Updated 2001-07-03 View/Download Original File
+Hosted by GameFAQs
+Return to Final Fantasy II (SNES) FAQs & Guides
+
+Liked this FAQ? Click to recommend it to other GameFAQs users.
+
+Save State Hacking FAQ for Final Fantasy 2 SNES
+by: PKT_Paladin
+
+~~~~~~~~~~~~~~~~~
+Table of Contents
+~~~~~~~~~~~~~~~~~
+I. Introduction
+II. Revision History
+III. How to Hack Save States
+IV. First Character Offsets
+	A. Statistics
+	B. Equipment
+V. Second Character Offsets
+	A. Statistics
+	B. Equipment
+VI. Third Character Offsets
+	A. Statistics
+	B. Equipment
+VII. Fourth Character Offsets
+	A. Statistics
+	B. Equipment
+VIII. Fifth Character Offsets
+	A. Statistics
+	B. Equipment
+IX. Magic Offsets
+X. Miscellaneous
+XI. Digits
+	A. Name Digits
+	B. Class Digits
+	C. Status Ailments Digits
+	D. Items Digits
+	E. Armor Digits
+	F. Helmet Digits
+	G. Shield Digits
+	H. Weapon Digits
+	I. Magic Digits
+XII. Credits
+XIII. Contact Information
+
+~~~~~~~~~~~~~~~
+I. Introduction
+~~~~~~~~~~~~~~~
+
+	My alias is PKT_Paladin, but that is not my name.  For this FAQ you
+don't need to know my real name =).  Please don't steal anything from this
+FAQ for your site or for your own FAQ unless you provide some sort of credit.
+I wrote everything in this FAQ.  These offsets are specifically for the emulator
+ZSNES and the game these offsets for is Final Fantasy 2 for SNES (the one that
+was released in America).
+
+
+~~~~~~~~~~~~~~~~~~~~
+II. Revision History
+~~~~~~~~~~~~~~~~~~~~
+
+v.90		: I elaborated on all of the sections to warn about
+		  certain offsets and to inform of the maximum for each
+		  offset, etc.
+v.85		: A big thanks goes out to Excalibur from rpgclassics!  I
+		  found his hacking guide and compared it with mine to
+		  fix a few problems I was having and now this FAQ is
+		  better than ever, having corrections in all areas.
+v.80		: This is the first version made and it contains information
+		  mostly about hacking the stats and equipment for the
+		  characters in your party.  When I find new important
+		  offsets they will be added.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+III. How to Hack Save States
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	Download Hex Workshop from download.com.  Install it, run it, and 
+open up the save state file.  On the left you will see addresses on the 
+left and 16 columns on the right.  There are actually 16 bytes each in
+groups of two.  Observe:
+
+    0 0000 0000 0000 0000 0000 0000 0000 0000
+   10 0000 0000 0000 00FF 0000 0000 0000 0000
+
+	The location of the byte FF is actually 17.  In hex, as opposed to
+the regular number system we are used to that goes from 0-10, the numbers
+go from 0-F (0-10 and then A,B,C,D,E,F).  That means FF is the highest value
+and 00 is the lowest (FF is 255 in decimal and 00 is 0).  Find the location
+that I have listed in the savestate editting section and modify the bytes
+to as high or as low as you desire.  When you are done, save it on the
+hexidecimal editor and load it in the emulator and you should be done.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+IV. First Character Offsets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	- This is the character that is in the middle of the screen.
+
+A. Statistics
+	- The name of your character is a predefined string that is
+	  located in the ROM and cannot be changed specifically.  That
+	  means that if you want Cecil to be named PKT_Paladin, you
+	  would have to modify Cecil's name in the ROM instead.
+	- The maximum Level is 99, but can be increased to 255 by
+	  putting FF (255) instead of 63 (99)
+	- The maximum experience points is 6,777,215.  It is obtained
+	  by putting FF FF FF in the experience points offsets.
+	- The normal maximum for any statistic is 63 (hexidecimal)
+	  but you can get away with putting FF as the value.
+	- The normal maximum for HP and MP is 9999 and 999 (respectively)
+	  but both can be given a value of 65,535 with the hexidecimal of
+	  FF
+
+	Name Modifier	   - 1C13
+	Character Modifier - 1C14
+	Level		   - 1C15
+	Status Ailment	   - 1C16
+	Current HP	   - 1C1A + 1C1B
+	Maximum HP	   - 1C1C + 1C1D
+	Current MP	   - 1C1E + 1C1F
+	Maximum MP	   - 1C20 + 1C21
+	Strength	   - 1C22 + 1C27
+	Agility		   - 1C23 + 1C28
+	Vitality	   - 1C24 + 1C29
+	Wisdom		   - 1C25 + 1C2A
+	Will		   - 1C26 + 1C2B
+	Experience Points  - 1C48 + 1C49 + 1C4A
+
+B. Equipment
+	Head		   - 1C43
+	Body		   - 1C44
+	Arms		   - 1C45
+	Right Hand	   - 1C46
+	Right Hand Quantity- 1C47
+	Left Hand	   - 1C48
+	Left Hand Quantity - 1C49
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+V. Second Character Offsets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	- This is the person at the top of the list.
+
+A. Statistics
+	- The name of your character is a predefined string that is
+	  located in the ROM and cannot be changed specifically.  That
+	  means that if you want Cecil to be named PKT_Paladin, you
+	  would have to modify Cecil's name in the ROM instead.
+	- The maximum Level is 99, but can be increased to 255 by
+	  putting FF (255) instead of 63 (99)
+	- The maximum experience points is 6,777,215.  It is obtained
+	  by putting FF FF FF in the experience points offsets.
+	- The normal maximum for any statistic is 63 (hexidecimal)
+	  but you can get away with putting FF as the value.
+	- The normal maximum for HP and MP is 9999 and 999 (respectively)
+	  but both can be given a value of 65,535 with the hexidecimal of
+	  FF
+
+	Name Modifier	   - 1C53
+	Character Modifier - 1C54
+	Level		   - 1C55
+	Status Ailment	   - 1C56
+	Current HP	   - 1C5A + 1C5B
+	Maximum HP	   - 1C5C + 1C5D
+	Current MP	   - 1C5E + 1C5F
+	Maximum MP	   - 1C60 + 1C61
+	Strength	   - 1C62 + 1C67
+	Agility		   - 1C63 + 1C68
+	Vitality	   - 1C64 + 1C69
+	Wisdom		   - 1C65 + 1C6A
+	Will		   - 1C66 + 1C6B
+	Experience Points  - 1C88 + 1C89 + 1C8A
+
+B. Equipment
+	Head		   - 1CA3
+	Body		   - 1CA4
+	Arms		   - 1CA5
+	Right Hand	   - 1CA6
+	Right Hand Quantity- 1CA7
+	Left Hand	   - 1CA8
+	Left Hand Quantity - 1CA9
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+VI. Third Character Offsets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	- This is the person at the bottom of the list
+
+A. Statistics
+	- The name of your character is a predefined string that is
+	  located in the ROM and cannot be changed specifically.  That
+	  means that if you want Cecil to be named PKT_Paladin, you
+	  would have to modify Cecil's name in the ROM instead.
+	- The maximum Level is 99, but can be increased to 255 by
+	  putting FF (255) instead of 63 (99)
+	- The maximum experience points is 6,777,215.  It is obtained
+	  by putting FF FF FF in the experience points offsets.
+	- The normal maximum for any statistic is 63 (hexidecimal)
+	  but you can get away with putting FF as the value.
+	- The normal maximum for HP and MP is 9999 and 999 (respectively)
+	  but both can be given a value of 65,535 with the hexidecimal of
+	  FF
+
+	Name Modifier	   - 1C93
+	Character Modifier - 1C94
+	Level		   - 1C95
+	Status Ailment	   - 1C96
+	Current HP	   - 1C9A + 1C9B
+	Maximum HP	   - 1C9C + 1C9D
+	Current MP	   - 1C9E + 1C9F
+	Maximum MP	   - 1CA0 + 1CA1
+	Strength	   - 1CA2 + 1CA7
+	Agility		   - 1CA3 + 1CA8
+	Vitality	   - 1CA4 + 1CA9
+	Wisdom		   - 1CA5 + 1CAA
+	Will		   - 1CA6 + 1CAB
+	Experience Points  - 1CC8 + 1CC9 + 1CCA
+
+B. Equipment
+	Head		   - 1CC3
+	Body		   - 1CC4
+	Arms		   - 1CC5
+	Right Hand	   - 1CC6
+	Right Hand Quantity- 1CC7
+	Left Hand	   - 1CC8
+	Left Hand Quantity - 1CC9
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+VII. Fourth Character Offsets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	- This is the person in the second character slot
+
+A. Statistics
+	- The name of your character is a predefined string that is
+	  located in the ROM and cannot be changed specifically.  That
+	  means that if you want Cecil to be named PKT_Paladin, you
+	  would have to modify Cecil's name in the ROM instead.
+	- The maximum Level is 99, but can be increased to 255 by
+	  putting FF (255) instead of 63 (99)
+	- The maximum experience points is 6,777,215.  It is obtained
+	  by putting FF FF FF in the experience points offsets.
+	- The normal maximum for any statistic is 63 (hexidecimal)
+	  but you can get away with putting FF as the value.
+	- The normal maximum for HP and MP is 9999 and 999 (respectively)
+	  but both can be given a value of 65,535 with the hexidecimal of
+	  FF
+
+	Name Modifier	   - 1CD3
+	Character Modifier - 1CD4
+	Level		   - 1CD5
+	Status Ailment	   - 1CD6
+	Current HP	   - 1CDA + 1CDB
+	Maximum HP	   - 1CDC + 1CDD
+	Current MP	   - 1CDE + 1CDF
+	Maximum MP	   - 1CE0 + 1CE1
+	Strength	   - 1CE2 + 1CE7
+	Agility		   - 1CE3 + 1CE8
+	Vitality	   - 1CE4 + 1CE9
+	Wisdom		   - 1CE5 + 1CEA
+	Will		   - 1CE6 + 1CEB
+	Experience Points  - 1D08 + 1D09 + 1CDA
+
+B. Equipment
+	Head		   - 1D03
+	Body		   - 1D04
+	Arms		   - 1D05
+	Right Hand	   - 1D06
+	Right Hand Quantity- 1D07
+	Left Hand	   - 1D08
+	Left Hand Quantity - 1D09
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+VIII. Fifth Character Offsets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	- This is the person in the fourth character slot
+
+A. Statistics
+	- The name of your character is a predefined string that is
+	  located in the ROM and cannot be changed specifically.  That
+	  means that if you want Cecil to be named PKT_Paladin, you
+	  would have to modify Cecil's name in the ROM instead.
+	- The maximum Level is 99, but can be increased to 255 by
+	  putting FF (255) instead of 63 (99)
+	- The maximum experience points is 6,777,215.  It is obtained
+	  by putting FF FF FF in the experience points offsets.
+	- The normal maximum for any statistic is 63 (hexidecimal)
+	  but you can get away with putting FF as the value.
+	- The normal maximum for HP and MP is 9999 and 999 (respectively)
+	  but both can be given a value of 65,535 with the hexidecimal of
+	  FF
+
+	Name Modifier	   - 1D13
+	Character Modifier - 1D14
+	Level		   - 1D15
+	Status Ailment	   - 1D16
+	Current HP	   - 1D1A + 1D1B
+	Maximum HP	   - 1D1C + 1D1D
+	Current MP	   - 1D1E + 1D1F
+	Maximum MP	   - 1D20 + 1D21
+	Strength	   - 1D22 + 1D27
+	Agility		   - 1D23 + 1D28
+	Vitality	   - 1D24 + 1D29
+	Wisdom		   - 1D25 + 1D2A
+	Will		   - 1D26 + 1D2B
+	Experience Points  - 1D48 + 1D49 + 1D4A
+
+B. Equipment
+	Head		   - 1D43
+	Body		   - 1D44
+	Arms		   - 1D45
+	Right Hand	   - 1D46
+	Right Hand Quantity- 1D47
+	Left Hand	   - 1D48
+	Left Hand Quantity - 1D49
+
+
+~~~~~~~~~~~~~~~~~
+IX. Magic Offsets
+~~~~~~~~~~~~~~~~~
+	- You can edit which character is in your party so that
+	  you can have Cecil be a Paladin at any part of the
+	  game and hack black magic or even summoning magic into
+	  his magic list.
+
+	Cecil's Magic List (Paladin) 	: 2173 - 218A
+	Rydia's Magic List (White)	: 218B - 21A2
+	Rydia's Magic List (Black) 	: 218B - 21A2
+	Rydia's Magic List (Call)	: 21D3 - 21EA
+	Tellah's Magic List (White)	: 21EB - 2202
+	Rosa's Magic List (White)	: 221B - 2232
+	Porom's Magic List (Black)	: 2233 - 2242
+	Palom's Magic List (White)	: 224B - 2262
+	FuSoYa's Magic List (White)	: 2263 - 227A
+	FuSoYa's Magic List (Black)	: 227B - 2292
+	Edge's Ninja List		: 2293 - 22AA
+
+
+~~~~~~~~~~~~~~~~
+X. Miscellaneous
+~~~~~~~~~~~~~~~~
+	- The maximum amount of Gold is 9,999,999, but that amount
+	  can be surpassed by placing a value of FF FF FF in the
+	  Gold offsets.
+	- 2053 is the first item in your list.  2054 is the quantity
+	  of that item and 2055 is the item to the right of the first item.
+	  2056 is the quantity of THAT item, and 2057 is the one under the
+	  first item.  That's the way the items are set up.
+
+	Gold Offsets	   - 22B3 + 22B4 + 22B5
+	Item Offsets       - 2053 through 20AE
+
+~~~~~~~~~~
+XI. Digits
+~~~~~~~~~~
+A. Name Digits
+	00 Cecil (Dark Knight) 
+	01 Kain 
+	02 Young Rydia 
+	03 Tellah 
+	04 Edward 
+	05 Rosa 
+	06 Yang 
+	07 Palom 
+	08 Porom 
+	09 Cecil (Paladin) 
+	0A Cid 
+	0B Old Rydia 
+	0C Edge 
+	0D FuSoYa 
+
+B. Class / Portrait Digits
+	00 Empty
+	01 Paladin/Dark Knight  
+	02 Dragoon  
+	03 Caller  
+	04 Sage  
+	05 Bard 
+	06 Wh. Wizard (Rosa)
+	07 Karate 
+	08 Wh. Wizard (Palom) 
+	09 Bl. Wizard 
+	0A Sage 
+	0B Paladin/Dark Knight
+	0C Sage 
+	0D Karate 
+	0E Chief 
+	0F Dragoon 
+	10 Wh. Wizard (Rosa)
+	11 Caller 
+	12 Ninja 
+	13 Lunarian 
+	14 Dragoon 
+	15 Golbez 
+	16 Anna 
+
+C. Status Ailments Digits
+	00 Normal
+	01 Poison 
+	02 Blind 
+	04 Mute 
+	08 Piggy 
+	10 Tiny 
+	20 Frog 
+	40 Stoned 
+	80 Swoon 
+
+D. Items Digits
+	46 - Dummy 
+	B0 - Dummy (Fire1)
+	B1 - Dummy Fire2 
+	B2 - Dummy Ice1 
+	B3 - Dummy Ice2 
+	B4 - Dummy Lit1 
+	B5 - Dummy Lit2 
+	B6 - Dummy Meteo (By Palom and Porom) 
+	B7 - Dummy Psych 
+	B8 - Dummy (Drain) 
+	B9 - Dummy (Bersk) 
+	8A - Dummy (Haste)
+	BB - Dummy Stops Enemy (short) BB 
+	BC - Dummy Stops Enemy (medium) BC 
+	BD - Dummy Stops Enemy (long) BD 
+	BF - Dummy (Image) 
+	C0 - Fire-Bomb 
+	C1 - Dummy (Holy) 
+	C2 - Lit-Bolt
+	C3 - Dummy (Wall) 
+	C4 - Dummy (Explode)
+	C5 - Dummy (Wall) 
+	C6 - Dummy (Mute) 
+	C7 - Dummy (Quake) 
+	C8 - Crystal
+	C9 - Dummy (Fatal) 
+	CA - Dummy (Summon) 
+	CB - Dummy (Search) 
+	CC - Dummy (Wakes Everyone)
+	CD - Dummy (Heals Non-Permanent Statuses in Battle)
+	CE - Cure1
+	CF - Cure2 
+	D0 - Cure3 
+	D1 - Ether1
+	D2 - Ether2
+	D3 - Elixer
+	D4 - Life
+	D5 - Dummy (Cures Stone)
+	D6 - Dummy (Cures Frog)
+	D7 - Dummy (Cures Small)
+	D8 - Dummy (Cures Piggy)
+	D9 - Dummy (Cures Silence)
+	DA - Dummy (Cures Darkness)
+	DB - Dummy (Cures Poison) 
+	DC - Dummy (Cures Curse)
+	DD - Heal
+	DE - Dummy (Calls Enemies)
+	DF - Dummy (Permenently increases HP by 100)
+	E0 - Dummy (Permenently increases HP by 50)
+	E1 - Dummy (Permenently increases MP by 10)
+	E2 - Tent 
+	E3 - Cabin
+	E4 - Dummy (Favorite Book) 
+	E5 - Dummy (Exit)
+	E6 - Dummy (Sight) 
+	E7 - Imp (Summon)
+	E8 - Bomb (Summon)
+	E9 - Dummy (Summon) (Coctrice)
+	EA - Mage 
+	EC - Pass
+	EE - Package
+	EF - Baron
+	F0 - SandRuby
+	F1 - Earth
+	F2 - Magma
+	F3 - Luca
+	F4 - TwinHarp
+	F5 - Darkness
+	F6 - Rat
+	F7 - Adamant
+	F8 - Pan 
+	F9 - Pink 
+	FA - Tower
+	FB - Dummy (Dark Matter)
+	FC - Dummy
+	FD - Dummy
+	FE - Sort 
+	FF - Trash
+
+E. Armor Digits
+	81 - Iron Armor
+	82 - Shadow Armor
+	83 - Darkness Armor
+	84 - Black Armor
+	85 - Paladin Armor
+	86 - Silver Armor
+	87 - Fire Armor
+	88 - Ice Armor
+	89 - Diamond Armor
+	8A - Samurai Armor
+	8B - Dragoon Armor
+	8C - Crystal Armor
+	8D - Cloth Robe
+	8E - Leather Robe
+	8F - Gaea Robe
+	90 - Wizard Robe
+	91 - Black Robe
+	92 - Sorcerer Robe
+	93 - White Robe
+	94 - Power Robe
+	95 - Heroine Robe
+	96 - Prisoner Robe
+	97 - Bard Robe
+	99 - Bl. Belt
+	9A - Adamant Armor
+	9B - Ninja Robe
+
+F. Helmet Digits
+	6D - Iron Helmet
+	6E - Shadow Helmet
+	6F - Darkness Helmet
+	70 - Black Helmet
+	71 - Paladin Helmet
+	72 - Silver Helmet
+	73 - Diamond Helmet
+	74 - Samurai Helmet
+	75 - Dragoon Helmet
+	76 - Crystal Helmet
+	77 - Cap
+	78 - Leather Helmet
+	79 - Gaea Helmet
+	7A - Wizard Helmet
+	7B - Tiara
+	7C - Ribbon
+	7D - Headband
+	7E - Bandanna
+	7F - Ninja Helmet
+	80 - Glass
+
+G. Shield Digits
+	61 - Iron Shield
+	62 - Shadow Shield
+	63 - Black Shield
+	64 - Paladin Shield
+	65 - Silver Shield
+	66 - Fire Shield
+	67 - Ice Shield
+	68 - Diamond Shield
+	69 - Aegis Shield
+	6A - Samurai Shield
+	6B - Dragoon Shield
+	6C - Crystal Shield
+
+H. Weapons Digits
+	SWORDS:
+	16 - Shadow Sword
+	17 - Darkness Sword
+	18 - Black Sword
+	19 - Legend Sword
+	1A - Light Sword
+	1B - Excalibur Sword
+	1C - Fire Sword
+	1D - IceBrand
+	1E - Defense Sword
+	1F - Drain Sword
+	20 - Ancient Sword
+	21 - Slumber Sword
+	22 - Medusa Sword
+	2B - Short Sword
+	2C - Middle Sword
+	2D - Long Sword
+	2E - Ninja Sword
+	2F - Murasame Sword
+	30 - Masamune Sword
+	3D - Silver Sword
+	3F - Crystal Sword
+	4C - Avenger
+
+	CLAWS:
+	01 - FireClaw
+	02 - IceClaw
+	03 - Thunder Claw
+	04 - Charm Claw
+	05 - Poison Claw
+	06 - Cat Claw
+
+	RODS:
+	07 - Rod
+	08 - IceRod
+	09 - FlameRod
+	0A - Thunder Rod
+	0B - Change Rod
+	0C - Charm Rod
+	0D - Stardust Rod
+	0E - Lilith Rod
+
+	STAVES:
+	0F - Staff
+	10 - Cure Staff
+	11 - Silver Staff
+	12 - Power Staff
+	13 - Lunar Staff
+	14 - Life Staff
+	15 - Silence Staff
+
+	SPEARS:
+	23 - Spear
+	24 - Wind Spear
+	25 - Flame Spear
+	26 - Blizzard Spear
+	27 - Dragoon Spear
+	28 - White Spear
+	29 - Drain Spear
+	2A - Gugnir Spear
+
+	KNIVES:
+	31 - Assassin Knife
+	32 - Mute Knife
+	3B - Silver Knife
+	3C - Dancing Knife
+	3E - Spoon
+
+	WHIPS:
+	33 - Whip
+	34 - Chain
+	35 - Blitz
+	36 - Flame
+	37 - Dragon
+
+	SHURIKENS:
+	40 - Shuriken
+	41 - Ninja Shuriken
+
+	BOOMERANGS:
+	42 - Boomrang
+	43 - Fullmoon
+
+	WRENCHES:
+	49 - Wooden Wrench
+	4A - Earth Wrench
+	4B - Silver Wrench
+
+	AXES:
+	38 - HandAxe
+	39 - Dwarf Axe
+	3A - Ogre Axe
+	47 - Poison Axe
+	48 - RuneAxe
+
+	BOWS:
+	4D - ShortBow
+	4E - CrossBow
+	4F - GreatBow
+	50 - Archer Bow
+	51 - ElvenBow
+	52 - Samurai Bow
+	53 - Artemis Bow
+
+	ARROWS:
+	54 - Iron Arrow
+	55 - White Arrow
+	56 - Fire Arrow
+	57 - Ice Arrow
+	58 - Lit Arrow
+	59 - Darkness Arrow
+	5A - Poison Arrow
+	5B - Mute Arrow
+	5C - Charm Arrow
+	5D - Samurai Arrow
+	5E - Medusa Arrow
+	5F - Artemis Arrow
+
+	HARPS:
+	44 - Dreamer Harp
+	45 - Charm Harp
+
+I. Magic Digits
+	BLACK:
+	19 - Toad
+	1A - Piggy
+	1B - Warp
+	1C - Venom
+	1D - Fire1
+	1E - Fire2
+	1F - Fire3	
+	20 - Ice-1
+	21 - Ice-2
+	22 - Ice-3
+	23 - Lit-1
+	24 - Lit-2
+	25 - Lit-3
+	26 - Virus
+	27 - Weak
+	28 - Quake
+	29 - Sleep
+	2A - Stone
+	2B - Fatal
+	2C - Stop
+	2D - Drain
+	2E - Psych
+	2F - Meteo
+	30 - Nuke
+
+	WHITE:
+	01 - Hold
+	02 - Mute
+	03 - Charm
+	04 - Blink
+	07 - Slow
+	09 - Bersk
+	0A - Wall
+	0B - White
+	0D - Peep
+	0E - Cure1
+	0F - Cure2
+	10 - Cure3
+	11 - Cure4
+	12 - Heal
+	13 - Life1
+	14 - Life2
+	15 - Size
+	16 - Exit
+	17 - Sight
+	18 - Float
+
+	SUMMON:
+	31 - Imp
+	32 - Bomb
+	33 - Coktrc
+	34 - Titan
+	35 - Chocobo
+	36 - Shiva
+	37 - Indra
+	38 - Jinn
+	3A - Mist
+	3B - Sylph
+	3C - Odin
+	3D - Leviatan
+	3E - Asura
+	3F - Bahamut
+
+	NINJA:
+	42 - Flame
+	43 - Flood
+	44 - Blitz
+	45 - Smoke
+	46 - Pin
+	47 - Image
+
+
+~~~~~~~~~~~~
+XII. Credits
+~~~~~~~~~~~~
+Squaresoft		- They made the game.  They deserve all of
+			  the credit.
+Nintendo		- As much as I hate the butchering they did
+			  to the original, amazing story line, they
+			  licensed the game and made the Super NES.
+Excalibur		- This guy is a staff member at RPGClassics.
+			  After just about finishing this guide I found
+			  out that he had written a lot of information
+			  on the same things so I compared our work
+			  and fixed a lot of bugs I had on here.  Much
+			  thanks goes out to him!
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~
+XIII. Contact Information
+~~~~~~~~~~~~~~~~~~~~~~~~~
+If you want to send me an e-mail, please send it pkt_paladin@yahoo.com.  
+Since there are a few things that I have yet to know that you might know, 
+I would appreciate any submissions (you will be given credit, of course) 
+to help further develop this FAQ.  Please submit any questions so I can
+answer them for you and anyone else who reads this FAQ.
+------------------------------------------------------------------------
+This guide was written by PKT_Paladin (pkt_paladin@yahoo.com.  Please do
+not use this guide without permission or take direct information from 
+it.  Doing that is illegal.  I am in no way affiliated with the makers
+of Final Fantasy 2.
+
+Final Fantasy II: Save State Hacking Guide by PKT_Paladin
+Last Updated 2001-07-03 View/Download Original File
+Hosted by GameFAQs
+Return to Final Fantasy II (SNES) FAQs & Guides

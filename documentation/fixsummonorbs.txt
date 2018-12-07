@@ -1,0 +1,6 @@
+Apply the following 4 bytes at 0A876:
+
+A9 ?? 80 11
+
+where ?? is an actor number for Rydia
+(indexed from 01 = Dark Knight Cecil)

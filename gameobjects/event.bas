@@ -1,6 +1,6 @@
 type Event
- script as List
- branch as List
+ script as InstructionList
+ branch as InstructionList
 end type
 
 const total_events = 253

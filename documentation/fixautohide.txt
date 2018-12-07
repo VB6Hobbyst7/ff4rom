@@ -1,0 +1,40 @@
+The first time Hideward's actor is stored is at 0x1a40.  From past problems, this seems to be the place where terrified Edward gets removed from the command queue. Here's the nearby code:
+
+83/a402:	bd0020	LDA ($2000),x	Loads the actor+handedness into the accumulator
+83/a405:	291f	AND #$1f	Masks out the handedness stuff
+83/a407:	c905	CMP #$05	Is it Edward?
+83/a409:	d014	BNE $a41f	If not, leave
+83/a40b:	ad8235	LDA $3582	load whatever's in this bank's address 3582 into accumulator
+83/a40e:	d00f	BNE $a41f	if the above is already not zero, also leave
+83/a410:	addb38	LDA $38db	load whatever's in this bank's address 38db into accumulator
+83/a413:	3a	DEA		Decrement accumulator
+83/a414:	f009	BEQ $a41f	If the now smaller accumulator is 0, leave
+...
+83/a41f:	20a1aa	JSR $aaa1	Go do other stuff in the next subroutine.
+
+You know what, I don't even care about the payload of all the logic being applied here.
+The point is, when the would-be Edward actor's number is loaded, it is used only once before it gets blown out by another load.  So, if we just load a different number, AND with the new appropriate mask (0F), and compare to Edward's job number (04), then things should work without damaging anything else.  Right?
+
+Note: I don't know whether this code here will be called for non-present characters.  If so, we could have a problem, because Edward may have been the most recent job in a now-blank slot, and that data doesn't get re-initialized at each fight.
+
+// apply to 0x1a402:
+byte[] autoHidePatch = {
+	0xbd, 0x01, 0x20, 0x29, 0x0f, 0xc9, 0x04
+}
+
+83/a402:	bd0120	LDA ($2001),x	Loads the JOB + other stuff into the accumulator
+83/a405:	290f	AND #$0f	Masks out all except bytes 0-3
+83/a407:	c904	CMP #$04	Is it Edward?
+...
+
+----------
+The other time Hideward's actor is stored is at 0x1ab57.  From past mistakes, this seems to be what adds the Hide command into Edward's action queue.  Here is the surrounding code:
+
+83/ab51:	bd0020	LDA ($2000),x	Loads the actor+handedness into the accumulator
+83/ab54:	291f	AND #$1f	Masks out the handedness stuff
+83/ab56:	c905	CMP #$05	Is it Edward?
+83/ab58:	d047	BNE $ab9f	If not, leave
+83/ab5a:	ad8235	LDA $3582	load whatever's in this bank's address 3582 into accumulator
+83/ab5d:	d042	BNE $ab9f	if the above is already not zero, also leave	
+
+This looks AWFULLY familiar.  Let's apply literally the same patch, but to 0x1ab51.

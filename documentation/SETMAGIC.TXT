@@ -1,0 +1,11 @@
+A81A2-A81CB   Magic List # to Menu Item Link (3 bytes per character: top list, mid list, bottom list)
+
+The top list name defaults to "White", the middle to "Black", and the bottom to "Call". (I don't know where the 
+information is that changes Edge's to "Ninja".) So, for example, Dark Knight Cecil's 3 bytes are FF FF FF, 
+since he doesn't use magic. If you wanted to map magic list 01 to Black magic for Cecil, you would change his list 
+to FF 01 FF.
+
+9FFDD-A000C   Magic List # to Battle Command/Learning Link
+A81A2-A81CB   Magic List # to Menu Item Link
+
+They both follow the same format (top list, mid list, bottom list).

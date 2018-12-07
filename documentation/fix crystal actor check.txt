@@ -1,0 +1,1 @@
+So writing EA EA 80 to 1A134 (unheadered) enables Crystal to be used by other party members. However, the AI script on Zeromus also specifies it has to be used by a certain actor

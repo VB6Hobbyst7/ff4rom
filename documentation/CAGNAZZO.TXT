@@ -1,0 +1,91 @@
+Initial Mode:
+Cagnazzo attacks characters once  - (not useful)
+Change into "Water Form"
+
+While in "Water Form":
+Display message == "Water is gathering" or whatever
+Change weakness to Lightning (while under this state)
+Cast Wave on enemy (1/25 of Caster's HP)
+Cast Haste on self
+Repeat "Water Form" script
+If hit by a Lightning magic attack while under "Water Mode", goto Initial Mode
+Also Display message == "Lightning neutralizes water" or whatever
+
+At any time, current HP < 700 (not sure if that's an exact number) Always Change To "Shell Mode":
+Display message = "Monster hides in shell" or whatever
+Set Defense to 3 (while under this state) - Edit: Yes, that's really 3, which is not a significant increase.
+Cast Remedy/Heal/Restore (different names for the same spell) - (heals 1/10 of Caster's Max HP)
+Repeat script while current HP < 700
+Else Change Into "Water Form"
+
+This defense change never occurs... it seems like the FF4A Euro version has this fixed. It may be worth looking into further.
+
+Battle script (0x9D):
+( $2 $0 $0 $2 )
+    Target Enemies in Current Group
+    Cast Remedy ($84)
+    (End of Turn)
+    Defense $7A
+    $F3 to $F8 -  $81
+    Do Nothing
+( $2 $0 $0 $1 )
+    Start Attack Chain
+    $F3 to $F8 -  $81
+    Do Nothing
+    Chain with
+    Battle Message $46
+    Do Nothing
+    Chain with
+    Graphics $13
+    Do Nothing
+    Chain with
+    Elemental Weakness $4
+    Do Nothing
+    End Attack Chain
+    (End of Turn)
+    Cast Wave ($9D)
+    (End of Turn)
+    Target Enemies in Current Group
+    Cast Fast
+Always
+    Fight
+    $F3 to $F8 -  $81
+    
+    
+Counter script (0x9E):
+If Self has less than 700 HP
+If Receives a Damage Counter
+    Start Attack Chain
+    $F3 to $F8 -  $82
+    Do Nothing
+    Chain with
+    $F3 to $F8 -  $80
+    Do Nothing
+    Chain with
+    Graphics $14
+    Do Nothing
+    Chain with
+    Elemental Weakness $2
+    Do Nothing
+    Chain with
+    Battle Message $47
+    Do Nothing
+    End Attack Chain
+( $2 $0 $1 $1 )
+If Casted on by Character with Lightning
+    Start Attack Chain
+    $F3 to $F8 -  $80
+    Do Nothing
+    Chain with
+    $F3 to $F8 -  $80
+    Do Nothing
+    Chain with
+    Graphics $12
+    Do Nothing
+    Chain with
+    Elemental Weakness $2
+    Do Nothing
+    Chain with
+    Battle Message $74
+    Do Nothing
+    End Attack Chain

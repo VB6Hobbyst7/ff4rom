@@ -1,0 +1,111 @@
+There are 11 attack sequences that are changed between FF4j and FF2us. I have the hex data if 
+anyone is interested, but I think it just clutters up the explanation, so ask me if you want to see it. There are 4
+normal sequence changes and 7 lunar sequence changes. Here they are:
+
+Normal:
+1. Sequence 71: This is the change documented by Deathlike2 in this thread.
+2. Sequence AA: The first instance of the Dark Elf says "ME ATTACK YOU!" (brilliant translation work, in my estimation) 
+while performing his fire/lit/ice attack. In FF4j, this is executed with an F1 byte. In FF2us, it's executed with an F2 byte.
+Not sure what the difference is, but it's there.
+3. Sequence E5: During the Asura battle, her Armor casting in FF4j is changed to a Cure4 casting in FF2us.
+4. Sequence F1: During the Elements battle in FF4j, Valvalis performs an attack, casts Ray, attacks twice more, 
+then casts Storm. In FF2us, she attacks, casts Ray, attacks, casts Ray, attacks, then casts Storm.
+
+Lunar:
+5. Sequence 30: PaleDim's reflex sequence in FF4j is to attack 5 times in a row and then cast Storm. In FF2us he 
+just attacks 5 times.
+6. Sequence 4C: Zeromus' attack sequence has four small changes. During this sequence, he resets his magic 
+power four times. In FF4j, these values are 0x27, 0x27, 0x31, and 0x27. This is changed to 0x1F, 0x20, 0x24, and 0x20 in FF2us.
+7. Sequence 4D: Zeromus' reflex sequence also resets his magic power. In FF4j it uses the value of 0x15, in FF2us it's 0x0E.
+8. Sequence 4E: Same sequence as #7.
+9. Sequence 55: Similar to #6. Values of 0x27, 0x15, and 0x27 are changed to 0x1F, 0x0E, and 0x20.
+10. Sequence 58: Similar to #6. Value of 0x28 is changed to 0x24.
+11. Sequence 59: I'm pretty sure this isn't used. It's blank in FF4j, and in FF2us it's just 26 (which would cast Virus).
+The last value of sequence 58 is 26, so I'm pretty sure it's just a remnant from reducing the sequences at some point.
+
+So, there you have it -- all the changes between FF4j and FF2us. I did this off the hex data, so I might 
+have made some mistakes. If any of this isn't reflected in gameplay, let me know.
+
+
+attack sequences
+71: 90 FE 81               FF
+    90 FE 81 *FE 90 FE 94* FF
+AA: E1 FE E1 FE E1 FE *F2* 09 FD 4E FB 54 FB 51 FC FE 57 FE F1 0A F1 0B F1 0C AE FF
+    E1 FE E1 FE E1 FE *F1* 09 FD 4E FB 54 FB 51 FC FE 57 FE F1 0A F1 0B F1 0C AE FF
+E5: F0 36 F9 16 *05* F4 81 FF
+    F0 36 F9 16 *11* F4 81 FF
+F1: C0 FE 69 FE C0 FE         C0 FE 80 FF
+    C0 FE 69 FE C0 FE *69 FE* C0 FE 80 FF
+
+lunar sequences
+30: C0 FE C0 FE C0 FE C0 FE C0 *FE 80* FF
+    C0 FE C0 FE C0 FE C0 FE C0         FF
+4C: E1 FE BB FE EE *27* 87 FE 7D F1 75 FE E1 FE BB FE EE *27* 87 FE EE *31* F9 28 26 FE 7D F1 75 FE E1 FE BB FE EE *27* 87 FE 7D F1 75 FF
+    E1 FE BB FE EE *1F* 87 FE 7D F1 75 FE E1 FE BB FE EE *20* 87 FE EE *24* F9 28 26 FE 7D F1 75 FE E1 FE BB FE EE *20* 87 FE 7D F1 75 FF
+4D: EE *15* 30 FF
+    EE *0E* 30 FF
+4E: EE *15* 30 FF
+    EE *0E* 30 FF
+55: E1 FE BB FE EE *27* 87 FE 7D F1 75 FE EE *15* 30 FE E1 FE E1 FE BB FE EE *27* 87 FF
+    E1 FE BB FE EE *1F* 87 FE 7D F1 75 FE EE *0E* 30 FE E1 FE E1 FE BB FE EE *20* 87 FF
+58: EE *28* F9 28 26 FF
+    EE *24* F9 28 26 FF
+59:      FF
+    *26* FF
+
+attack groups
+B5: 46 BE *51 F6* 48 C2 06 C1 1A C0 1B C0 1C C0 1D C0 1E C0 FF
+    46 BE         48 C2 06 C1 1A C0 1B C0 1C C0 1D C0 1E C0 FF
+    
+    
+
+Battle Scripts
+---------------------------------------------------------------------------------------------------
+
+Part of Yang's battle script is not properly executed...
+
+Battle script 0xA8:
+Always
+    Battle Message $E
+    Target Kain  
+    Fight
+    (End of Turn)
+    Battle Message $F
+    Kick
+    (End of Turn)
+    Battle Message $10
+    Target Kain  
+    Fight
+    (End of Turn)
+    Battle Message $11
+    Kick
+    $F3 to $F8 -  $81
+    
+ Counter script: 0xA9
+ ( $2 $0 $0 $1 )
+ If Attacked by Tellah
+     Battle Message $12
+    Cast Dummy ($AE)
+    
+ 
+ The mystery ($2 $0 $0 $1) that is in the editor means "if condition flag 01 is set". Thus, Yang's 
+ reaction script is "If condition flag 01 is set and attacked by Paladin Cecil: show battle message 0x12
+ and cast 0xAE." So the attack sequence needs to be played out once, condition flag 01 is set, and 
+ then as soon as Paladin Cecil attacks after that, Yang says, "Ouch!" and the battle is over.
+ 
+ Battle Script:
+ 
+ While targeting Cecil, display message 0xE and attack him.
+ Display message 0xF, then attack with Kick.
+ While targeting Cecil, display message 0x10 and attack him.
+ Display message 0x11, then attack with Kick.
+ Repeat sequence
+ 
+ Counter Script:
+ 
+When Cecil deals physical damage, there is a random chance to execute the following script... 
+which is to display message 0x12 and end the battle (by using spell 0xAE).
+
+-this is never executed on a normal run. There's a simple reason. This was intended for Dark Knight Cecil.. 
+not Paladin Cecil as the battle script is never normally executed. 
+

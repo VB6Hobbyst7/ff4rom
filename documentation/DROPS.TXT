@@ -1,0 +1,64 @@
+1. Potion, Potion, Potion, Potion
+2. Potion, Potion, Potion, Hi-Potion
+3. Remedy, Remedy, Remedy, Tent
+4. Remedy, Remedy, Remedy, Remedy
+5. Remedy, Remedy, Remedy, Remedy
+6. Flame Arrows, Flame Arrows, Flame Arrows, Flame Arrows
+7. Ice Arrows, Ice Arrows, Ice Arrows, Ice Arrows
+8. Thunder Arrows, Thunder Arrows, Thunder Arrows, Thunder Arrows
+9. Potion, Potion, Potion, Potion
+10. Poisoned Arrows, Poisoned Arrows, Poisoned Arrows, Poisoned Arrows
+11. Ether, Ether, Ether, Ether
+12. Hi-Potion, Ether, Ether, Ether
+13. Mythril Shield, Mythril Hammer, Hi-Potion, X-Potion
+14. Potion, Grimoire, Grimoire, Grimoire
+15. Remedy, Remedy, Remedy, Remedy
+16. Hi-Potion, X-Potion, Elixir, Glass Mask
+17. Potion, Hi-Potion, Hi-Potion, Hi-Potion
+18. Potion, Grimoire, Grimoire, Grimoire
+19. Plumed Hat, Grimoire, Grimoire, Grimoire
+20. Cap, Grimoire, Grimoire, Grimoire
+21. Potion, Potion,Potion, Cursed Ring
+22. Tent, Cottage, Cottage, Cottage
+23. Harp of Doubt, Ruby Ring, Temptation Arrows, Temptation Arrows
+24. Flame Lance, Flame Sword, Flame Shield, Flame Armor
+25. Tent, Tent, Tent, Tent
+26. Cottage, Ogre Frightener, Poison Axe, Muffle Axe
+27. Hi-Potion, Hi-Potion, Grimoire, Grimoire
+28. Potion, Potion, Potion, Potion
+29. Ether, Ether, Ether, Ether
+30. Hi-Potion, X-Potion, Stone Arrows, Stone Arrows
+31. Mythril Knife, Mythril Shield, Mythril Armor, Piggy's Stick
+32. Remedy, Yoichi's Arrows, Yoichi's Arrows, Yoichi's Arrows
+33. Hi-Potion, Twist Headband, Power Wrist, Giant's Gloves
+34. Potion, Potion, Potion, Potion
+35. Healing Staff, Magic Armlet, Muffle Staff, Grimoire
+36. Potion, Potion, Grimoire, Grimoire
+37. Hi-Potion, Hi-Potion, Hi-Potion, Silver Apple
+38. X-Potion, X-Potion, X-Potion, Golden Apple
+39. Magic Rod, Silver Armlet, Ether, Dry Ether
+40. Ether, Ether, Ether, Witch's Rod
+41. Dry Ether, Elixir, Fuma Shuriken, Pink Tail
+42. Goddess' Arrows, Goddess' Arrows, Heroine's Dress, Goddess' Bow
+43. Gaia Hammer, Giant's Gloves, Giant's Gloves, Silver Apple
+44. Ether, Dry Ether, Elixir, Protect Ring
+45. Hi-Potion, Shuriken, Dragon's Whisker, Wyvern Lance
+46. Murasame, Murasame, Murasame, Murasame
+47. Red Fang, Dragon Gloves, Wyvern Lance, Crystal Armlet
+48. Power Wrist, Power Sash, Silver Apple, Sword of Anger
+49. Remedy, Dry Ether, Golden Apple, Ribbon
+50. Remedy, Remedy, Remedy, Silver Apple
+51. Hi-Potion, Hi-Potion, Hi-Potion, Hi-Potion
+52. Potion, Potion, Potion, Cursed Ring
+53. Potion, Grimoire, Grimoire, Grimoire
+54. Potion, Potion, Hi-Potion, Hi-Potion
+55. Hi-Potion, Hi-Potion, Silver Apple, Cat Claw
+56. Stone Arrows, Stone Arrows, Stone Arrows, Stone Sword
+57. Potion, Tent, Hi-Potion, Goblin
+58. Revival Medicine, Revival Medicine, Revival Medicine, Revival Medicine
+59. Potion, Potion, Potion, Bomb
+60. Hi-Potion, Hi-Potion, Hi-Potion, Mind Flayer
+61. Dr. Lugae's Key, Dr. Lugae's Key, Dr. Lugae's Key, Dr. Lugae's Key
+62. Potion, Potion, Potion, Potion
+63. Revival Medicine, Revival Medicine, Revival Medicine, Revival Medicine
+64. Elixir, Elixir, Elixir, Elixir

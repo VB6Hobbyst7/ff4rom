@@ -1,0 +1,29 @@
+0: Red wings flying over islands
+1: Red wings landing at Baron
+2: Bomb ring flies away
+3: Red wings fly by with bombs
+4: Titan collapses valley
+5: ?
+6: Spinning stars
+7: Spinning mist
+8: Bombs torching everything
+9: Prologue
+10: ?
+11: ?
+12: Various explosions
+13: ?
+14: Underworld entrance opening
+15: Leviathan's tail
+16: Leviathan emerges
+17: Ship being swallowed
+18: Kain's airship comes along
+19: Kain's airship goes away
+20: Two airships rise together
+21: ?
+22: Tanks fighting airships
+23: Red wing chasing Enterprise south
+24: Red wing chasing Enterprise east
+25: ?
+26: ?
+27: ?
+28: ?

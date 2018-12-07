@@ -1,0 +1,117 @@
+Phoenix has done a lot more with map editing than me, so I'll let him answer
+your exit and NPC questions. The palette is determined in the map's header,
+which starts at offset 0xA8E84 in a headered FF2us ROM. There's documentation
+of them in this post:
+
+http://slickproductions.org/forum/index.php?topic=382.msg11290#msg11290
+
+You'll also notice the background index and background movement bytes. Those
+will let you create the mist effect, but you'll need to add a mist tile to
+the town tileset, replacing something else, since it isn't loaded there. The
+background index is pretty cool, it wasn't utilized by the game nearly
+enough, and can create some pretty cool effects (the parallax effect in the
+watery cave was always impressive to me, and I couldn't figure out why they
+never used it anywhere else).
+
+-- (Contents of linked post) --
+
+I finally figured out what the deal was with the location properties. It
+turns out the information provided by Yousei was one byte off -- the location
+properties start at A8E84, not A9E85. So the bytes I was changing to look at
+metallic battles weren't for the maps I was testing. I reformatted my data
+for the Cave Magnes maps like so:
+
+##   Location (Name)                        Offset  00 01 02 03 04 05 06 07 08 09 0A 0B 0C
+--   -------------------------              -----   -- -- -- -- -- -- -- -- -- -- -- -- --
+8C   Cave Magnes (entrance)                 AA5A0   B8 8C 02 8C EA 02 10 25 95 86 00 47 B9
+8D   Cave Magnes (B2F - big pits)           AA5AD   B8 8D 02 8D 89 02 10 25 95 86 00 09 BB
+8E   Cave Magnes (B2F - pit)                AA5BA   B8 8E 02 8E 89 02 10 25 95 86 00 80 BC
+8F   Cave Magnes (B3F)                      AA5C7   B8 8F 02 8F EA 02 10 25 95 86 00 0A BE
+90   Cave Magnes (B2F - treasure room)      AA5D4   B8 90 02 90 89 02 10 25 95 86 00 80 BE
+91   Cave Magnes (B2F - passage)            AA5E1   B8 91 02 91 89 02 10 25 95 86 00 80 C1
+92   Cave Magnes (save point) [1]           AA5EE   B8 92 02 92 89 02 10 25 95 86 00 80 C2
+93   Cave Magnes (B4F)                      AA5FB   B8 93 02 93 EA 02 10 25 95 86 00 0B C2
+94   Cave Magnes (crystal room)             AA608   8E 4A 07 94 72 07 40 2D AF 86 00 18 C3
+95   Cave Magnes Background                 AA615   80 95 02 95 66 02 00 00 95 86 00 80 C3
+96   Watery Pass (inside tent)              AA622   04 96 0E 96 01 0E 10 25 23 86 00 15 C3
+97   Baron (Serpent Road house)             AA62F   03 97 06 97 00 06 10 09 23 86 00 3A C3
+98   Tower of Zot (entrance)                AA63C   0C 98 0A 98 2F 0A 10 19 9B 86 00 4B C3
+99   Tower of Zot (2F)                      AA649   1C 99 0A 99 2F 0A 10 19 9B 86 00 01 C4
+9A   Tower of Zot (3F)                      AA656   1C 9A 0A 9A 2F 0A 10 19 9B 86 00 02 C5
+9B   empty room (black)                     AA663   00 9B 06 9B 2F 06 10 00 9B 00 00 80 C5
+9C   Tower of Zot (4F)                      AA670   1C 9C 0A 9C 2F 0A 90 19 9B 86 00 03 C5
+9D   Tower of Zot (5F)                      AA67D   1C 9D 0A 9D 2F 0A 10 19 9B 86 00 04 C5
+9E   Tower of Zot (6F)                      AA68A   0C 9E 0A 9E 2F 0A 50 19 9B 86 00 05 C9
+9F   Tower of Zot (7F)                      AA697   0C 9F 0A 9F 2F 0A 70 19 9B 86 00 06 C9
+A0   Grotto Adamant                         AA6A4   34 A0 0E A0 6E 10 10 25 23 86 00 5B C9
+A1   Cave Magnes (save point) [2]           AA6B1   B8 92 02 92 89 02 10 25 95 86 00 80 C9
+
+And the data fits. The metallic battle property is contained within the
+highest bit of the first byte (i.e. values 80-FF) as you can see from the
+location properties. So, the meanings of the bytes are:
+
+00: Battle Properties
+   bits 0-3: Battle Background
+   bits 4-6: ?
+   bit 7: Battles have Magnetic Effect if event flag E1 is set
+01: Map Index
+02: Tileset Index
+03: NPC Placement Index
+04: Border Tile Index
+   bits 0-6: Border Tile Index
+   bit 7: ?
+05: Map Palette Index
+06: NPC Palette Index
+   bits 0-3: NPC Palette Indices 1 & 2
+      0000: Palettes 01 & 02
+      0001: Palettes 03 & 04
+      etc.
+   bits 4-7: NPC Palette Indices 3 & 4
+      same as above
+07: Music Index
+08: Background Index
+09: Background Movement
+   bit 0: Background is transparent when walking under (such as lakes)
+   bit 1: Vertical Background Relative Movement
+   bit 2: Horizontal Background Relative Movement
+   bit 3: ?
+   bits 4-5: Direction
+      00: Up
+      01: Right
+      10: Down
+      11: Left
+   bit 6-7: Speed (Absolute Movement / Relative Movement)
+      00: None / None
+      01: Slow / Moves slowly in character's direction
+      10: Medium / Moves in character's direction
+      11: Fast / Moves opposite to character's direction
+0A: 80 = Load people/objects from Underground/Moon index
+0B: Map Name Index
+0C: Treasure Contents Index
+
+--- (A related previous post) ---
+
+Here's the data, in case anyone is interested (for the Magnus Cave entrance
+through Adamant Grotto). It starts at AA5A1 (FF2us ROM with header):
+
+8C 02 8C EA 02 10 25 95 86 00 47 B9 B8
+8D 02 8D 89 02 10 25 95 86 00 09 BB B8
+8E 02 8E 89 02 10 25 95 86 00 80 BC B8
+8F 02 8F EA 02 10 25 95 86 00 0A BE B8
+90 02 90 89 02 10 25 95 86 00 80 BE B8
+91 02 91 89 02 10 25 95 86 00 80 C1 B8
+92 02 92 89 02 10 25 95 86 00 80 C2 B8
+93 02 93 EA 02 10 25 95 86 00 0B C2 8E
+4A 07 94 72 07 40 2D AF 86 00 18 C3 80
+95 02 95 66 02 00 00 95 86 00 80 C3 04
+96 0E 96 01 0E 10 25 23 86 00 15 C3 03
+97 06 97 00 06 10 09 23 86 00 3A C3 0C
+98 0A 98 2F 0A 10 19 9B 86 00 4B C3 1C
+99 0A 99 2F 0A 10 19 9B 86 00 01 C4 1C
+9A 0A 9A 2F 0A 10 19 9B 86 00 02 C5 00
+9B 06 9B 2F 06 10 00 9B 00 00 80 C5 1C
+9C 0A 9C 2F 0A 90 19 9B 86 00 03 C5 1C
+9D 0A 9D 2F 0A 10 19 9B 86 00 04 C5 0C
+9E 0A 9E 2F 0A 50 19 9B 86 00 05 C9 0C
+9F 0A 9F 2F 0A 70 19 9B 86 00 06 C9 34
+A0 0E A0 6E 10 10 25 23 86 00 5B C9 B8

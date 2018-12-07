@@ -1,0 +1,375 @@
+=================================================================================
+Events (Pointers: 90200-903FF, Data: 90400-971FF)		Phoenix Hacks
+								6/30/2008
+=================================================================================
+
+========================================================
+Event Script Bytecodes (based on Yousei's FF4 document)
+========================================================
+0x-Bx		Person/Object Movement
+ x0	Move Up
+ x1	Move Right
+ x2	Move Down
+ x3	Move Left
+ x4	Face Up
+ x5	Face Right
+ x6	Face Down
+ x7	Face Left
+ x8	Toggle Visibility
+ x9	Jump 2 spaces sideways	
+ xA	Spin			
+ xB	Jump in place with spin	
+ xC	Wave with hand inside	
+ xD	Wave with hand outside	
+ xE	Downcast		
+ xF	Swoon			
+Cx		Main Character Movement
+ x0	Move Up
+ x1	Move Right
+ x2	Move Down
+ x3	Move Left
+ x4	Face Up
+ x5	Face Right
+ x6	Face Down
+ x7	Face Left
+ x8	Toggle Visibility
+ x9	Nothing
+ xA	Wave with hand inside
+ xB	Wave with hand outside
+ xC	Downcast
+ xD	Swoon
+ xE	Freeze all character graphics
+ xF	Spin one frame per movement
+D0		Toggle screen shake
+D1		Screen flash
+D2		Screen blur and unblur
+D3		Travel to/from Moon
+D4		Open Fat Chocobo screen
+D5		Open a door
+D6		Screen moves up 1 tile and down 1 tile
+D7		Toggle running
+D8		Toggle music fade
+D9		Open Namingway screen
+DA		Toggle screen fade
+DB xx		Toggle status ailments xx
+DC xx		Inn (costs 50 * 2^xx GP)
+DD xx		Change character graphic to xx
+DE xx		Restore HP (10 * xx HP)
+DF xx		Restore MP (10 * xx MP)
+E0 xx		Add item xx to inventory
+E1 xx		Remove item xx from inventory
+E2 xx yy	Put in spell list xx magic spell yy
+E3 xx		Remove all status ailments but xx
+E4 xx		Add status ailments xx
+E5 xx		Add 100 * xx GP to party
+E6 xx		Add 50 * xx GP to party
+E7 xx		Add character xx to party
+E8 xx		Remove character xx from party
+E9 xx		Pause xx cycles
+EA xx		Fade song xx in
+EB xx yy	Repeat xx times the following yy actions 
+EC xx		Fight battle with enemy set xx
+ED xx		Bring up shop xx
+EE xx		Show message [hex data xx following event call] (from bank 2)
+EF xx		Show message xx (from bank 2) starting from pointer [map#]
+F0 xx		Show message 0xx (from bank 1)
+F1 xx		Show message 1xx (from bank 1)
+F2 xx		Set event flag xx
+F3 xx		Clear event flag xx
+F4 xx		Activate person/object xx
+F5 xx		Deactivate person/object xx
+F6 xx		Show message xx (from bank 3)
+F7 xx		Bring up item selection window (item xx should be selected)
+F8 xx		Show message 1xx (from bank 1) with "Yes/No" box
+			("Yes" continues on with the event, "No" moves on to the next event after FF)
+F9 xx		Toggle screen tint xx
+FA xx		Play song xx
+FB xx		Play sound effect xx
+FC xx		? Load some type of graphic
+FD xx		Play visual effect xx
+FE aa xx yy zz	Load map aa at position (xx, yy) with transportation/world zz
+		    zz: 01 = Yellow Chocobo
+			02 = Black Chocobo
+			03 = Hovercraft
+			04 = Enterprise
+			05 = Falcon
+			06 = Lunar Whale
+			07-1F = Ship
+			20 = load map without pixelation transition
+			40 = for airships, don't use the dust entrance or take-off animations
+			80 = Underground/Moon; bit 7 of xx and yy in location maps is unknown
+FF		END
+
+
+If event flag 0E is set, the Village Mist passageway will be closed
+If event flag 14 is set, Damcyan Castle will be ruined
+If event flag 2C is set, the Fabul bridge will start the ship event
+If event flag 30 is set, the passage to the Underground will be open
+If event flag 32 is set, the Enterprise can't be entered
+If event flag 36 is set, the Enterprise can use the hook
+If event flag 39 is set, the Falcon can go over lava
+If event flag 3D is set, the Falcon will have the drill
+If event flag E1 is set, the Cave Magnes maps will have magnetic battles
+
+
+=============================================================================
+Event Data		(major events are starred)
+=============================================================================
+No.	Offsets		Description
+---	-----------	-----------
+00	90400-90400	--
+01	90400-90402	Show message [hex data 00] (from bank 2)
+02	90403-90405	Show message [hex data 01] (from bank 2)
+03	90406-90408	Show message [hex data 02] (from bank 2)
+04	90409-9040F	Fight battle with Behemoth in Bahamut's Cave (set event flag 51)
+05	90410-90416	Fight battle with Behemoth in Bahamut's Cave (set event flag 52)
+06	90417-9041F	Entering Tower of Bab-il
+07	90420-9042A	Hummingways (visual effect 3D, sound effect 49, message EF01, visual effect 3E)
+08	9042B-90434	Rydia learning Sylph (no Pan use)
+09	90435-90454	Receiving the pan
+0A	90455-90464	"Do you have the clerics' permission?" [FF] If "No": Message EF03
+0B	90465-90466	Open a door
+0C	90467-90469	"Empty."
+0D	9046A-90470	Namingway Screen [FF] If "No": nothing
+0E	90471-905DC	* Rubicant main battle
+0F	905DD-905DF	"OUCH!"
+10	905E0-9093F	* Opening Events
+11	90940-90987	* Cid Greeting Cecil
+12	90988-9098C	Speaking to Kain in Castle Baron
+13	9098D-90998	Cecil's Maid
+14	90999-909C0	* Rosa Greeting Cecil
+15	909C1-90AD5	* Cecil Sleeping, Prologue
+16	90AD6-90ADA	Item selection window (choose soft)
+17	90ADB-90AF4	"Sealed with unknown power"
+18	90AF5-90B26	Finding Odin before Land of Monsters
+19	90B27-90B5F	Odin battle
+1A	90B60-90BDF	* Baigan battle
+1B	90BE0-91076	* Kainazzo battle, Losing Palom & Porom
+1C	91077-90184	Serpent Road is sealed
+1D	90185-911CC	* Attaching hook to Enterprise
+1E	911CD-91228	Serpent Road to Mysidia
+1F	91229-91234	Using Key to Baron to unlock the Waterway door
+20	91235-91240	Using Key to Baron to unlock the Weapon/Armor shop
+21	91241-91371	* Cecil/Yang Fight
+22	91372-913A4	Staying at a 50 GP Inn
+23	913A5-913A7	Bring up shop 05
+24	913A8-913AA	Bring up shop 03
+25	913AB-913AD	Bring up shop 0C
+26	913AE-913B0	Bring up shop 13
+27	913B1-913B3	Message EF00
+28	913B4-913B6	Message EF01
+29	913B7-913B9	Message EF02
+2A	913BA-913BC	Message EF03
+2B	913BD-913BF	Message EF04
+2C	913C0-913C2	Message EF05
+2D	913C3-913C5	Message EF06
+2E	913C6-913C8	Message EF07
+2F	913C9-913E0	Mist Dragon battle [FF] If "No": Cecil walks down 1 step
+30	913E1-914F9	* Mist Events
+31	914FA-91569	* Watery Cave Save Events
+32	9156A-9159C	Staying at a 800 GP Inn
+33	9159D-9159F	Bring up shop 16
+34	915A0-915A2	Bring up shop 17
+35	915A3-915A5	Bring up shop 00
+36	915A6-915A8	Bring up shop 0A
+37	915A9-915AB	Bring up shop OE
+38	915AC-915AE	Bring up shop 15
+39	915AF-9168E	* Kaipo Events, Rydia Joining
+3A	9168F-917C9	* Curing Rosa
+3B	917CA-917E2	* Watery Cave Tellah Joining
+3C	917E3-91819	Watery Cave Waterfall events
+3D	9181A-9185E	* Octomamm battle
+3E	9185F-91862	"The current is too strong for us to get in!"
+3F	91863-91865	"..."
+40	91866-91868	"Giott: Open the door! Dwarf: Lali!"
+41	91869-9186B	"Terrible bombardments from the airships."
+42	9186C-91879	Redwings bombing Damcyan
+43	9187A-919FB	* Tellah fighting Edward, Edward joining
+44	919FC-91A04	Speaking to the fallen soldier in Damcyan's basement, making door mechanism active
+45	91A05-91A83	Antlion battle
+46	91A84-91B3D	* Rydia melting Mt. Hobs ice, learning Fire1
+47	91B3E-91C24	* Yang joining, Mombomb battle
+48	91C25-920BB	* Fabul battle
+49	920BC-920EF	Staying at a 100 GP Inn
+4A	920F0-921BC	Toroia Clerics event (after you get the Earth Crystal)
+4B	921BD-921BF	"WA!"
+4C	921C0-921C2	"We also might have been hypnotized."
+4D	921C3-921C4	Open Fat Chocobo screen
+4E	921C5-921E0	Giving a Carrot to a Fat Chocobo place
+4F	921E1-921E9	Getting on a Chocobo, load map in the middle of the Mist Mountains?
+50	921EA-921FA	Touching a White Chocobo
+51	921FB-92213	Rosa getting captured
+52	92214-92292	Discussion about rescuing Rosa
+53	92293-92295	Bring up shop 1A
+54	92296-92298	Bring up shop 1B
+55	92299-922A7	Being poisoned by the bartender in Mysidia (before speaking with the Elder)
+56	922A8-922DA	Staying at a 200 GP Inn
+57	922DB-922E4	Speaking to the White Mage in Mysidia (near water, jumps away into the forest)
+58	922E5-922FA	Winning the Crystal Sword
+59	922FB-92311	Winning the Masamune
+5A	92312-92314	Bring up shop 02
+5B	92315-92317	Bring up shop 0B
+5C	92318-9231A	Bring up shop 14
+5D	9231B-9232B	Being turned into a toad by a Black Mage near Mysidia's entrance (before speaking with the Elder)
+5E	9232C-923B2	* Talking with Mysidian Elder, Palom & Porom joining
+5F	923B3-92501	* Mt. Ordeals fire put out by Palom
+60	92502-925E5	Meeting Tellah on Mt. Ordeals
+61	925E6-92605	Milon battle (first time)
+62	92606-92844	* Cecil's transformation, Tellah remembering all his spells
+63	92845-92875	Milon battle (second time)
+64	92876-9298A	Paladin Cecil talking to Mysidian Elder
+65	9298B-929D4	Serpent Road to Baron
+66	929D5-92A32	Cecil talking with Kain, entering the Tower of Zot first time
+67	92A33-92A55	Resting (for free) in Fabul
+68	92A56-92A7A	Resting (for free) in Castle Baron
+69	92A7B-92A80	Load map 8A (Castle Baron: hallway to throneroom) at position (07, 06, 00)
+6A	92A81-92A86	Load map 8A (Castle Baron: hallway to throneroom) at position (87, 03, 00)
+6B	92A87-92A8C	Load map 8A (Castle Baron: hallway to throneroom) at position (17, 06, 00)
+6C	92A8D-92A92	Load map 8A (Castle Baron: hallway to throneroom) at position (97, 03, 00)
+6D	92A93-92A95	Bring up shop 0D
+6E	92A96-92A98	Bring up shop 04
+6F	92A99-92A9B	Bring up shop 18
+70	92A9C-92ACE	Staying at a 400 GP Inn
+71	92ACF-92B80	Meeting Edward in Toroia, receiving TwinHarp
+72	92B81-92C0E	Returning to Edward in Toroia after defeating the Dark Elf
+73	92C0F-92CE5	Dark Elf "Me Attack You" battle
+74	92CE6-92CF5	Obtaining the Earth Crystal
+75	92CF6-92CFE	"Found Black Chocobo!", load Overworld map at (29, 35, 02)
+76	92CFF-92D01	Save point message
+77	92D02-92D1E	Using a Tent
+78	92D1F-92D39	Using a Cabin
+79	92D3A-92D99	Magus Sisters battle
+7A	92D9A-92F01	* Top of Tower of Zot events
+7B	92F02-92F04	Bring up shop 01
+7C	92F05-930B4	* Valvalis battle, Dark Crystals discussion
+7D	930B5-930C7	HP restoring pot
+7E	930C8-930D8	MP restoring pot
+7F	930D9-930E7	Magnus Cave entering message
+80	930E8-930EC	Dark Elf "You Fool" battle
+81	930ED-93113	Dark Elf "Fire2" battle
+82	93114-9323D	* Kain regaining his senses (first time)
+83	9323E-935E1	* Depart Fabul, Leviathan Attack
+84	935E2-93617	Using Magma Key, opening Underworld
+85	93618-9362C	HP/MP/Status restoring pot
+86	9362D-936A3	Rosa casting Exit from the Tower of Zot, learning Exit
+87	936A4-936D2	Cecil flashing (visual effect 0A)
+88	936D3-936DA	Characters 2 & 5: Toggle Visibility, Message EF00
+89	936DB-936E2	Characters 2 & 5: Toggle Visibility, Message EF01
+8A	936E3-936EA	Characters 2 & 5: Toggle Visibility, Message EF04
+8B	936EB-937BF	Entering the Underworld in the airship events
+8C	937C0-93A9E	* Meeting Giott, Calbrena battle, rejoining Rydia
+8D	93A9F-93AAB	Entering the Tower of Zot subsequent times
+8E	93AAC-93ABC	Exiting the Tower of Zot
+8F	93ABD-93AD1	Being turned Mini by a Black Mage in Baron's Black Mage Classroom
+90	93AD2-93B04	Staying at a 1600 GP Inn
+91	93B05-93B18	Dwarf in castle basement opens the door to the back passageway (next to Fat Chocobo)
+92	93B19-93B1B	"Authorized dwarves only!"
+93	93B1C-93B25	Play song 00, Load Old Waterway map B1F, Play song 25
+94	93B26-93C1A	Dr. Lugae battles
+95	93C1B-93CE3	Super Cannon destruction, Yang leaves
+96	93CE4-93F62	* Jump from Tower of Bab-il, airship escape
+97	93F63-93F95	Staying at a 3,200 GP Inn
+98	93F96-93F98	Bring up shop 07
+99	93F99-93F9B	Bring up shop 10
+9A	93F9C-94076	Edge joining, Rubicant battle
+9B	94077-9409C	EF00, EF01, Character graphic 12 dances
+9C	9409D-940A5	"Found Black Chocobo!", load Overworld map at (59, A3, 02)
+9D	940A6-94317	Returning from the moon to find the Giant of Bab-il, teleporting in
+9E	94318-943D4	* Blue Whale surfacing
+9F	943D5-943DE	"Do you have the Clerics' permission?" when you do
+A0	943DF-943FF	EF01, Character graphic 12 dances
+A1	94400-94490	Fighting Edge's parents
+A2	94491-94543	Falling to the Underground
+A3	94544-94558	Winning the Murasame
+A4	94559-9456E	Winning the White Spear
+A5	9456F-9463A	Finding the Falcon
+A6	9463B-94662	Obtaining the Luca Key
+A7	94663-948BA	Cid meeting Edge, adding the heat shield to the Falcon
+A8	948BB-948E2	Opening the Sealed Cave door
+A9	948E3-948E7	Rydia: "I came here on my way..." at the Summoned Monsters Cave entrance
+AA	948E8-94907	Demon Wall battle
+AB	94908-9493A	Staying at a 6,400 GP Inn
+AC	9493B-9493D	Bring up shop 08
+AD	9493E-94940	Bring up shop 11
+AE	94941-94943	Bring up shop 00
+AF	94944-94953	Obtaining the Dark Crystal
+B0	94954-94964	Climbing ropes (moving down with pauses)
+B1	94965-94971	Climbing ropes (up with pauses)
+B2	94972-94974	Bring up shop 12
+B3	94975-9498B	Climbing ropes (moving down with pauses, jumping sideways/nothing)
+B4	9498C-9499F	Climbing ropes (moving up with pauses, jumping sideways/nothing)
+B5	949A0-949B7	Climbing ropes (moving down, spinning, moving up)
+B6	949B8-94A56	Kain stealing the Dark Crystal and leaving
+B7	94A57-94A60	TrapDoor battle (person/object 3D)
+B8	94A61-94A6A	TrapDoor battle (person/object 3E)
+B9	94A6B-94A74	TrapDoor battle (person/object 3F)
+BA	94A75-94A7E	TrapDoor battle (person/object 40)
+BB	94A7F-94A88	TrapDoor battle (person/object 41)
+BC	94A89-94A92	TrapDoor battle (person/object 42)
+BD	94A93-94A9C	TrapDoor battle (person/object 43)
+BE	94A9D-94AA6	TrapDoor battle (person/object 44)
+BF	94AA7-94AB0	TrapDoor battle (person/object 45)
+C0	94AB1-94ABA	TrapDoor battle (person/object 46)
+C1	94ABB-94AC4	TrapDoor battle (person/object 47)
+C2	94AC5-94ACE	TrapDoor battle (person/object 48)
+C3	94ACF-94AD8	TrapDoor battle (person/object 49)
+C4	94AD9-94AE2	TrapDoor battle (person/object 4A)
+C5	94AE3-94D92	Talking to Giott, attaching the airship drill
+C6	94D93-94DA0	Drilling to the surface
+C7	94DA1-94DA3	Bring up shop 06
+C8	94DA4-94DA6	Bring up shop 0F
+C9	94DA7-94DC2	Asura battle [FF] If "No": Message EF06
+CA	94DC3-94DE0	Leviathan battle [FF] If "No": Message EF07
+CB	94DE1-94DE3	Bring up shop 1C
+CC	94DE4-94DE6	Bring up shop 1D
+CD	94DE7-94E1A	Staying at a 12,800 GP Inn
+CE	94E1B-94E1D	Bring up shop 1E
+CF	94E1E-94E34	Bahamut battle
+D0	94E35-94EC8	Meeting FuSoYa and having him join
+D1	94EC9-94F0D	Baron Dancer's dance
+D2	94F0E-94F81	Kaipo Dancer's dance
+D3	94F82-94FCD	Fabul Dancer's dance
+D4	94FCE-9500A	Agart Dancer's dance (with Giott's song)
+D5	9500B-9505F	Mysidia Dancer's dance (and being piggied)
+D6	95060-950B8	Baron Dancer's dance (after killing Kainazzo, dances with Cecil)
+D7	950B9-9523D	Silvera 3 Dancers' dance
+D8	9523E-95538	Toroia Dance Troupe's dance
+D9	95539-9559D	Dwarf Castle Dancer's dance
+DA	9559E-955A5	Characters 2 & 5: Toggle Visibility, Message EF07
+DB	955A6-955C1	Reading the magazine?
+DC	955C2-955D0	"Sealed with unknown power": Crystal Room panel
+DD	955D1-95739	Entering the Lunar Subterrane
+DE	9573A-95747	Obtaining the magazine
+DF	95748-95751	Obtaining a Grimoire (person/object 6C)
+E0	95752-9575B	Obtaining a Grimoire (person/object 6D)
+E1	9575C-95764	Obtaining Excalibur
+E2	95765-95776	Trading the Rat Tail for Adamant
+E3	95777-95789	Trading the Pink Tail for Adamant Armor
+E4	9578A-95792	Load map 2F (07,07,80) (Blue Whale interior)
+E5	95793-957DE	Rydia learning Sylph (using the Pan)
+E6	957DF-95BDD	* Giant of Bab-il CPU battle, FuSoYa teaming up with Golbez and leaving
+E7	95BDE-966E0	* Zeromus Battle, Ending Events
+E8	966E1-966E8	Load map 2F (07,07,80) (Blue Whale interior), Activate Baron Black Chocobo
+E9	966E9-966EB	Visual effect 2D (Boarding Blue Whale)
+EA	966EC-966F8	Travel to/from Moon [B]
+EB	966F9-96717	Resting for free
+EC	96718-96721	TrapDoor battle (person/object 68)
+ED	96722-967B0	Element Fiends battle
+EE	967B1-967E7	Giving Adamant and Legend Sword to smithy
+EF	967E8-967EA	Bring up shop 1F
+F0	967EB-967F6	"Do you have a pass?", if you give one, "Have a good time"
+F1	967F7-967FB	Message EF07, Bring up shop 09 (Smith's shop)
+F2	967FC-96800	Watery Pass - North exiting message
+F3	96801-96807	Fight battle with Behemoth in Bahamut's Cave (set event flag 50)
+F4	96808-96810	Load map 17 (Mysidia: Room of Wishes), play song "Long Way to Go"
+F5	96811-96819	Load map 33 (Mysidia: Room of Wishes, Yang/Cid/Edward), play song "Long Way to Go"
+F6	9681A-96822	Load map 88 (Mysidia: Crystal Room), play song "The Prelude"
+F7	96823-96827	Speaking to Sylph the first time (before Yang awakes)
+F8	96828-96832	Obtaining a Grimoire (person/object 91)
+F9	96833-96843	Trading the Pan for the Spoon
+FA	96844-96851	Using the Tower Key
+FB	96852-96854	Visual effect 33
+FC	96855-96865	Obtaining the Ribbon
+FD	96866-9687F	Viewing the moon through the telescope in Corio's observatory
+FE	96880-96882	Visual effect 36: two explosions at right side of screen
+FF	96883-96883	--

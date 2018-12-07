@@ -1,0 +1,2 @@
+7C900-7CABF Character Spell Level up Data
+7CAC0-7CBFF Character Startup Spell Data

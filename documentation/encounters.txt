@@ -1,0 +1,21 @@
+There are 511 possible monster formations, each composed of 8 bytes, 
+located in a table at 70200 (previously discussed here: 
+http://slickproductions.org/forum/index.php?topic=1713.300) 
+[see formations.txt]
+
+There are 96 sets of monster formations that can be assigned to any 
+given location. Each set consists of eight of the possible monster 
+formations (represented by one byte each, and whether this byte 
+represents one of the first 255 or the latter 255 formations is 
+determined by whether the location it's set to is in the Overworld or 
+Underworld/Moon). The probability of each formation within a set is 
+even. The table for these sets begins at 74996.
+
+Which monster formation set is used by each location is determined by a
+table beginning at 74742.
+
+According to Phoenix:
+   74742-74781   For the Overworld (1 byte per 32x32 tile region)
+   74782-74791   For the Underground (1 byte per 32x32 tile region)
+   74792-74795   For the Moon (1 byte per 32x32 tile region)
+   74796-74995   For Locations (1 byte per location)

@@ -1,0 +1,50 @@
+# Like the Cure subroutine does a check for Cure4, I confirmed that the Life subroutine does a check for Life2, 
+which is why it does a complete HP restore. The Life subroutine also checks for a few other monster spells 
+(AB Recover and AC Remedy) and does a full HP restore for them, too.
+
+# I also confirmed that the generic spell subroutine does a check for summon spells, and if one is being casted it 
+checks if the targets are allies (Asura skips this check). So, I was right that there is an ally safeguard for 
+these spells. Why? I don't know, since you're not allowed to target them on allies anyway, and they're not 
+reflectable. Anyway, to change this behavior and skip the check, change the value at 1D37D (ROM with header) from 
+[10 AE] to [80 00]. You can then target allies with summons if you change the targeting byte within the spell.
+
+-Magnetized characters can have spells hurt them when reflected
+
+# I found the code that specifies the spell multiplier (which we knew to be [wisdom/will] / 4 + 1). 
+Within this block of code is a section that says if the spell has the status-spell bit set in the effect 
+data, then this multiplier is set to 1. So far, this bit doesn't seem to have any other uses besides this.
+
+# Deathlike2, I think you'll be particularly interested in this. I think I found the algorithm that 
+calculates the spell hit rate. It uses the base hit rate of the spell and the modified wisdom/will 
+of the character (modified meaning after equipment bonuses). The modified hit rate is the spell's base 
+hit rate + (modified wisdom/will)/2. Furthermore, if the caster is blind, this modified hit rate is cut 
+in half. Also, it appears to do a check to see whether the caster is in the first slot (character or enemy), 
+and gives a 25% bonus to the hit rate if so:
+
+modified hit rate = (spell's base hit rate) + (modified wisdom/will)/2
+divide by 2 if Blind
+multiply by 5/4 if in slot 1
+
+
+* Magic Defense % gets cut in half if blind. It also gets the 5/4 bonus if the target is in slot 1 
+(enemy or ally). So I guess this negates the Magic Hit Rate % bonus, and makes an enemy stronger 
+against the rest of your party.
+ * If the status bit is set on the spell, the Magic Defense Multiplier is set to 1.
+ * If the target is a Toad or charging (from Yang's Power command), the Magic Defense Multiplier is set to 0.
+ * If the target is an enemy and its Magic Defense Base is 255 (0xFF), then its Magic Defense % and 
+ Magic Defense Multiplier are both set to 99.
+    
+ * Protect adds 5 to the physical defense base of the character, up to a max of 255.
+ * Shell adds 3 to the magical defense base. I'm not sure why it's less, other than mag. def. stats are always 
+ less than physical def. stats for the characters.
+ * Here's what's interesting: neither of these will work in the battle with Zeromus. There's a check 
+ that skips the subroutine if you're fighting Zeromus, making the battle that much more difficult. 
+
+ * Dispel removes all the statuses we thought (Berserk, Image, Wall, Barrier) but also removes HP Leak. 
+ * Effect 2A removes Berserk, Float, Image, Wall, Barrier, and resets the speed modifier. 
+ That means this effectively removes Slow/Fast, and only positive statuses.
+
+In the damage subroutines, the damage value is two bytes. The most significant bit of these bytes 
+determines whether the damage is normal (0) or recovery (1). The second most significant bit determines 
+whether the damage is HP (0) or MP (1).
+

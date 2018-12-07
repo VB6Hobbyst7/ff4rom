@@ -1,0 +1,164 @@
+The following is my commentary on the function that copies the in-combat inventory to the out-of-combat inventory.
+The commands are listed in a Snes9x log file, with a bit of unneeded stuff trimmed.
+
+//wipe whatever was in A, X, and Y.
+03f1dc tdc                    A:0005 X:0280 Y:0140 
+03f1dd tax                    A:0000 X:0280 Y:0140 
+03f1de tay                    A:0000 X:0000 Y:0140  
+
+//X will be used to point to the combat inventory 
+//Y will be used to point to the out-of-combat inventory
+//a9 will store how many items have been iterated; after 48 items, the code moves on.
+
+//Initialize a9 to zero.
+03f1df stx $a9       [0000a9] A:0000 X:0000 Y:0000
+
+//start of loop.
+//load the next combat item type into A, and copy it to the out-of-combat spot.
+03f1e1 lda $321b,x   [7e321b] A:0000 X:0000 Y:0000 
+03f1e4 sta $1440,y   [7e1440] A:0000 X:0000 Y:0000
+
+//if the item we just copied is blank...
+03f1e7 beq $f1ed     [03f1ed] A:0000 X:0000 Y:0000 S:02e9 D:0000 DB:7e nvMxdiZC V:208
+
+//No really, set this item type to blank.
+03f1ed tdc                    A:0000 X:0000 Y:0000 //If you're here because you had "No Armor" in this slot, zero it.
+03f1ee sta $1440,y   [7e1440] A:0000 X:0000 Y:0000 //Redundant if the item was blank.
+03f1f1 bra $f1f6     [03f1f6] A:0000 X:0000 Y:0000 //skip over some stuff...
+
+//write into the out-of-combat quantity. Because of how we branched, this is zero.
+03f1f6 sta $1441,y   [7e1441] A:0000 X:0000 Y:0000
+//skip the next step if the quantity wasn't zero.
+03f1f9 bne $f1ff     [03f1ff] A:0000 X:0000 Y:0000
+03f1fb tdc                    A:0000 X:0000 Y:0000 
+03f1fc sta $1440,y   [7e1440] A:0000 X:0000 Y:0000 //triple redudancy!
+
+//pointer X goes up by 4, Y by 2, to point to the next item in each inventory.
+03f1ff inx                    A:0000 X:0000 Y:0000 
+03f200 inx                    A:0000 X:0001 Y:0000 
+03f201 inx                    A:0000 X:0002 Y:0000 
+03f202 inx                    A:0000 X:0003 Y:0000
+03f203 iny                    A:0000 X:0004 Y:0000 
+03f204 iny                    A:0000 X:0004 Y:0001 
+
+//a9++, then load a9 into A.
+03f205 inc $a9       [0000a9] A:0000 X:0004 Y:0002 
+03f207 lda $a9       [0000a9] A:0000 X:0004 Y:0002 
+
+//are we at the 48th item slot? if not, go back to the start of the loop.
+03f209 cmp #$30               A:0001 X:0004 Y:0002 
+03f20b bne $f1e1     [03f1e1] A:0001 X:0004 Y:0002 
+
+
+//here's the next loop pass, as executed with a non-blank item.
+
+//load the next combat item type into A, and copy it to the out-of-combat spot.
+03f1e1 lda $321b,x   [7e321f] A:0001 X:0004 Y:0002 
+03f1e4 sta $1440,y   [7e1442] A:0052 X:0004 Y:0002 
+//This item isn't blank, so continue.
+03f1e7 beq $f1ed     [03f1ed] A:0052 X:0004 Y:0002 
+
+//Is it "No Armor"?  If so, continue (will arrive at same spot as blank item case branched to above)
+//else jump ahead to $f1f3
+03f1e9 cmp #$60               A:0052 X:0004 Y:0002 
+03f1eb bne $f1f3     [03f1f3] A:0052 X:0004 Y:0002 
+
+//load the item quantity and put it into .
+//Note: the "blank" and "no armor" cases both start at $f1f6 with a 0 in A
+03f1f3 lda $321c,x   [7e3220] A:0052 X:0004 Y:0002 
+03f1f6 sta $1441,y   [7e1443] A:0001 X:0004 Y:0002 
+03f1f9 bne $f1ff     [03f1ff] A:0001 X:0004 Y:0002 
+
+//increment stuff, then loop again.
+03f1ff inx                    A:0001 X:0004 Y:0002 
+03f200 inx                    A:0001 X:0005 Y:0002 
+03f201 inx                    A:0001 X:0006 Y:0002 
+03f202 inx                    A:0001 X:0007 Y:0002 
+03f203 iny                    A:0001 X:0008 Y:0002 
+03f204 iny                    A:0001 X:0008 Y:0003 
+03f205 inc $a9       [0000a9] A:0001 X:0008 Y:0004 
+03f207 lda $a9       [0000a9] A:0001 X:0008 Y:0004 
+03f209 cmp #$30               A:0002 X:0008 Y:0004 
+03f20b bne $f1e1     [03f1e1] A:0002 X:0008 Y:0004 
+
+
+//Once the loop terminates, here's what happens next:
+03f20d jmp $95d8
+
+Then there are 112 bytes of unused space.
+So, we can easily add another function here just by pushing the jump command back.
+
+Specifically, I want to loop over each character's hand slots,
+then, for each slot that is either 0 of 0x60 (blank or "no armor"), set the quantity to 0.
+NOTE: by the time this code is executed, the game has already executed a blind copy of the characters' information, including their hand slots, from the combat to the non-combat data.
+The combat hand slots are in 2 pairs of bytes (type, quantity) at 0x7e2033 + 0x80 * Slot number, 0-based.
+Out of combat starts at 0x7e1033 and goes up by 0x40 per character.
+
+My patch starts at byte 0x1f20d in the ROM.
+
+//initialize some stuff:
+//a9 will store the current loop iteration
+//X will store the offset for the current character's left hand
+f20d:	7b	tdc
+f20e:	85a9	sta $a9
+f210:	a23310	ldx #$1033
+
+//start of loop
+
+//look at the current hand's item type
+f213:	bd0000	lda $0000,x
+//If it is not blank, branch past this next command (which will set its quantity to 0)
+f216:	d003	bne $f21a
+//set the quantity to zero.  Conveniently, the accumulator is already zero if we're here.
+f218:	9d0100	sta $0001,x
+
+//Now, if the item is not "no armor", skip past THIS command which does the same. 
+f21b:	c960	cmp #$60
+f21d:	d004	bne $f221
+//this time I need to zero the accumulator.
+f21f:	7b	tdc 
+f220:	9d0100	sta $01,x
+
+//do the same process, but with the other hand.
+f223:	bd0200	lda $02,x
+f226:	d003	bne $f227
+f228:	9d0300	sta $03,x
+f22b:	c960	cmp #$60
+f22d:	d004	bne $f22e
+f22f:	7b	tdc 
+f230:	9d0300	sta $03,x
+
+//Loop logic.
+//Increase a9; if we've hit 5 (which is out of bounds), branch ahead to the exit.
+f233:	e6a9	inc $a9
+f235:	a5a9	lda $a9
+f237:	c905	cmp #$05
+f239:	f00a	beq $f245
+//Otherwise, add 0x40 to X and return to the start of the loop.
+//we need to be in 16-bit mode to do this.
+f23b:	c220	rep #$20
+f23d:	8a	txa
+f23e:	6940	adc #$40
+f240:	aa	tax
+f241:	e220	sep #$20
+f243:	80cd	bra $f213
+
+//end the function as normal
+//just in case it matters, set $a9 back to 30 and zero the accumulator (which has some crap in the 16 bit registers)
+//X is reset before it is used next; I checked that one.
+f245:	a930 lda #$30
+f247:	85a9 sta $a9
+f249:	c220	rep #$20
+f24b	7b	tdc
+f24c:	e220	sep #$20
+f24e:	4cd895	jmp $95d8
+
+
+const int duplicationPatchAddress = 0x1f20d;
+byte[] duplicationPatchData = new byte[] {
+	0x7b, 0x85, 0xa9, 0xa2, 0x33, 0x10, 0xbd, 0x00, 0x00, 0xd0, 0x03, 0x9d, 0x01, 0x00, 0xc9, 0x60,
+	0xd0, 0x04, 0x7b, 0x9d, 0x01, 0x00, 0xbd, 0x02, 0x00, 0xd0, 0x03, 0x9d, 0x03, 0x00, 0xc9, 0x60,
+	0xd0, 0x04, 0x7b, 0x9d, 0x03, 0x00, 0xe6, 0xa9, 0xa5, 0xa9, 0xc9, 0x05, 0xf0, 0x0a, 0xc2, 0x20,
+	0x8a, 0x69, 0x40, 0x00, 0xaa, 0xe2, 0x20, 0x80, 0xcd, 0xa9, 0x30, 0x85, 0x19, 0xc2, 0x20, 0x7b,
+	0xe2, 0x20, 0x4c, 0xd8, 0x95
+};

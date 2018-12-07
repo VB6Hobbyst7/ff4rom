@@ -1,0 +1,33 @@
+DIALOGUE
+========
+
+Bank 1
+------
+Pointers: 80200
+Dialogue: 80600
+
+Bank 2
+------
+Pointers: 88200 ? (Not sure)
+Dialogue: 88500
+
+Bank 3
+------
+Pointers: 9A700
+Dialogue: 9A900
+
+Status Names
+------------
+Pointers: 7B600
+Dialogue: 7B640
+
+Battle Dialogue
+---------------
+Pointers: 77400 -- subtract 68200
+Dialogue: 77574
+
+Battle Messages
+---------------
+Pointers: 7b200 -- subtract 70200
+Dialogue: 7b276
+

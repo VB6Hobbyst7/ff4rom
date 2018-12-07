@@ -1,0 +1,128 @@
+=========================================================================================
+Enemy Condition Indices Table (76800-768FF)			Phoenix Hacks
+								with help from Zyrthofar
+[first byte of enemy attack group sets]				6/13/2008
+=========================================================================================
+
+=======================================
+Conditions Encoded Data (76900-76AFF):
+=======================================
+00xxyyzz = if xx's status byte yy is status zz
+01xx00yy = if xx's HP is less than [index yy of HP table at 76200]
+020000xx = if condition flag is xx
+020001xx = if reflex flag is xx
+03xx0100 = if character xx is dead
+040001xx = if enemy xx is dead
+050000xx = if current enemy set is Overworld xx
+050001xx = if current enemy set is Underground/Moon xx
+06000000 = if only enemy type alive
+07xxyyzz = if xx does command yy with element zz (00 = any)
+08xxyyzz = ?? duplicated 07?
+09000000 = ??
+0A000000 = if HP damage
+0B000000 = if only enemy alive
+	Note: for character/enemy xx, values above 16 are xx-1
+
+=======================================
+Condition Indices Meanings
+=======================================
+#	Condition
+--	---------
+00	no condition
+01	if charmed
+02	if only enemy alive
+03	if only enemy type alive
+04	if HP damage
+05	? [09000000] (not used)
+06	if physically attacked by a character
+07	if magically attacked by a character
+08	if hit by a character fire-elemental spell
+09	if hit by a character ice-elemental spell
+0A	if hit by a character lightning-elemental spell
+0B	if magically attacked by a character?
+0C	if hit by a character fire-elemental spell?
+0D	if hit by a character ice-elemental spell?
+0E	if hit by a character lightning-elemental spell?
+0F	if hit by a character holy-elemental spell
+10	if condition flag is 00
+11	if condition flag is 01
+12	if condition flag is 02
+13	if condition flag is 03
+14	if condition flag is 04
+15	if condition flag is 05
+16	if condition flag is 00 and physically attacked by a character
+17	if HP is less than 1,000 and HP damage
+18	if condition flag is 03 and HP damage and HP is less than 16,000
+19	if self has a Wall
+1A	if Paladin Cecil is dead and hit by a character fire-elemental spell
+1B	if Older Rydia is dead and hit by a character fire-elemental spell
+1C	if Kain (v.2) is dead and hit by a character fire-elemental spell
+1D	if Rosa (v.2) is dead and hit by a character fire-elemental spell
+1E	if Edge is dead and hit by a character fire-elemental spell
+1F	if condition flag is 10
+20	if physically attacked by a character and only enemy alive
+21	if HP damage and only enemy alive
+22	if only enemy type alive and magically attacked by a character
+23	if magically attacked by a character and only enemy alive
+24	if magically attacked by an enemy from group 1
+25	if current enemy set is Overworld F7 (1 General, 2 Fighters)
+26	if current enemy set is Underground/Moon C3 (1 Flamedog)
+27	if all characters have Count status
+28	if physically attacked by a character and condition flag is 01
+29	if HP damage and condition flag is 02
+2A	if HP damage and condition flag is 04
+2B	if HP damage and condition flag is 06
+2C	if HP damage and condition flag is 08
+2D	if HP damage and condition flag is 0A
+2E	if HP damage and condition flag is 0C
+2F	if HP damage and condition flag is 0E
+30	if physically attacked by Edward
+31	if condition flag is 01 and physically attacked by a character
+32	if condition flag is 02 and physically attacked by a character
+33	if condition flag is 03 and physically attacked by a character
+34	if condition flag is 01 and HP damage
+35	if condition flag is 02 and HP damage
+36	if HP is less than 10,000
+37	if HP is less than 1,000
+38	if enemy A7 (Baigan) is dead
+39	if reflex flag is 01 and hit by a character lightning-elemental spell
+3A	if HP is less than 700 and HP damage
+3B	if current enemy set is Overworld FC (Dark Elf: "You Fool")
+3C	if HP is less than 20,000 and HP damage
+3D	if enemy AD (Sandy) is dead
+3E	if enemy AE (Cindy) is dead
+3F	if enemy AF (Mindy) is dead
+40	if condition flag is 01 and if hit by jump landing
+41	if condition flag is 01 and physically attacked by a character
+42	if condition flag is 01 and magically attacked by a character
+43	if condition flag is 01 and physically attacked by Paladin Cecil
+44	if HP is less than 100 and HP damage
+45	if current enemy set is Overworld FD (Edge's Rubicant)
+46	if current enemy set is Overworld FD (Edge's Rubicant) and hit by a character fire-elemental spell
+47	if condition flag is 01 and hit by a character ice-elemental spell
+48	if HP is less than 1,000 and physically attacked by a character
+49	if physically attacked by enemy from group 2
+4A	if condition flag is 01 and hit by a character lightning-elemental spell
+4B	if DarkKnight Cecil is critical
+4C	if condition flag is 01 and only enemy alive
+4D	if HP is less than 19,000 and HP damage
+4E	if condition flag is 00 and HP damage
+4F	if condition flag is 01 and HP damage
+50	if condition flag is 02 and HP damage
+51	if hit by a call spell
+52	if hit by a twin-casted spell and condition flag is 01
+53	if hit by a twin-casted spell from FuSoYa
+54	if HP is less than 700 and HP damage and condition flag is 00
+55	if self is an egg
+56	if self is an egg and HP damage
+57	if condition flag is 00 and HP is less than 40,000 and HP damage
+58	if condition flag is 01 and HP is less than 11,000 and HP damage
+59	if condition flag is 02 and HP is less than 27,000 and HP damage
+5A	if only enemy alive and hit by a character holy-elemental spell
+5B	if magically attacked by a character and condition flag is 01
+5C	if hit by jump landing
+5D	if hit by a call spell and if condition flag is 03
+5E	if hit by a dark-elemental spell from Paladin Cecil and condition flag is 02
+5F	if hit by a character dark-elemental spell
+60	no condition
+61	if condition flag is 04 and HP damage and HP is less than 12,000

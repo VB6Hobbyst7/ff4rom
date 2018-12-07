@@ -13,9 +13,11 @@ type Formation
  battle_music as UByte
  character_battle as Boolean
  auto_battle as Boolean
+ auto_battle_script as AutoScriptList
  floating as Boolean
  transparent as Boolean
  cursor_style as UByte
 end type
 
 const total_formations = 511
+const max_autobattles = 6

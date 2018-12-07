@@ -1,0 +1,36 @@
+Statuses that deactivate battle commands: 9FF19 to 9FF4F (FF2us ROM with header), with 2 bytes per command.
+
+The first byte deals with status byte 03 (Swoon, Stone, Toad, Mini, Pig, Mute, Blind, Poison) and the second byte 
+deals with status byte 04 (Curse, Float, etc.). For example, Kick's entry is 3840. In binary, 38 is 00111000, 
+which correspond to Toad, Mini, and Pig. The value 40 is why Kick is disabled by Float. The data is for all 
+the commands up until Change (and half of Parry).
+
+Command	Bytes	Disabled
+-------	-----	--------
+Fight	0000	
+Item	0000	
+White	2C00	Toad, Pig, Mute
+Black	0400	Mute
+Call	2C00	Toad, Pig, Mute
+Dark	3800	Toad, Mini, Pig
+Jump	3000	Toad, Mini
+Recall	2C00	Toad, Pig, Mute
+Sing	0400	Mute
+Hide	0000	
+Heal	0000	
+Pray	0000	
+Aim	3800	Toad, Mini, Pig
+Power	3900	Toad, Mini, Pig, Poison
+Kick	3840	Toad, Mini, Pig, Float
+Gird	3800	Toad, Mini, Pig
+Twin	3C00	Toad, Mini, Pig, Mute
+Bluff	3800	Toad, Mini, Pig
+Cry	3800	Toad, Mini, Pig
+Cover	3000	Toad, Mini
+Peep	3800	Toad, Mini, Pig
+Dummy	3800	Toad, Mini, Pig
+Dart	3000	Toad, Mini
+Sneak	2000	Toad
+Ninja	2C00	Toad, Pig, Mute
+Regen	3800	Toad, Mini, Pig
+Change	0000	

@@ -1,0 +1,5 @@
+A000D-A001C	Auto-Battle Enemy Set Pointer (xx00 = Overworld Enemy Sets, xx01 = Underground/Moon Enemy Sets)
+A001D-A002C	Auto-Battle Pointers (2 bytes, reverse and add 0x90200)
+A002D-A0066	Auto-Battle Data (00xx = spell, 01xx = item, Cx/Dx00 = command; separated by 0xFFs)
+A0067-A0075	Auto-Battle related? (enemy set to transition to?)
+A0076-A0088	Auto-Battle related? (other auto-battle related enemy sets?)

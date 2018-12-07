@@ -16,5 +16,3 @@ type Trigger
  trap_formation as Formation ptr
  event_call as EventCall ptr
 end type
-
-const total_triggers = 100

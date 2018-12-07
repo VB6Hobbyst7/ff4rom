@@ -1,0 +1,442 @@
+---------------------------------------------------------------------
+RAM REFERENCES
+---------------------------------------------------------------------
+$001700				Index of the current world ($00 == overworld, $01 == underground, $02 == moon)
+$000EDB-$000FDB		Stores current world map tile properties
+$7F5C71				Beginning of Map data
+
+---------------------------------------------------------------------
+CODE
+---------------------------------------------------------------------
+07CEA-		(00FAEA-      )	Overworld map loader
+07D78-		(00FB78-      ) Underground map loader
+07DC5-		(00FBC5-      ) Moon map loader
+
+AC8FA-		(15C6FA-      ) Routine that alters overworld map depending on events
+
+---------------------------------------------------------------------
+DATA
+---------------------------------------------------------------------
+
+09410-09419	(019210-019219) Positions of Characters on Menu Screens (x, y) (center, top, bottom, mid-top, mid-bottom)
+09441-		(019241-      ) Menu Character Formations (?)
+
+0C763-0C772 (01C563-01C572) Positions of Item Names on Shop Screens (x, y)
+0C773-0C782 (01C573-01C582) Positions of Item Prices on Shop Screens (x, y)
+
+0DA2A-		(01D82A-      ) Menu Screen Specifications (see below)
+
+11D99-      (029B99-      ) Borders for Battle Menus
+
+44200-		(08C000-      )	Title Screen Graphic Data
+
+46A00-46AFF	(08E800-08E8FF)	Title Screen Palette Data
+46B00-46EAF (08E900-08ECAF)	--
+
+47200-		(08F000-      )	Enemy Graphic Data
+
+57200-581FF (0AF000-0AFFFF) Text Font (2 bitplanes)
+
+68200-6823F	(0D8000-0D803F)	Overworld Character Palette Data
+68240-6827F	(0D8040-0D807F)	Overworld Vehicle Palette Data
+68280-682BF	(0D8080-0D80BF)	--
+
+682D0-6843F	(0D80D0-0D823F)	Townspeople Palette Data
+68440-688CF (0D8240-0D86CF)	--
+688D0-689CF	(0D86D0-0D87CF)	Character Portrait Palette Data
+689D0-689DF	(0D87D0-0D87DF)	Window Palette Data
+
+7015E-		(0DFF5E-      )	Enemy Size Data (multiply by 8 for pixel sizes)
+70200-711FF	(0E8000-0E8FFF)	Enemy Combination Data (8 bytes, *6)
+71200-7168F (0E9000-0E948F)	Enemy Horizontal Position Data
+71690-719FF (0E9490-0E97FF)	--
+71A00-720FF	(0E9800-0E9EFF)	Enemy Name Data
+
+72200-723BF (0EA000-0EA1BF)	Enemy Gold Totals
+723C0-7257F (0EA1C0-0EA37F)	Enemy Experience Totals
+
+728A0-72A5F	(0EA6A0-0EA85F)	Enemy Stats Pointers
+72A60-73638	(0EA860-0EB438)	Enemy Stats
+73639-738BF	(0EB439-0EB6BF)	--
+
+74500-7453F (0EC300-0EC33F)	Probability of Enemy Attack for the Overworld (1 byte == 32x32 tile region)
+74540		(0EC340)		Probability of Enemy Attack for the Underground (1 byte == entire map)
+74541		(0EC341)		Probability of Enemy Attack for the Moon (1 byte == entire map)
+
+74742-74781	(0EC542-0EC581) Enemy Sets for the Overworld (1 byte == 32x32 tile region)
+74782-74791	(0EC582-0EC591)	Enemy Sets for the Underground (1 byte == 32x64 tile region)
+74792-74795	(0EC592-0EC595)	Enemy Sets for the Moon (1 byte == 32x32 tile region)
+74796-74995	(0EC596-0EC795)	Location Enemy Sets (1 byte == entire location)
+74996-749ED	(0EC796-0EC7ED)	Enemy Combinations in Enemy Sets
+
+74D00-74D0F	(0ECB00-0ECB0F)	Cursor and Battle Number Palette Data
+
+77400-781FF	(0EF200-0EFFFF)	Battle Dialogue (pointers + 68200)
+78200-78AFF	(0F8000-0F88FF)	Item Names (9 bytes each)
+78B00-78CAF	(0F8900-0F8AAF)	Spell Names (6 bytes each)
+78CB0-78FEF	(0F8AB0-0F8DEF)	Attack Names (8 bytes each)
+
+7A650-7A74F (0FA450-0FA54F) GP Values of Items
+7A750-		(0FA550-      ) Equipability of Items (1 word each)
+
+7A910-7A963	(0FA710-0FA763)	Character Names (6 bytes each)
+7A964-7A9C5	(0FA764-0FA7C5)	Character Class Names (7 bytes each)
+7A9C6-7AA5B	(0FA7C6-0FA85B)	Battle Command Names (5 bytes each)
+
+7AB00-7ACBF	(0FA900-0FAABF)	Characters' Initial Statistics (32 bytes each, *3)
+7ACC0-7ACFF	(0FAAC0-0FAAFF)	--
+7AD00-7AD91	(0FAB00-0FAB91)	Characters' Initial Equipment (7 bytes each, *1)
+7AD92-7AFFF	(0FAB92-0FADFF)	--
+
+7B200-7B53C	(0FB000-0FB33C)	Battle Messages (pointers + 70200)
+
+7B600-7B6BA	(0FB400-0FB4BA)	Abnormal Status Text (pointers + 70200)
+
+7CC00-7CFFF	(0FCA00-0FCDFF)	Enemy Size Pointer, Palette Pointer, and Graphic Pointer Data
+
+7D140-7D3FF	(0FCF40-0FD1FF)	--
+7D400-		(0FD200-      )	Battle Background Palette Data
+
+80200-805FF	(108000-1083FF)	Dialogue Bank 1 Pointers
+80600-881FF	(108400-10FFFF)	Dialogue Bank 1 Data
+88200-884FF	(118000-1182FF)	Dialogue Bank 2 Pointers
+88500-901FF (118300-11FFFF)	Dialogue Bank 2 Data
+90200-903FF	(128000-1281FF)	Event Pointers
+90400-971FF	(128200-12EFFF)	Event Data (each event is terminated by 0xFF)
+
+97460-9765F	(12F260-12F45F)	Triggered Event Pointers (tells which FF trigger invokes which event)
+97660-97817	(12F460-12F617)	Triggered Event Data
+97818-9785F	(12F618-12F65F)	--
+
+98200-983FF	(138000-1381FF)	Event Placement Pointers
+98400-998FF	(138200-1396FF)	Event Placement Data (4 bytes, *7)
+99900-999FF	(139700-1397FF)	DTE Table
+99A00-99DFF	(139800-139BFF)	Event Pointers (2)
+
+9A500-9A6FF (13A300-13A4FF) Items in Shops (8 bytes per shop, FF == no item)
+9A700-9A8FF (13A500-13A6FF) Dialogue Bank 3 Pointers
+9A900-9D3FF (13A700-13D1FF) Dialogue Bank 3 Data
+
+9FF50-9FFB7	(13FD50-13FDB7)	Character Battle Commands (5 bytes each)
+
+A0200-A07FF	(148000-1485FF)	World Map Tile Formation Data
+A0800-A0AFF	(148600-1488FF)	World Map Tile Palette Pointers
+A0B00-A0C7F	(148900-148A7F)	World Map Palette Data
+A0C80-A0F7F	(148A80-148D7F)	World Map Tile Properties Data
+A0F80-A0FFF	(148D80-148DFF)	--
+A1000-A1FFF	(148E00-149DFF)	Town Map Tile Properties Data (*5)
+A2000-A5FFF	(149E00-14DDFF)	Town Map Tile Formation Data (*4)
+A6000-A6FFF	(14DE00-14EDFF)	Town Map Palette Data
+
+A8200-A84FF	(158000-1582FF)	Town Trigger Pointers
+A8500-A981F	(158300-15961F)	Town Trigger Data (*2)
+A9820-A9CF0	(159620-159AF0)	Town Titles
+
+A9E84-AB204	(159C84-15B004)	Town Properties
+
+B0200-B067F	(168000-16847F)	World Map Row Pointers
+B0680-B6D53	(168480-16EB53)	World Map Row Data (each row is terminated by 0xFF)
+
+B7EF8-      (16FCF8-      ) Starting position of character sprites on battle screen
+            
+B8200-B84FF	(178000-1782FF)	Town Map Pointers
+B8500-D005F	(178300-19FE5F)	Town Map Data (each map is fixed at 32x32 tiles; no termination for rows)
+D0060-D0065	(19FE60-19FE65)	World Trigger Pointers
+D0066-D01FF	(19FE66-19FFFF)	World Trigger Data (*2)
+D0200-		(1A8000-      )	Battle Character Graphic Data
+
+D8200-		(1B8000-      )	Overworld Character Graphic Data
+
+E7000-E7E9F	(1CEE00-1CFC9F)	Enemy Palette Data
+
+E7F00-E80FF	(1CFD00-1CFEFF)	Battle Character Palette Data
+
+E8200-ED5BF	(1D8000-1DD3BF)	World Map Tile Graphic Data (also used to construct pointers to town gfx)
+ED5C0-EEF3F	(1DD3C0-1DED3F)	Character Portrait Graphic Data
+EEF40-		(1DED40-      )	Town Tile Graphic Data
+
+F0200-F021F	(1E8000-1E801F)	Pointers to Town Tile Graphic Data (add to 0xE8200, but sometimes something else o_O)
+
+F800A-F8013	(1EFE0A-1EFE13) Positions of Character Portraits on Menu Screen (x, y) (standard formation) (center, top, bottom, mid-top, mid-bottom)
+F8014-F801D	(1EFE14-1EFE1D)	Positions of Character Portraits on Menu Screen (x, y) (inverted formation) (center, top, bottom, mid-top, mid-bottom)
+
+-----------------------------------------------------------------------------
+Other Points of Interest:
+
+913E1-914F9	(1291E1-1292F9)	Mist Events
+
+-----------------------------------------------------------------------------
+
+Event Script Bytecodes
+
+D0				Toggle screen shake
+D1				Screen flash
+D2				Screen blur and unblur
+D3			
+D4				Open Fat Chocobo screen
+D5				Open a door
+D6				Screen moves up 1 tile and down 1 tile
+D7				Toggle running
+D8				Toggle music fade
+D9				Open Namingway screen
+DA				Toggle screen fade
+DB xx			Toggle status ailments xx
+DC xx			Inn (costs 50 * 2^xx GP)
+DD xx			Change character graphic to xx
+DE xx			Restore HP (10 * xx HP)
+DF xx			Restore MP (10 * xx MP)
+E0 xx			Add item xx to inventory
+E1 xx			Remove item xx from inventory
+E2 xx yy
+E3 xx			Remove all status ailments but xx
+E4 xx			Add status ailments xx
+E5 xx			Add 100 * xx GP
+E6 xx			Add 50 * xx GP
+E7 xx			Add character xx to party
+E8 xx			Remove character xx from party
+E9 xx			Pause xx cycles
+EA xx			Fade song xx in
+EB xx yy		Repeat the following yy actions xx times
+EC xx			Fight battle with enemy set xx
+ED xx			Bring up shop xx
+EE xx
+EF xx			Show message 1xx (2)
+F0 xx			Show message 0xx (1)
+F1 xx			Show message 1xx (1)
+F2 xx			
+F3 xx			
+F4 xx
+F5 xx
+F6 xx			Show message xx (3)
+F7 xx			Bring up item selection window (xx is the item that should be selected)
+F8 xx			Show message 1xx (1) with "Yes/No" box
+F9 xx			Toggle screen tint
+FA xx			Play song xx
+FB xx			Play sound effect xx
+FC xx
+FD xx			Play visual effect xx
+FE aa xx yy zz	Load map aa at position (xx, yy), zz & 0x80 == Underground/Moon
+FF			END
+
+Movement Codes
+--------------
+x0				Move Up
+x1				Move Right
+x2				Move Down
+x3				Move Left
+x4				Look Up
+x5				Look Right
+x6				Look Down
+x7				Look Left
+x8				Toggle Visibility
+x9				Special Move #1
+xA				Special Move #2
+xB				Special Move #3
+xC				Special Move #4
+xD				Special Move #5
+xE				Special Move #6
+xF				Special Move #7
+
+--------------------------
+
+Menu Specifications:
+
+0x0000			Menu X Position
+0x0001			Menu Y Position
+0x0002			Menu Width
+0x0003			Menu Height
+......			Menu Items
+
+Menu Items:
+
+0x0000			Item X Position (taking borders into account)
+0x0001			Item Y Position (taking borders into account)
+......			Item Text
+				(Terminated by 0x00 -- end of menu)
+				(Terminated by 0x01 -- more items follow)
+
+--------------------------
+
+Structure Offset Notation:
+
+0xXXXX			The value at 0xXXXX is a single byte value
+0xXXXX-0xYYYY	The value at 0xXXXX through 0xYYYY is a multi-byte value, swapping when necessary
+0xXXXX:x-y		Bits x through y at 0xXXXX are to be taken as a single value, not as a bitmask
+0xXXXX:x...y	Bits x through y at 0xXXXX are to be taken as a bitmask, not a single value
+
+*1 -- Characters' Initial Equipment, 7 bytes
+
+0x0000			Head
+0x0001			Body
+0x0002			Arms
+0x0003			Left Hand
+0x0004			Number of previous weapon in left hand
+0x0005			Right hand
+0x0006			Number of previous weapon in right hand
+
+*2 -- Trigger Data, 5 bytes
+
+0x0000			X position
+0x0001			Y position
+0x0002			Destination map or event code
+0x0003			Destination X position or event parameter
+0x0004			Destination Y position or event parameter
+
+*3 -- Characters' Initial Statistics, 32 bytes
+
+0x0000:0-5		Commands, name on status screen, etc.
+0x0000:6...7	Equipable Hands:  Left, Right
+0x0001:0-4		Appearance (overall)
+0x0001:5-7		?
+0x0002			Experience Level
+0x0003:0...7	Status Ailments:  Poison, Darkness, Mute, Pig, Small, Toad, Stone, Swoon
+0x0004:0...7	Status Ailments:  ?, Petrify, Berserk, Charm, Sleep, Paralyze, Float, Curse
+0x0005:0...7	Status Ailments:  Count, ?, ?, ?, ?, ?, Stop, ?
+0x0006:0...7	?, ?, ?, ?, Barrier, Wall, ?, ?
+0x0007-0x0008	Current HP
+0x0009-0x000A	Maximum HP
+0x000B-0x000C	Current MP
+0x000D-0x000E	Maximum MP
+0x000F			Strength
+0x0010			Agility
+0x0011			Vitality
+0x0012			Wisdom
+0x0013			Will
+0x0014-0x0016	?
+0x0017-0x0019	Experience
+0x001A-0x001C   ?
+0x001D-0x001F	Experince to Level Up Modifier (+44?)
+
+Character Name and Attack Indices:
+01		Cecil
+02		Kain
+03		Rydia
+04		Tellah
+05		Edward
+06		Rosa
+07		Yang
+08		Palom
+09		Porom
+0A		Tellah (second time you meet him?)
+0B		Cecil (Paladin)
+0C		Tellah (?)
+0D		Yang (second time)
+0E		Cid
+0F		Kain (second time)
+10		Rosa (second time)
+11		Rydia, older
+12		Edge
+13		FuSoYa
+14		Kain (third time)
+15		Golbez
+16		Anna
+
+*4 -- Town Map Tile Formation Data, 2 bytes
+
+0x0000			8x8 tile (0x00-0xFF)
+0x0001:0...1	?
+0x0001:2-4		Palette Index
+0x0001:5		Tile Priority (0 = behind character, 1 = in front of character)
+0x0001:6		Flip tile horizontally
+0x0001:7		Flip tile vertically
+
+*5 -- Town Map Tile Properties, 2 bytes
+
+0x0000:0		Can walk on/off tile
+0x0000:1...2	?
+
+*6 -- Enemy Combination Data, 8 bytes
+
+0x0000:0...2	?
+0x0000:3		Forced Back Attack
+0x0000:4		Dies like a boss
+0x0000:5...6	?
+0x0000:7		Egg
+0x0001-0x0003	Enemies
+0x0004:0...1	?
+0x0004:2-3		# of 3rd enemy (see 0x0003)
+0x0004:4-5		# of 2nd enemy (see 0x0002)
+0x0004:6-7		# of 1st enemy (see 0x0001)
+0x0005			Enemy Arrangemnt
+0x0006:0		Can't run from battle
+0x0006:1		Dying in battle does not end the game
+0x0006:2-3		Battle music
+		00: 	Regular battle music
+		01:  	Boss battle music
+		10:  	Fiend battle music
+		11:  	Make no change in the music (continue playing the current song)
+0x0006:4		Human-style
+0x0006:5		Auto-battle
+0x0006:6		Enemies are floating
+0x0006:7		Enemies are transparent
+0x0007			?
+
+*7 -- Event Placement Data, 4 bytes
+
+0x0000			Event number
+0x0001:0-4		Starting X position
+0x0001:5...6	?
+0x0001:7		The "event" walks
+0x0002:0-4		Starting Y position
+0x0002:5		?
+0x0002:6/7		Characters can walk through the "event"
+0x0003:0-1		Direction the "event" faces
+		00: 	Up
+		01:  	Right
+		10:  	Down
+		11:  	Left
+0x0003:2-3		Event palette
+0x0003:4		"Event" turns when spoken to
+0x0003:5		"Event" moves in place even if not walking
+0x0003:6-7		Movement speed
+
+DTE Table (entries flagged with an asterisk aren't -really- DTE)
+---------
+
+80*	0			A0	yo			C0*	'			E0	ot
+81*	1			A1	<sp>y		C1*	.			E1	be
+82*	2			A2	<sp>i		C2*	-			E2	el
+83*	3			A3	al			C3*	...			E3	om
+84*	4			A4	ar			C4*	!			E4	's
+85*	5			A5	<sp>h		C5*	?			E5	il
+86*	6			A6	r<sp>		C6*	%			E6	de
+87*	7			A7	<sp>s		C7*	/			E7	gh
+88*	8			A8	at			C8*	:			E8	ay
+89*	9			A9	n<sp>		C9*	,			E9	nt
+8A	e<sp>		AA	<sp>c		CA	<sp>f		EA	Wh
+8B	<sp>t		AB	ng			CB	<sp>d		EB	Yo
+8C	th			AC	ve			CC	ow			EC	wa
+8D	he			AD	ll			CD	se			ED	oo
+8E	t<sp>		AE	y<sp>		CE	<sp><sp>	EE	We
+8F	ou			AF	nd			CF	it			EF	g<sp>
+90	<sp>a		B0	en			D0	et			F0	ge
+91	s<sp>		B1	ed			D1	le			F1	<sp>n
+92	er			B2	hi			D2	f<sp>		F2	ee
+93	in			B3	or			D3	<sp>g		F3	wi
+94	re			B4	,<sp>		D4	es			F4	<sp>M
+95	d<sp>		B5	I<sp>		D5	ro			F5	ke
+96	an			B6	u<sp>		D6	ne			F6	we
+97	<sp>o		B7	me			D7	ry			F7	<sp>p
+98	on			B8	ta			D8	<sp>l		F8	ig
+99	st			B9	<sp>b		D9	us			F9	ys
+9A	<sp>w		BA	<sp>I		DA	no			FA	<sp>B
+9B	o<sp>		BB	te			DB	ut			FB	am
+9C	<sp>m		BC	of			DC	ca			FC	ld
+9D	ha			BD	ea			DD	as			FD	<sp>W
+9E	to			BE	ur			DE	Th			FE	la
+9F	is			BF	l<sp>		DF	ai			FF*	<sp>
+
+0x007CEC	BF 00 80 16	LDA $168000, X			Overworld pointers ($168000 == 0xB0200)
+0x007CF2	BF 01 80 16	LDA $168001, X
+0x007CFA	BF 80 84 16	LDA $168480, X			Overworld data ($168480 == 0xB0680)
+0x007D03	BF 81 84 16	LDA $168481, X			[New location:  $208000 == 0x100200]
+
+0x007D7A	BF 00 82 16	LDA $168200, X			Underground pointers ($168200 == 0xB0400)
+0x007D80	BF 01 82 16	LDA $168201, X
+0x007D88	BF 80 C4 16	LDA $16C480, X			Underground data? ($16C480 == 0xB4680)
+0x007D91	BF 81 C4 16	LDA $16C481, X			[New location:  $228000 == 0x110200]
+
+0x007DC7	BF 00 84 16	LDA $168400, X			Moon pointers ($168400 == 0xB0600)
+0x007DCD	BF 01 84 16	LDA $168401, X
+0x007DD5	BF 80 E1 16	LDA $16E180, X			Moon data? ($16E180 == 0xB6380)
+0x007DDE	BF 81 E1 16	LDA $16E181, X			[New location:  $248000 == 0x120200]

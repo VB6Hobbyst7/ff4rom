@@ -1,0 +1,220 @@
+Attack Power:
+
+Base Attack Power (fists) = Str/4 + Level/4
+Base Attack Power (for non-bow weapons) = Weapon Attack Power + Str/4 + Level/4
+Base Attack Power (for bow/arrow combo) = Bow Attack Power/2 + Str/4
+If using the arrow is not in the character's "primary hand", multiply 4/5  from result.
+Note: Internally, the bow is stronger, but for some stupid reason it has to be crippled.
+Base Attack Power (Yang - think FF1's black belt/master) = (Level+1)*2 + Str/4
+**Base Attack Power (Edge - both hands in use) = Left Weapon Attack Power + Str/4 + Level/4 + Right Weapon Attack Power + Str/4 + Level/4
+Base Attack Power (monster) = Whatever is listed by the game
+**Note: If a shield is in any hand, Weapon Attack Power for that hand = 0.
+
+Attack Power Modifiers:
+Critical Hit = 3/2
+Attacker Has Mini Status sets Base Attack Power = 1
+Attacker Has Toad Status sets Base Attack Power = 1
+**Target Has Elemental Immunity (Darkness and Zombies, but not limited to that enemy) sets Attack Power = 0
+**Target Has Elemental Immunity and "Critical Hit" sets Attack Power = 25 (21 in FF4A)
+Target Has Mini Status = 2
+Target Has Toad Status = 2
+Attacker Is Cursed = 1/2
+Attacker Is Berserked = 3/2
+Kick = 1/2
+*Kick and Target is Flan/Pudding = 0
+Dark Wave = 1/2
+Dark Wave and Target is Undead = 1/8
+Jump = 2
+Power (aka Build Up in FF4) = 2
+Deadly (FF4A only) = 3
+**Target Resistant Vs Weapon Element (target resists or absorb element) = 1/2
+**Target Weak Vs Weapon Element = 2
+**Target Weak Vs Weapon Element (and is "Weak+") = 4
+Attack Using Drain Elemental Weapon vs Target That Absorbs Any Elemental = 1/2
+***Target Resistant vs Enemy Type/Race (monsters attacking specific armor) = 3/4
+Target Weak vs Enemy Type/Race (weapon attacking specific monsters) = 4
+Unapplicable = 1
+
+If Base Attack Power > 255, Base Attack Power = 255.
+
+Important Note: There is an order in which these modifiers are applied (from first to last)
+Critical Hit, Statuses, Commands, Elemental, Enemy Type/Race
+
+Critical hits apply against the weapon the character wields. Critical hit info found here: http://slickproductions.org/forum/index.php?topic=368.0
+Statuses modify the attack power of the target, which override critical hits.
+Certain commands ignore race and elemental multipliers (Kick, Dark Wave) while others do not (Jump, Build Up).
+
+Note: If the target reacts to any of the elemental attacks, continue using the multiplier during an uninterrupted attack such as one given by Zeromus EG from FF4A. Stop using the multiplier when the uninterrupted attack ends. Elemental multipliers do not stack.
+
+*Note: Flan/Puddings are immune to Kick, which automatically deals 0 (unseen) damage.
+
+**Refer to this thread for physical elemental attacks: http://slickproductions.org/forum/index.php?topic=426.0
+Note: Critical and Zombies vs Darkness Weaponry formula applies the same in FF4. The base power is lower in FF4A though.
+
+***Note: Even if multiple weapons or multiple enemy types are exposed, the multiplier is applied only once. Therefore, stacking is unapplicable here.
+
+Before You Start: Make sure to calculate the defense power of the target first before plugging in the numbers.
+
+Attack Power = Base Attack Power * Attack Power Modifiers * (rand(100, 150)/100) -Target's Defense Power
+
+If Attack Power< 0, Attack Power = 0.
+
+Or... you could also say:
+
+Attack Power = Base Attack Power * Attack Power Modifiers  * (rand (100, 150)/100)
+If Attack Power < Target's Defense Power, then Attack Power = 0.
+Else Attack Power -= Target's Defense Power.
+
+Note: The randomization is done once for the attack.
+If your attack multiplier is a multiple of 5, hit rate is 99%, and you aren't exposing enemy resistances,
+all your attacks will be divisible by 5.
+The randomization is redone in FF4A if Attack Power = 0 after a round of calculations.
+
+Hit Rate:
+
+Base Hit Rate (fists) = 50 + Level/4
+Base Hit Rate (for non-bow weapons) = Weapon Hit Rate + Level/4
+Base Hit Rate (for bow+arrow combo) = Bow Hit Rate + Level/4
+Note: Arrows have no hit rate.
+Base Hit Rate (for characters that are wielding two weapons) = (Left Weapon Hit Rate + Right Weapon Hit Rate)/2 + Level/4
+Note: Only applies if both hands have weapons.
+Base Hit Rate (monster) = Whatever is listed by the game
+
+Hit Rate Modifiers:
+Aim sets Hit Rate = 99.
+Attacker is Blind = 1/2
+**Attacker is in back row without a back row compatible weapon = 1/2
+**Target is "considered" in the back row = 1/2
+Unapplicable = 1
+Note: Aim has the highest priority, regardless of the penalties.
+
+Hit Rate = Base Hit Rate * Hit Rate Modifer
+
+**Refer to this thread regarding hit rate being affected by the back row and the special bit for the weapons: http://slickproductions.org/forum/index.php?topic=455.0
+
+If Hit Rate > 99, Hit Rate = 99.
+
+Attack Multiplier:
+
+Attack Multiplier (character) = Str/8 + Agi/16 + 1
+Attack Multiplier (monster) = Whatever is listed by the game
+
+Defense Power:
+
+Base Defense (character) = sum of all defense ratings of armor + Vit/2
+If unequipped for any part of the body (head, body, arm, and non-strong hand), armor for those sections = 0.
+Base Defense (monster) = Whatever is listed by the game
+
+Defense Power Modifiers:
+Target has Mini status = 0
+Target has Toad status = 0
+Target is Cursed = 1/2
+Throw = 0
+Dark Wave = 0
+Parry/Defend = 2
+Unapplicable = 1
+
+If Base Defense > 255, Base Defense = 255.
+
+Note: The above info is just there for the sake of reference since it normally doesn't occur.
+
+Defense Power = Base Defense * Defense Power Modifers
+
+Evade:
+
+Base Evade (character) = sum of all evasion ratings of all armor equipped
+If unequipped for the head, body, or arm, each unequipped section = 10% evade
+Base Evade (monster) = 0
+**Target has Immune bit set on equipment (characters only) sets Evade = 99
+If Monster Defense = 255, Base Evade (monster) = 99.
+Note: When Monster Defense is naturally at 255 (with no help from Protect), they are intentionally "invincible" to physical attacks.
+
+If Base Evade > 99, Base Evade = 99.
+
+**Note: Only applicable to the SNES versions of the game.
+
+Evade Modifier:
+Target is Blind = 1/2
+Target has Frog Status = 0
+Target has Mini Status = 0
+Unapplicable = 1
+Note: Statuses should not affect invincible monsters...
+
+Evade = Base Evade * Evade Modifier
+
+Defense Multiplier:
+
+Defense Multiplier (character) = Agi/8
+If at least one shield is equipped, Defense Multiplier += Level/16
+Defense Multiplier (monster) = irrelevent
+Since evade = 0, the defense multiplier is effectively ignored (think of Cid).
+If Monster Defense = 255, Defense Multiplier (monster) = 99.
+Note: When Monster Defense is naturally at 255 (with no help from Protect), they are intentionally "invincible" to physical attacks.
+
+Undead Modifier:
+Drain Elemental Attack vs Undead = -1
+Unapplicable = 1
+
+Absorb Modifier:
+Absorb elemental multiplier = -1
+Unapplicable = 1
+
+Note: If the target is in the middle of an uninterruptable attack sequence and absorb one of the magical attacks,
+all physical attacks in this sequence only are converted into healing.
+
+-------------------------------------------------------------------------------------------------------------
+
+//Multiplier Madness! - These checks redo the attack multiplier based on hit rate and target's evasion.
+
+New Attack Multiplier = Attacker's Attack Multiplier; // initial
+
+while (Attacker's Attack Multiplier > 0)
+{
+ if (rand (0, 99) <= Attacker's Hit Rate) // check if individual hit is successful due to attacker's hit rate
+ {
+  while (Target's Defense Multiplier > 0)
+  // consider the Defense Multiplier the number of chances to evade hits
+  // we try again on failure and stop when there is no more
+  {
+   Target's Defense Multiplier--;
+   if (rand (0,99) < Target's Evade) // see if the target evades the hit
+   {
+    New Attack Multiplier--;
+    break; // exit this loop since target has evaded successfully
+   }
+  }
+  else
+  {
+   Hit Success = true; // used for dual hit type of attacks
+   if (Attack Power == 0) // GBA port only - noticable on Flan/Pudding enemies
+   {
+    rerandomize Attack Power Randomizer();
+    New Attack Multiplier--; // "penalty" for dealing 0 damage on the hit is a reduced multiplier
+   }
+  }
+ }
+ else // executed when individual hit fails to hit target and ignores evade - think of Tellah's suckage
+ {
+  New Attack Multiplier--;
+ }
+ Attacker's Attack Mulitplier--;
+}
+
+-------------------------------------------------------------------------------------------------------------------
+
+Damage = New Attack Multiplier * Attack Power *  Undead Modifier * Absorb Modifier;
+
+//if target is successfully hit, but can't quite pierce the target's armor...
+if ((Hit Success == true) && (Damage == 0))
+{
+ Damage = 1;
+}
+
+//tests target hit to be inflicted with status effect(s), based on level
+if (Attacker's Weapon.inflict status attributes() && !Target.resist status attributes() && Target.not dead())
+{
+ if (rand (0, Attacker's Level) >= rand (0, Target's Level))
+ {
+  Inflict status();
+ }
+}

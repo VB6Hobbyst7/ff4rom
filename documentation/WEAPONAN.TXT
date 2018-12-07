@@ -1,0 +1,175 @@
+Weapon Animations - Compiled by Dragonsbrethren
+
+Icon		Name		Offset		Data
+
+None		(Unarmed)	0x7A010		25150D00
+Claw		FireClaw	0x7A014		18160E03
+Claw		IceClaw		0x7A018		19160E03
+Claw		Thunder		0x7A01C		1A160E03
+Claw		Charm		0x7A020		1B160E03
+Claw		Poison		0x7A024		1C160E03
+Claw		CatClaw		0x7A028		1D160E03
+Rod		Rod		0x7A02C		1E000A02
+Rod		IceRod		0x7A030		19000A02
+Rod		FlameRod	0x7A034		18000A02
+Rod		Thunder		0x7A038		1A000A02
+Rod		Change		0x7A03C		1B000A02
+Rod		Charm		0x7A040		1D000A02
+Rod		Stardust	0x7A044		1F000A02
+Rod		Lilith		0x7A048		1C000A02
+Staff		Staff		0x7A04C		1E010A02
+Staff		Cure		0x7A050		20010A02
+Staff		Silver		0x7A054		21010A02
+Staff		Power		0x7A058		1D010A02
+Staff		Lunar		0x7A05C		1A010A02
+Staff		Life		0x7A060		1C010A02
+Staff		Silence		0x7A064		1B010A02
+Dark Sword	Shadow		0x7A068		22060301
+Dark Sword	Darkness	0x7A06C		1A060301
+Dark Sword	Black		0x7A070		1C060301
+Holy Sword	Legend		0x7A074		20040401
+Holy Sword	Light		0x7A078		20040401
+Holy Sword	Excalbur	0x7A07C		20040401
+Sword		Flame		0x7A080		18040601
+Sword		IceBrand	0x7A084		19040501
+Sword		Defense		0x7A088		1F040001
+Sword		Drain		0x7A08C		1C040001
+Sword		Ancient		0x7A090		1E040001
+Sword		Slumber		0x7A094		1F040001
+Sword		Medusa		0x7A098		23040001
+Spear		Spear		0x7A09C		24020001
+Spear		Wind		0x7A0A0		23040001
+Spear		Flame		0x7A0A4		18020601
+Spear		Blizzard	0x7A0A8		19020501
+Spear		Dragoon		0x7A0AC		1A020701
+Spear		White		0x7A0B0		2C020401
+Spear		Drain		0x7A0B4		1C020001
+Spear		Gungnir		0x7A0B8		22020001
+Katana		Short		0x7A0BC		22060301
+Katana		Middle		0x7A0C0		22060301
+Katana		Long		0x7A0C4		23060301
+Katana		Ninja		0x7A0C8		1A060301
+Katana		Murasame	0x7A0CC		19060301
+Katana		Masamune	0x7A0D0		24060201
+Knife		Assassin	0x7A0D4		1E050001
+Knife		Mute		0x7A0D8		1B050001
+Whip		Whip		0x7A0DC		1E13020A
+Whip		Chain		0x7A0E0		2413020A
+Whip		Blitz		0x7A0E4		1A13020A
+Whip		Flame		0x7A0E8		1813020A
+Whip		Dragon		0x7A0EC		1B13020A
+Axe		HandAxe		0x7A0F0		1E070001
+Axe		Dwarf		0x7A0F4		1E070007
+Axe		Ogre		0x7A0F8		19070001
+Knife		Silver		0x7A0FC		21030001
+Knife		Dancing		0x7A100		1D030001
+Sword		Silver		0x7A104		21040001
+Knife		Spoon		0x7A108		21030001
+Holy Sword		Crystal		0x7A10C		1A040401
+Shuriken	Shuriken	0x7A110		240B1206
+Shuriken	Ninja		0x7A114		180B1206
+Boomerang	Boomrang	0x7A118		1E0D1007
+Boomerang	FullMoon	0x7A11C		200F1108
+Harp		Dreamer		0x7A120		1D0A1309
+Harp		Lamia		0x7A124		1F0A1309
+None		Dummy		0x7A128		1A040401
+Axe		Poison		0x7A12C		23070001
+Axe		RuneAxe		0x7A130		1B070001
+Wrench		Silver		0x7A134		21090E0B
+Wrench		Earth		0x7A138		1A090E0B
+Wrench		Wooden		0x7A13C		18090E0B
+Sword		Avenger		0x7A140		1D040001
+Bow		ShortBow	0x7A144		1E170804
+Bow		CrossBow	0x7A148		22170804
+Bow		GreatBow	0x7A14C		24170804
+Bow		Archer		0x7A150		23170804
+Bow		ElvenBow	0x7A154		1B170804
+Bow		Samurai		0x7A158		1C170804
+Bow		Artemis		0x7A15C		1D170804
+Arrow		Iron		0x7A160		24170805
+Arrow		White		0x7A164		20170805
+Arrow		Fire		0x7A168		18170805
+Arrow		Ice		0x7A16C		19170805
+Arrow		Lit		0x7A170		1A170805
+Arrow		Darkness	0x7A174		22170805
+Arrow		Poison		0x7A178		23170805
+Arrow		Mute		0x7A17C		1F170805
+Arrow		Charm		0x7A180		1F170805
+Arrow		Samurai		0x7A184		1C170805
+Arrow		Medusa		0x7A188		1B170805
+Arrow		Artemis		0x7A18C		1D170805
+				0x7A190		24170D05
+				0x7A194		24170D04
+				0x7A198		21171505
+				0x7A19C		21171504
+
+Byte 1: Palette
+
+18: Red Orange/Yellow
+19: Blue/Light Blue
+1A: Gold/Blue
+1B: Green/Yellow
+1C: Red/Yellow
+1D: Orange/Yellow
+1E: Brown/Gray
+1F: Pink/Gold
+20: Light Blue/Yellow
+21: Gray/Green
+22: Dark Blue/Gold
+23: Purple/Green
+24: Gray/Brown
+25: Red/Flesh
+2C: Blue/White
+
+Byte 2:
+
+00: Rod
+01: Staff
+02: Spear
+03: Knife
+04: Sword
+05: Dagger
+06: Katana
+07: Axe
+09: Hammer
+0A: Harp
+0B: Shuriken
+0D: Boomerang
+0F: Chakram
+13: Whip
+15: Fist
+16: Claw
+17: Bow & Arrows
+
+Byte 3:
+
+00: Slash
+02: Whip Lash
+03: Katana Slash
+04: Holy Slash
+05: Ice Slash
+06: Flame Slash
+07: Thunder Slash
+08: Arrows
+0A: Sparkles
+0D: Punch
+0E: Big Punch
+10: Unknown (Used on Boomrang)
+11: Unknown (Used on FullMoon)
+12: Shurikens
+13: Notes
+
+Byte 4:
+
+00: Unknown (Used on Unarmed)
+01: Unknown (Used on Swords/Spears/Katanas/Axes)
+02: Unknown (Used on Rods/Staves)
+03: Unknown (Used on Claws)
+04: Unknown (Used on Bows)
+05: Unknown (Used on Arrows)
+06: Unknown (Used on Shurikens)
+07: Boomerang
+08: Unknown (Used on FullMoon)
+09: Unknown (Used on Harps)
+0A: Unknown (Used on Whips)
+0B: Unknown (Used on Hammers)

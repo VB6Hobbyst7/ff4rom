@@ -1,0 +1,14 @@
+// The Golbez/Rydia fight does do job checks as you suspected, in two places.
+// These can be swapped 1-for-1 for actor checks, in much the same way as your
+// auto-hide patch, just in the other direction. This appears to be all that's
+// necessary to make the fight play out as normal.
+
+// apply to both EF0F and 16155
+byte[] adultRydiaFightPatch = {
+	0xBD, 0x00, 0x20, 0x29, 0x1F, 0xC9, 0x11
+}
+
+// Changes:
+//  LDA $2001,X    >  LDA $2000,X
+//  AND #$0F       >  AND #$1F
+//  CMP #$0B       >  CMP #$11

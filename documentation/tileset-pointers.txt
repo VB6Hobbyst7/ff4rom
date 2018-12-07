@@ -1,0 +1,16 @@
+Airship             F5E00
+Lunar Core          F61A8 - F61A8
+Sealed Cave         F0220 - F0220
+Castle Exterior     F6F40 - EEF40 = 8000
+Town                F1768 - F1768
+House               F2EC0 - F2EC0
+Castle Interior     F3AC0 - F3AC0
+Crystal Room        F51E8 - F51E8
+Lunar Whale         F1700 - F9700 = -8000
+Feymarch            F0200 - F8200 = -8000
+Tower               F1700 - F9700 = -8000
+Giant               F1700 - F9700 = -8000
+Lunar Subterrane    F61A8 - F61A8
+Mountain            F5408 - FD408 = -8000
+Cave                F6A88 - FEA88 = -8000
+Ship                F5E00

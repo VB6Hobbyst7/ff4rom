@@ -1,0 +1,176 @@
+Area Music bytes:
+A9E8B-Baron Town Main
+A9E98-Mist Main
+A9EA5-Kaipo Main
+A9EB2-Mysidia Main
+A9EBF-Silvera Main
+A9ECC-Town Toroia Main
+A9ED9-Agart Main
+A9EE6-Town Toroia Inn
+A9EF3-Town Toroia Weapon Shop
+A9F00-Town Toroia Armor Shop
+A9F0D-Town Toroia Item Shop
+A9F1A-Baron Town Inn
+A9F27-Baron Town Weapon\Armor Shop
+A9F34-Baron Town Cid's House
+A9F41-Baron Town Rosa's House
+A9F4E-Mist House Top-Left
+A9F5B-Kaipo Inn Floor 1 Inn\Item
+A9F68-Kaipo Inn Floor 2 Cafe
+A9F75-Kaipo Room Far Right\Middle (Rosa's Room)
+A9F82-Mysidia Inn Floor 1 Cafe
+A9F8F-Mysidia Inn Floor 2 Inn
+A9F9C-Blank...
+A9FA9-Mysidia House of Wishes Floor 1
+A9FB6-? Byte Value: 15
+A9FC3-Toroia Cafe Floor 1
+A9FDD-Toroia Cafe Floor 2
+A9FEA-? Byte Value: 02
+A9FF7-Toroia Black Chocobo Farm Floor 1
+AA004-Toroia Black Chocobo Farm Floor 2
+AA011-Agart Astro Tower Floor 1
+AA01E-Agart Astro Tower Floor 2 Observatory
+AA02B-Agart Inn
+AA038-Chocobo's Village North of Toroia (w/Black Chocobos)
+AA05F-Baron Castle Outside
+AA06C-Damcyan Castle Outside
+AA079-Fabul Castle Outside
+AA086-Toroia Castle Outside
+AA093-Eblan Castle Outside
+AA0B9-Baron Castle 1F
+AA0BA-Baron Castle 2F
+AA0C7-Baron Castle King's Room
+AA0D4-Baron Castle Left Room (w\Rosa in the begining)
+AA0E1-Baron Castle Right Room (w\Treasure Chests)
+AA0EE-Baron Castle Dungeon Floor 1
+AA0FB-Baron Castle Dungeon Floor 2
+AA108-Baron Castle Top Room (When Cid comes out in the begining)
+AA115-Baron Castle Left Tower 1F
+AA122-Baron Castle Left Tower 2F
+AA12F-Baron Castle Left Tower 3F ("Room")
+AA13C-Baron Castle Right Tower 1F
+AA149-Baron Castle Right Tower 2F
+AA156-Baron Castle Right Tower 3F
+AA163-Baron Castle Right Tower B1F
+AA170-Baron Castle Right Tower B2F
+AA17D-Old Water-way from Baron Town
+AA18A-Old Water-way B3F
+AA197-Old Water-way B1F
+AA1A4-Old Water-way Save Room
+AA1B1-Old Water-way B2F
+AA1BE-Damcyan Castle 1F
+AA1CB-Damcyan Castle 2F
+AA1D8-Damcyan Castle 3F
+AA1E5-Damcyan Castle Basement
+AA1F2-Damcyan Castle (Basement) B1F
+AA1FF-Baron Town Entrance Room to Old Water-way
+AA20C-Agart Weapon Shop
+AA219-Agart Armor Shop
+AA226-Fabul Castle 1F
+AA233-Fabul Castle 2F
+AA240-Fabul Castle King's Room
+AA24D-Fabul Castle Crystal Room
+AA25A-Fabul Castle Weapons\Armors
+AA267-Fabul Castle Inn (Inn\Item)
+AA274-Fabul Castle Right Tower 1F
+AA281-Fabul Castle Right Tower 2F
+AA28E-Fabul Castle Right Tower 3F (King's Room)
+AA29B-Fabul Castle Left Tower 1F
+AA2A8-Fabul Castle Left Tower 2F
+AA2B5-Fabul Castle Left Tower 3F (Yang's Room)
+AA2C2-? Byte Value: 00
+AA2CF-Watery Pass-South Save Room
+AA2DC-Toroia Castle 1F
+AA2E9-Toroia Castle 2F
+AA2F6-Toroia Castle Crystal Room
+AA303-Toroia Castle Left Room (Cefca's Room)
+AA310-Toroia Castle Right Room (w\3 Stairs)
+AA31D-Toroia Castle Right Room - Left Stairs B1F
+AA32A-Toroia Castle Right Room - Middle Stairs B1F
+AA337-Toroia Castle Right Room - Right Stairs B1F
+AA344-Toroia Castle Right Room - Left Stairs B2F (w\Treasure Chests)
+AA351-Eblan Castle 1F
+AA35E-Eblan Castle 2F
+AA36B-Eblan Castle King's Room
+AA378-Eblan Castle Left Tower 1F
+AA385-Eblan Castle Left Tower 2F
+AA392-Eblan Castle Right Tower 1F
+AA39F-Eblan Castle Right Tower 2F
+AA3AC-Eblan Castle Basement
+AA3B9-Baron Castle Black Magic Class
+AA3C6-Baron Castle White Magic Class
+AA3D3-? Byte Value: 0F
+AA3E0-? Byte Value: 09
+AA407-Misty Cave
+AA42E-Watery Pass-South
+AA43B-Watery Pass-South B2F
+AA448-Watery Pass-South B3F
+AA455-Watery Pass-South B2F
+AA462-Watery Pass-North
+AA46F-Waterfalls
+AA47C-Waterfalls B2F
+AA489-Waterfalls B3F ("Lake")
+AA496-Antlion B1F
+AA4B0-Antlion B2F
+AA4BD-Antlion's Nest (B3F)
+AA4CA-Antlion Save Room
+AA4D7-Antlion Room with the Charm Luth
+AA4F1-Mt. Hobs-West 1F
+AA4FE-Summit
+AA50B-Mt. Hobs-East
+AA518-Mt. Hobs (Save Area)
+AA532-Watery Pass-South Secret Waterfall Room
+AA53F-Mt. Ordeals Main
+AA54C-Mt. Ordeals 3rd Station
+AA559-Mt. Ordeals 7th Station
+AA566-Mt. Ordeals Summit
+AA573-Mysidia Crystal Room
+AA580-Mysidia Serpent Road Room
+AA58D-? Byte Value: 14
+AA59A-Agart Well Room
+AA5A7-Cave Magnes B1F
+AA5B4-Cave Magnes B2F
+AA5C1-Cave Magnes B2F North Treasure Room
+AA5CE-Cave Magnes B3F
+AA5DB-Cave Magnes B3F South Treasure Room
+AA5E8-Cave Magnes Charm Claw Room
+AA5F5-Cave Magnes B3F Save Room
+AA602-Cave Magnes B4F
+AA60F-Cave Magnes B4F Crystal Room
+AA629-
+
+AA7BC-Giant of Bab-il Mouth
+
+AB01D-Cave of Summoned Monsters Floor 1
+AB02A-Cave of Summoned Monsters Floor 2
+AB037-Cave of Summoned Monsters Floor 3
+AB06B-Lunar's Lair Floor 1
+AB078-Lunar's Lair Floor 2
+AB085-? Byte Value: 15
+AB092-Lunar Path 1
+AB09F-Lunar Path 2
+AB0AC-Hummingway Cave
+AB0C6-Lunar Subterrain Floor with the Ninja Armor
+AB0D3-Lunar Subterrain Floor with the Flame Whip
+AB0E0-Lunar Subterrain Room with the Dragoon Equipment
+AB0ED-Lunar Subterrain Floor with the Stardust Rod
+AB0FA-Lunar Subterrain Floor with the entrance to the Pink Puff room
+AB107-Lunar Subterrain Floor with the invisible bridge to the Crystal Sword
+AB114-Lunar Subterrain Floor before the Crystal Floors
+AB121-Crystal Floor 1st Floor
+AB12E-Crystal Floor 2nd Floor
+AB13B-Crystal Floor 3rd Floor
+AB148-Crystal Floor 4th Floor
+AB155-Crystal Floor 5th Floor (w\Zemus)
+AB162-Lunar Subterrain Elixir Room
+AB16F-Lunar Subterrain Cure3 x2 Room
+AB17C-Lunar Subterrain Protect Ring Room
+AB189-Lunar Subterrain White Robe Room
+AB196-Lunar Subterrain Pink Puff Room
+AB1A3-Lunar Subterrain Crystal Sword Save Room
+AB1B0-Lunar Subterrain Heroine Robe Room
+AB1BD-Lunar Subterrain White Spear Room
+AB1CA-Lunar Subterrain Last Save Spot
+AB1D7-Lunar Subterrain Ribbon Helmet Room
+AB1E4-? Byte Value: 00
+AB1F1-? Byte Value: 34

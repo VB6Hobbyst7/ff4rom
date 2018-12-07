@@ -1,0 +1,71 @@
+Fight
+
+Basic Attack Option, including Elemental Damage, Weak-Creature Resist/Weapon Damage, Status Infliction
+
+    Elemental Hit Damage Modifier
+        Elemental Hit - Very Weak: 1C863
+        Elemental Hit - Weakness: 1C872
+        Elemental Hit - Immunity: 1C881
+        Elemental Hit - Resistance: 1C890
+
+
+    Creature Weak to Weapon/Resist Armor
+        Monster Weakness Weapon Hit: 1C8A5
+        Monster Resistance Armor Hit: 1C8B8
+
+
+
+Caster's Stat Subtracted from Target's Stat equals Chance to Inflict Status.
+
+    Status Infliction Formula
+        Caster's Stat: 1CA43
+        Target's Stat: 1CA46
+
+
+Note in Regards to Command: The Elemental/Creature Hits are translated in this manner.
+
+00: Always 1 Damage
+01: x1/2 Damage
+02: Normal Damage
+03: x1.5 Damage
+04: x2 Damage
+05: x2.5 Damage
+06: x3 Damage
+07: x3.5 Damage
+08: x4 Damage
+
+
+Boast
+
+Increases Stat by Amount:
+
+    Stat: 1ECD1
+        xx: ...
+        16:Modified Vitality
+        17:Modified Wisdom
+        18:Modified Will
+        yy: ...
+        (This is a common list and I know where to go to find it so you wouldn't need to write this all out, this is just for example purposes)
+    Amount: 1ECD4
+
+
+Cry
+
+Sets Write Stat to half the value of Read Stat:
+
+    Read Stat: 1ECF3
+    Write Stat: 1ED0C
+
+
+Steal
+
+If a random number from 1 to 255 < Base + Bonus Stat - Penalty Stat then steal target's Slot item.
+
+    Base: 1E3F1
+    Bonus Stat: 1E3F3
+    Penalty Stat: 1E3F7
+    Slot: 1E457
+        00: Common
+        01: Uncommon
+        02: Rare
+        03: Mythic

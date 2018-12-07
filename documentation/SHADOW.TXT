@@ -1,0 +1,145 @@
+The shadow party stats are specified within the RAM area of $7E:1140-127F. 
+These hold the stat data for characters 
+that have left your party but will rejoin later. The data areas for each 
+character are:
+
+1140-117F   Kain
+1180-11BF   Tellah/FuSoYa (and Cid)
+11C0-11FF   Rosa
+1200-123F   Yang
+1240-127F   Rydia
+
+Some code that is being executed knows when and for whom to save the data, 
+but I don't know the location of it. 
+Re-adding a character outside these five will add the character with their 
+original stats.
+
+Though equipment information is within these stats, when one of these five 
+characters is re-added, their new equipment 
+is determined by the initial equipment information (7AD00-7AD91). The one 
+exception to this is Tellah when he receives 
+all his spells on Mt. Ordeals. His initial equipment specification for that 
+instance of his character is empty, but 
+he maintains the same equipment that his last character instance had. I'm not 
+sure how this works, exactly.
+
+Magic lists are also separate from these stats and are continuous throughout 
+the game. For example, if you remove older 
+Rydia from your party and add child Rydia, she'll maintain the same magic 
+lists even though her stats and equipment 
+match her child instance.
+
+Rydia, Kain, Rosa, and Yang all have their equipment specified in the initial 
+equipment bytes. Tellah does, too -- he 
+comes back with slightly different equipment the second time: the first time 
+he is equipped with a Staff and a Leather 
+Robe, the second time he is equipped with a Staff, a Gaea Robe, and an 
+IronRing. All of these work correctly with 
+their initial equipment specification.
+
+The third instance of Tellah (after Mt. Ordeals) is the one with no specified 
+equipment, but he keeps the same equipment 
+he had in the second instance.
+
+-the information I've found says that Cid's stats are loaded into the second 
+shadow data slot as well. This means that, 
+at some point in development, he was intended to rejoin your party.
+
+There's two different sets of bytes:
+
+1. The first is the table for loading characters stats when a character joins 
+your party. This is from 0689A-068AE (FF2us ROM 
+with header). There is 1 byte per character ID. Values of 00-0F mean to load 
+the initial stats for the characters 
+(referencing the table at 7AB00), and values of 80-84 mean to load the shadow 
+data stats.
+
+2. The second table is for storing character stats in the shadow data slots 
+when a character leaves your party. This is 
+from 0691D-06930, again with 1 byte per character ID. Values of 00-04 mean to 
+store the data in that shadow slot, and a 
+value of 80 means don't store.
+
+So, here's how the data lines up with the character IDs:
+ID  Character Instance    Load  Store
+--  ------------------    ----  -----
+01  Cecil (Dark Knight)    00    80
+02  Kain                   01    00
+03  Rydia (child)          02    04
+04  Tellah                 03    01
+05  Edward                 04    80
+06  Rosa                   05    02
+07  Yang                   06    03
+08  Palom                  07    80
+09  Porom                  08    80
+0A  Tellah (second time)   81    01
+0B  Cecil (Paladin)        09    80
+0C  Tellah (all spells)    81    80
+0D  Yang (second time)     83    80
+0E  Cid                    0A    01
+0F  Kain (second time)     80    00
+10  Rosa (second time)     82    80
+11  Rydia (older)          84    80
+12  Edge                   0B    80
+13  FuSoYa                 0C    01
+14  Kain (third time)      80    80
+15  Golbez                 0D    
+
+There are five shadow data slots of 64 bytes each. These store the same stat 
+data as the RAM locations that 
+store your current party stats:
+----------
+1000   *character id/handedness
+1001   *class id/row properties
+1002   level
+1003-6   current status anomalies
+1007-8   current hp
+1009-A   maximum hp
+100B-C   current mp
+100D-E   maximum mp
+100F   *base strength
+1010   *base agility
+1011   *base vitality
+1012   *base wisdom
+1013   *base willpower
+1014   *modified strength
+1015   modified agility
+1016   *modified vitality
+1017   modified wisdom
+1018   modified willpower
+1019   attack elemental
+101A   *attack strong vs. creature types***
+101B   physical attack multiplier
+101C   physical attack percent
+101D   physical attack base
+101E   attack status 1***
+101F   attack status 2***
+1020   elements weak vs***
+1021   elements very weak vs***
+1022   magical defense multiplier
+1023   magical defense percent
+1024   magical defense base
+1025   elemental defense (if immunity bit wasn't set)***
+1026   elemental defense (if immunity bit was set)***
+1027   *defense strong vs. creature types***
+1028   physical defense multiplier
+1029   physical defense percent
+102A   physical defense base
+102B   status immunity 1***
+102C   status immunity 2***
+102D-F   ?
+1030   *helmet
+1031   *armor
+1032   *gauntlet
+1033   *right-hand item
+1034   *right-hand quantity
+1035   *left-hand item
+1036   *left-hand quantity
+1037-9   *experience
+103A   ?
+103B   speed modifier. lower = faster. for autobattles, starts at 01; 
+otherwise
+      starts at 10. slow adds +08, (upper bound 20) haste adds -3 (lower 
+bound 0C)
+103C   ?
+103D-F   *experience to level up

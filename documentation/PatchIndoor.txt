@@ -1,0 +1,24 @@
+
+	// Map frame start
+	.addr	0x80b4
+	jsr	$=Indoor__FrameStart
+	.def	Indoor__Original_MapFrameCall	0x15ca23
+
+	// Patch increasing animation speed
+	.addr	0x15b246
+	jsr	$=Indoor__FixDashAnimation
+	.addr	0x15b237
+	jsr	$=Indoor__FixDashAnimation
+
+	// Patch start cutscene
+	.addr	0x00f033
+	jsr	$=Indoor__StartCutsceneTile
+	.addr	0x00f0e4
+	jsr	$=Indoor__StartCutsceneNpc
+
+	// Patch initial NPC visibility
+	.addr	0x00c169
+	ply
+	jsr	$=Indoor__InitVisibleNpc
+	rts
+

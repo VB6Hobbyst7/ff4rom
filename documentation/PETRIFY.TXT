@@ -1,0 +1,64 @@
+                                Petrification
+SNES Version:
+
+There are 3 officially listed states, but 1 state has 2 different visuals..
+which seems to be linked to a timer of sorts.
+
+1/3 Stone = Stiff (FF2 erroneously wrote it off as a Dummied status, which it
+simply is not) The area around the character's feet are in a stone color
+(grey/silver).
+
+2/3 Stone = Petrify There are two forms of this:
+  * If gradual petrification is unhealed by this point, the petrification
+    reaches most of the body, up to eye level. This is only seen under this
+    circumstance as another gradual pertification hit advances a bit
+    further...
+  * When gradual petrification is inflicted for a second time or gradual
+    pertrification has progressed further, the character's entire body is
+    covered in the stone color.
+
+Stone = effectively Death status without having HP loss. It needs no real
+explanation as it is the final status caused by another hit of gradual
+petrification (while in Petrify status), or the timer for gradual
+petrification has completed.
+------------------------------------------------------------------------------
+GBA Version:
+
+When gradual petrification is set, you don't get any useful info from the
+battle status area. You will see "grey paralysis" surrounding the character.
+
+Further hits from the attack seems to move the timer forward, such as moving
+from 1/3 Stone to 2/3 Stone, but there's no clear indication of its
+progression.
+
+There probably is just one timer that this status is based on (for both
+versions) and the starting point is different for 2/3 stone (at least in
+terms of this game, anyways).
+
+The gradual petrification timer seems to be dependant on the character's
+Vitality/Stamina as having more of it reduces the progression/timer (works
+very much like Poison status's timer).
+
+The major difference between the SNES and GBA version is primarily on how the
+timer is altered. The SNES version changes the status involved and sets
+(resets?) the timer as appropriate. The GBA version seems to move the timer
+along.
+------------------------------------------------------------------------------
+Bugs (only available in the SNES version):
+Gradual petrification is fucked when Stop is in use. It probably shares the
+same timer with Stop. When Stop status has ended, the timer either doesn't
+restart or isn't set anymore, which is similar to what happens with Paralysis
+and Sleep. The game will behave strangely and has a good chance of freezing
+when this is used on the enemies.
+
+If gradual petrification was set on all characters (an unlikely situation
+since the Stone Gaze attack isn't multitargetable by default), the middle
+character (slot 1) has a good chance of evading petrification due to some
+coding blunder. That character's timer seems to have expired, but has failed
+to set the Stone status, so the character stays in virtual-Petrify status for
+the duration of the battle. Inflicting gradual petrification on the character
+still inflicts Stone status.
+-For the enemies, a higher MaxHP slows down the timer (which is the enemy's
+equivalent of the Vitality/Stamina stat).
+
+online stats

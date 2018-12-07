@@ -1,0 +1,42 @@
+Updates:
+9/3/2000 Header added
+
+The most recent copy of this document can be obtained from the Tower of Bab-Il
+(http://minitrue.weyland-yutani.net/tower/index.html).
+
+In addition to the character id byte, each character has another, seperate
+byte that determines (at least) the following things:
+
+(1) Their graphic.
+(2) Their class name.
+
+Class names are 7 bytes long. The class names are stored from 7A964 to 7A9C5.
+
+id Graphic           Class
+-- -------           -----
+00 Dark Knight Cecil DKnight
+01 Kain              Dragoon
+02 young Rydia       Caller
+03 Tellah            Sage
+04 Edward            Bard
+05 Rosa              Wh.Wiz
+06 Yang              Karate
+07 Palom             Bl.Wiz
+08 Porom             Wh.Wiz
+09 Paladin Cecil     Paladin
+0A Cid               Chief
+0B teen Rydia        Caller
+0C Edge              Ninja
+0D FuSoYa            Lunar
+0F Golbez
+
+Golbez doesn't have a 'real' class name, status screen picture, or map screen
+animation. Setting a character's sprite/class id byte to 0F causes them to
+resemble Golbez in battle only. Setting this byte to 0E results in nothing
+useful (a strangely-colored pig...)
+
+If the MSB is set in this byte, it indicates that the character is currently
+in the back row. Otherwise, this byte changes little over the course of a
+character's existence (the only exception is Rydia, as Dark Knight Cecil is
+removed and Paladin Cecil is added; other than sharing a name, the game
+considers them totally different).

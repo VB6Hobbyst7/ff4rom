@@ -1,5 +1,7 @@
+const tiles_per_set = &h7F
+
 type TileSet
- tiles as List
+ tiles as TileList = TileList(tiles_per_set)
 end type
 
-const total_tile_sets = 16
+const total_tile_sets = 15

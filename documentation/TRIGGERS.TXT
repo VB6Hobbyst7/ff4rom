@@ -1,0 +1,1463 @@
+======================================================================================
+Location Triggers							Phoenix Hacks
+									10/1/2009
+(based on Yousei's FF4 data)
+======================================================================================
+
+Location Trigger data (for treasure, exits, and events) is from
+A8500 to A981F.
+
+Each item is 5 bytes. To find the data for a particular map, reverse the
+pointer bytes (located from A8200 to A84FF) and add them to A8500.
+
+======================================================================================
+Byte 0:	Trigger's X position
+Byte 1:	Trigger's Y position
+Byte 2:	0-FA	Load location map
+        FB-FD   Load overworld/underground/moon map
+            Byte 3: New map's X position
+                bits 0-5: X position
+                bits 6-7: character facing direction
+                00: up
+				01: right
+				10: down
+				11: left
+            Byte 4: New map's Y position
+
+        FE  Treasure Chest
+            Byte 3: total byte = enemy set in Underground/Moon set
+                bit 6: enemy in chest
+                bit 7: 0 = money, 1 = item
+            Byte 4: if money, 00-7F = GP * 10, 80-FF = GP * 1000
+                    if item, item index
+
+        FF  Event Trigger
+            Byte 3: event trigger pointer
+            Byte 4: nothing
+======================================================================================
+
+
+-------------------------------------------
+Overworld
+-------------------------------------------
+Map  Map Name                                   Offsets     Trigger Data
+---  -------------                              ----------- --------------
+00   Town of Baron                              A8500-A8563 08 02 FE 80 DD
+                                                            03 06 FE 80 D4
+                                                            0C 0A FE 80 DD
+                                                            12 13 FE 80 CE
+                                                            18 1B FE 80 CE
+                                                            1B 1A FE 80 E2
+                                                            1D 1D FE 80 E2
+                                                            14 1A 0B 0E 11
+                                                            09 1A EC 05 07
+                                                            0E 10 0C 07 09
+                                                            06 0B 0D 0A 08
+                                                            14 14 0E 09 07
+                                                            03 13 44 02 06
+                                                            0E 18 B1 07 0E
+                                                            04 1A 97 05 0B
+                                                            0F 1F FB 66 9E
+                                                            10 1F FB 66 9E
+                                                            11 1F FB 66 9E
+                                                            06 00 FB 66 9E
+                                                            1F 07 FB 66 9E
+
+01   Village Mist                               A8564-A8595 15 08 FE 00 0A
+                                                            1C 14 FE 80 CE
+                                                            1D 14 FE 80 DD
+                                                            0F 0D E0 0E 07
+                                                            0E 19 E1 04 07
+                                                            10 19 E2 04 07
+                                                            0B 07 0F 04 0D
+                                                            02 10 FB 5F 77
+                                                            1D 10 FB 5F 77
+                                                            08 10 FF 0C 00
+
+02   Kaipo                                      A8596-A85C7 18 12 FE 80 D1
+                                                            0E 11 10 14 0E
+                                                            1C 0D 12 04 0F
+                                                            17 17 E3 04 07
+                                                            09 12 E4 04 07
+                                                            09 19 B1 07 0E
+                                                            0E 1F FB 7C 68
+                                                            0F 1F FB 7D 69
+                                                            10 1F FB 7E 68
+                                                            0F 1A FF 0D 00
+
+03   Mysidia                                    A85C8-A85FE 10 08 16 0E 09
+                                                            17 18 13 0F 09
+                                                            07 17 E5 04 07
+                                                            09 17 E6 04 07
+                                                            1B 1A E7 05 07
+                                                            19 11 89 04 07
+                                                            02 18 B1 07 0E
+                                                            0F 1F FB 9A C8
+                                                            10 1F FB 9A C8
+                                                            11 1F FB 9A C8
+                                                            10 1C FF 49 00
+
+04   Silvera                                    A85FF-A8621 0D 08 FE 00 85
+                                                            17 08 FE 80 3B
+                                                            1E 11 FE 80 11
+                                                            0C 18 E8 0E 07
+                                                            0C 0D E9 04 07
+                                                            10 0D EA 04 07
+                                                            05 0E EB 05 07
+
+05   Toroia                                     A8622-A8658 04 03 FE 00 81
+                                                            01 05 FE 80 CF
+                                                            01 07 FE 80 D1
+                                                            04 07 FE 80 D2
+                                                            16 13 07 0E 07
+                                                            05 16 08 04 07
+                                                            08 18 09 04 07
+                                                            11 11 0A 05 07
+                                                            1A 04 1C 02 09
+                                                            0C 0D 18 0C 0C
+                                                            1C 11 B1 07 0E
+
+06   Agart                                      A8659-A8685 09 0F FE 80 CF
+                                                            17 08 45 04 07
+                                                            19 08 46 04 07
+                                                            05 19 1E 10 05
+                                                            17 13 20 0E 0F
+                                                            0F 15 8B 09 0B
+                                                            0F 1F FB 68 D8
+                                                            10 1F FB 68 D8
+                                                            11 1F FB 68 D8
+
+07   Toroia (Inn)                               --          --------------
+08   Toroia (Weapon Shop)                       --          --------------
+09   Toroia (Armor Shop)                        --          --------------
+0A   Toroia (Item Shop)                         --          --------------
+
+0B   Baron (Inn)                                A8686-A869E 10 03 FE 80 E2
+                                                            11 03 FE 80 DD
+                                                            13 03 FE 80 CE
+                                                            0A 11 FE 80 CE
+                                                            12 05 FF 01 00
+
+0C   Baron (Weapon/Armor Shop)                  A869F-A86A8 05 04 FE 80 03
+                                                            09 04 FE 00 82
+
+0D   Baron (Cid's house)                        --          --------------
+
+0E   Baron (Rosa's mother's house)              A86A9-A86B2 01 03 FE 80 E2
+                                                            05 03 FE 80 D1
+
+0F   Village Mist (fireplace house)             A86B3-A86C6 16 05 FE 80 7B
+                                                            17 05 FE 80 8D
+                                                            17 07 FE 80 A8
+                                                            16 19 FE 80 0B
+
+10   Kaipo (Inn 1F/Item Shop)                   A86C7-A86CB 14 09 11 0F 0B
+
+11   Kaipo (Inn 2F)                             --          --------------
+
+12   Kaipo (sickhouse)                          A86CC-A86D5 04 12 02 9C 0E
+                                                            04 06 FF 29 00
+
+13   Mysidia (Inn 1F)                           A86D6-A86DA 0F 03 14 0E 09
+
+14   Mysidia (Inn 2F)                           --          --------------
+15   Room of Mirrors                            --          --------------
+
+16   Mysidia (House of Wishes)                  A86DB-A86E4 0E 0C 03 90 09
+                                                            0E 00 88 0B 12
+
+17   Mysidia (Room of Wishes)                   A86E5-A86E9 05 0C 88 8B 05
+
+18   Toroia (cafe 1F)                           A86EA-A86F8 01 01 19 01 0B
+                                                            19 06 1A C3 02
+                                                            0C 01 FF 01 00
+
+19   Toroia (cafe 2F)                           --          --------------
+
+1A   Toroia (Saloon KING)                       A86F9-A8707 07 0A FF 50 00
+                                                            14 03 FF 01 00
+                                                            14 00 FF 01 00
+
+1B   ? (D)                                      --          --------------
+
+1C   Black Chocobo Farm (1F)                    A8708-A8711 02 02 1D C3 05
+                                                            08 03 FF 01 00
+
+1D   Black Chocobo Farm (BF)                    A8712-A8716 06 01 FF 01 00
+
+1E   Agart (Astro Tower 1F)                     A8717-A871B 01 03 1F 03 0C
+
+1F   Agart (Astro Tower 2F - Observatory)       --          --------------
+20   Agart (Inn/Item Shop)                      --          --------------
+
+21   Chocobo's Forest (north of Toroia, Baron?) A871C-A872A 1F 08 FE 80 EB
+                                                            1F 09 FE 80 EB
+                                                            14 1D FE 80 EB
+
+22   ship deck background? (Black Magic Class)  --          --------------
+
+23   cobblestone background (Room)              --          --------------
+
+24   Castle Baron (entrance)                    A872B-A878E 0F 1F FB 66 9E
+                                                            10 1F FB 66 9E
+                                                            0E 1F FB 66 9E
+                                                            11 1F FB 66 9E
+                                                            0F 0F 2A 08 0C
+                                                            10 0F 2A 08 0C
+                                                            0C 0D 2A 81 06
+                                                            08 0D 2D 82 02
+                                                            08 11 2D 02 08
+                                                            13 0D 2A D0 0A
+                                                            1C 0E 2E 92 02
+                                                            1C 12 2E 12 08
+                                                            04 12 2F 02 05
+                                                            0A 09 31 01 05
+                                                            06 09 32 05 06
+                                                            19 09 35 05 06
+                                                            0F 1A FF 01 00
+                                                            10 1A FF 01 00
+                                                            06 0D FF 16 00
+                                                            0A 00 FF 2E 00
+
+25   Damcyan (entrance)                         A878F-A8798 10 0B 3F 08 0F
+                                                            1D 0C 42 0D 08
+
+26   Fabul (entrance)                           A8799-A87B1 0F 0E 47 0B 0B
+                                                            0D 07 50 08 07
+                                                            11 07 4D 02 07
+                                                            0F 1F FB D7 3B
+                                                            0F 0A 48 04 0D
+
+27   Castle Toroia (entrance)                   A87B2-A87D9 10 0A 55 09 0F
+                                                            09 0B 58 02 05
+                                                            17 0B 59 04 06
+                                                            07 04 55 02 07
+                                                            19 04 55 10 07
+                                                            0F 1E FB 23 52
+                                                            10 1E FB 23 52
+                                                            11 1E FB 23 52
+
+28   Eblan (entrance)                           A87DA-A87ED 0F 0B 5E 07 0C
+                                                            10 0B 5E 07 0C
+                                                            0A 0C 61 06 08
+                                                            15 0C 63 07 08
+
+29   desert background, unused? (D)             --          --------------
+
+2A   Castle Baron (1F)                          A87EE-A8824 0D 03 FE 00 1E
+                                                            0E 03 FE 80 CE
+                                                            0F 03 FE 80 E2
+                                                            08 00 2B 0E 07
+                                                            01 05 24 CC 0D
+                                                            08 0F 24 8F 12
+                                                            10 0A 24 53 0D
+                                                            05 05 66 04 08
+                                                            0B 05 67 04 08
+                                                            06 0A FF 03 00
+                                                            0E 05 FF 01 00
+
+2B   Castle Baron (2F)                          A8825-A882E 0E 09 2A 88 01
+                                                            0E 02 FF 22 00
+
+2C   Castle Baron (throneroom)                  A882F-A8838 1E 1D C3 D9 08
+                                                            08 0D FF 23 00
+
+2D   Castle Baron (small hallway L)             A8839-A8847 02 02 24 48 0D
+                                                            02 0C 24 88 12
+                                                            02 06 FF 04 00
+
+2E   Castle Baron (small hallway R)             A8848-A8874 02 0F FE 80 D1
+                                                            03 0F FE 80 D1
+                                                            04 0F FE 80 CF
+                                                            02 10 FE 80 CF
+                                                            03 10 FE 80 D4
+                                                            04 10 FE 80 D4
+                                                            12 0C 24 9C 13
+                                                            12 02 24 DC 0E
+                                                            0E 04 FF 01 00
+
+2F   Castle Baron (dungeon 1F)                  A8875-A8879 01 03 30 81 01
+
+30   Castle Baron (dungeon BF)                  --          --------------
+
+31   Castle Baron (infirmary)                   A887A-A887E 0B 07 24 4C 08
+
+32   Castle Baron (L Tower 1F)                  A887F-A8888 05 09 24 86 0A
+                                                            05 04 33 05 04
+
+33   Castle Baron (L Tower 2F)                  A8889-A8892 05 04 32 85 04
+                                                            09 04 34 C9 04
+
+34   Castle Baron (L Tower 3F, Cecil's Room)    A8893-A889C 09 04 33 C9 04
+                                                            03 04 FF 05 00
+
+35   Castle Baron (R Tower 1F)                  A889D-A88BA 03 03 FE 80 CE
+                                                            01 04 FE 80 CE
+                                                            02 04 FE 80 DD
+                                                            08 04 FE 80 E2
+                                                            09 04 36 C9 04
+                                                            01 05 38 01 05
+
+36   Castle Baron (R Tower 2F)                  A88BB-A88C9 01 04 FE 80 D4
+                                                            01 05 FE 80 CF
+                                                            07 03 37 87 03
+
+37   Castle Baron (R Tower 3F)                  A88CA-A88E2 05 03 FE 80 D0
+                                                            07 04 FE 80 D1
+                                                            04 05 FE 80 D1
+                                                            05 05 FE 80 E2
+                                                            06 05 FE 80 E2
+
+38   Castle Baron (R Tower B1F)                 A88E3-A88F1 04 03 FE 80 D3
+                                                            18 05 39 81 01
+                                                            16 05 FF 07 00
+
+39   Castle Baron (R Tower B2F)                 A88F2-A88F6 08 07 FF 08 00
+
+3A   Old Water-way (entrance)                   A88F7-A890F 0D 1D FE 80 CF
+                                                            10 1D FE 80 D1
+                                                            13 1D FE 80 D4
+                                                            1B 07 3B 01 05
+                                                            03 03 44 82 04
+
+3B   Old Water-way (B3F)                        A8910-A8928 01 0C FE 00 32
+                                                            07 13 FE 80 D4
+                                                            14 11 FE 80 D4
+                                                            1E 03 3E 02 1A
+                                                            01 06 3A 9B 08
+
+3C   Old Water-way (B1F, save point entrance)   A8929-A8937 02 09 3D 04 0B
+                                                            0E 02 24 8A 00
+                                                            06 11 3E 88 06
+
+3D   Old Water-way (save point)                 A8938-A893C 11 05 FE 80 20
+
+3E   Old Water-way (B2F)                        A893D-A894B 02 07 FE 80 D1
+                                                            02 1B 3B 9E 04
+                                                            08 05 3C 06 10
+
+3F   Damcyan (1F)                               A894C-A8950 08 07 40 08 08
+
+40   Damcyan (2F)                               A8951-A895A 0B 04 FE 80 E2
+                                                            08 0D 41 0D 0D
+
+41   Damcyan (3F)                               A895B-A895F 0D 0B FF 11 00
+
+42   Damcyan (Basement)                         A8960-A8978 01 03 FE 80 A8
+                                                            04 03 FE 80 78
+                                                            05 03 FE 80 4E
+                                                            01 09 43 84 01
+                                                            0D 04 FF 01 00
+
+43   Damcyan (B1F)                              A8979-A89A5 03 04 FE 80 CE
+                                                            04 04 FE 80 CE
+                                                            05 04 FE 00 1E
+                                                            07 04 FE 80 54
+                                                            01 05 FE 80 55
+                                                            03 05 FE 80 D1
+                                                            04 05 FE 80 D4
+                                                            05 05 FE 00 14
+                                                            07 05 FE 80 55
+
+44   Castle Baron (entrance to Old Waterway)    A89A6-A89B4 0E 05 FE 00 81
+                                                            02 04 3A 83 04
+                                                            02 0A 00 83 14
+
+45   Agart (Weapon Shop)                        --          --------------
+
+46   Agart (Armor Shop)                         --          --------------
+
+47   Fabul (Inn/Weapon Shop entrance)           A89B5-A89C8 0B 0F 26 8F 0F
+                                                            0B 03 48 04 08
+                                                            05 07 4C 14 07
+                                                            11 07 4B 04 07
+
+48   Fabul (2F)                                 A89C9-A89D7 04 00 49 08 0D
+                                                            04 09 47 8B 04
+                                                            04 10 26 8F 0A
+
+49   Fabul (throneroom)                         A89D8-A8A04 01 07 FE 80 CE
+                                                            1C 07 FE 80 CE
+                                                            1C 08 FE 80 63
+                                                            1C 09 FE 80 D1
+                                                            08 0E 48 84 01
+                                                            04 02 4A 0B 19
+                                                            0F 07 FF 18 00
+                                                            0E 02 FF 01 00
+                                                            08 0C FF 15 00
+
+4A   Fabul (crystal room)                       --          --------------
+
+4B   Fabul (Weapon/Armor Shop)                  --          --------------
+
+4C   Fabul (Inn/Item Shop)                      A8A05-A8A09 11 05 FF 19 00
+
+4D   Fabul (R Tower 1F)                         A8A0A-A8A13 02 0A 26 91 08
+                                                            01 04 4E 01 06
+
+4E   Fabul (R Tower 2F)                         A8A14-A8A22 09 06 FE 00 32
+                                                            01 06 4D 81 04
+                                                            01 04 4F 01 06
+
+4F   Fabul (R Tower 3F, King's Room)            A8A23-A8A31 03 07 FE 80 E2
+                                                            01 06 4E 81 04
+                                                            06 03 FF 32 00
+
+50   Fabul (L Tower 1F)                         A8A32-A8A4A 02 03 FE 80 CE
+                                                            06 03 FE 80 CE
+                                                            01 04 FE 80 DD
+                                                            01 05 FE 80 E2
+                                                            09 04 51 09 06
+
+51   Fabul (L Tower 2F)                         A8A4B-A8A4F 09 04 52 09 06
+
+52   Fabul (L Tower 3F, Yang's Room)            --          --------------
+
+53   small grove after mist events              --          --------------
+
+54   Watery Pass (save point)                   A8A50-A8A5E 04 0C 70 82 12
+                                                            04 02 70 02 0B
+                                                            04 0A FF 17 00
+
+55   Castle Toroia (1F)                         A8A5F-A8A72 09 00 56 05 12
+                                                            09 12 27 90 0B
+                                                            02 0A 27 87 05
+                                                            10 0A 27 99 05
+
+56   Castle Toroia (2F - clerics' room)         A8A73-A8A81 05 06 57 0B 19
+                                                            05 13 55 89 02
+                                                            05 10 FF 2C 00
+
+57   Castle Toroia (crystal room)               --          --------------
+
+58   Castle Toroia (L room - guest bed)         A8A82-A8A86 08 04 FF 24 00
+
+59   Castle Toroia (R room - 3 stairwells)      A8A87-A8A95 02 03 5A 81 04
+                                                            04 03 5B 83 05
+                                                            06 03 5C 0B 0A
+
+5A   Castle Toroia (R room - basement 1)        A8A96-A8A9F 0C 04 5D 81 03
+                                                            07 01 FF 01 00
+
+5B   Castle Toroia (R room - basement 2)        A8AA0-A8AA4 05 06 FE 80 D1
+
+5C   Castle Toroia (R room - basement 3)        A8AA5-A8AE5 01 03 FE 80 E2
+                                                            02 03 FE 80 E2
+                                                            04 03 FE 80 CF
+                                                            05 03 FE 80 CF
+                                                            07 03 FE 80 D1
+                                                            08 03 FE 80 D1
+                                                            0A 03 FE 80 A8
+                                                            0B 03 FE 80 A8
+                                                            06 09 FF 01 00
+                                                            01 05 FF 01 00
+                                                            04 05 FF 01 00
+                                                            07 05 FF 01 00
+                                                            0A 05 FF 01 00
+
+5D   Castle Toroia (R room - treasure room)     A8AE6-A8B3F 03 05 FE 80 CF
+                                                            04 05 FE 80 DD
+                                                            05 05 FE 80 D1
+                                                            06 05 FE 80 D2
+                                                            07 05 FE 80 D3
+                                                            08 05 FE 00 81
+                                                            09 05 FE 80 4F
+                                                            0A 05 FE 80 56
+                                                            0B 05 FE 80 56
+                                                            03 06 FE 80 CF
+                                                            04 06 FE 80 DD
+                                                            05 06 FE 80 D1
+                                                            06 06 FE 80 D2
+                                                            07 06 FE 80 D3
+                                                            08 06 FE 00 81
+                                                            09 06 FE 80 57
+                                                            0A 06 FE 80 57
+                                                            0B 06 FE 80 58
+
+5E   Eblan (1F)                                 A8B40-A8B49 0D 04 FE 80 CF
+                                                            07 00 5F 09 07
+
+5F   Eblan (2F)                                 A8B4A-A8B67 04 03 FE 80 DD
+                                                            04 04 FE 80 CF
+                                                            0E 03 FE 80 CF
+                                                            0E 04 FE 80 E3
+                                                            0F 04 FE 80 D4
+                                                            09 00 60 0D 0C
+
+60   Eblan (throneroom)                         A8B68-A8B71 00 04 5F 81 03
+                                                            1A 04 5F 91 03
+
+61   Eblan (L Tower 1F)                         A8B72-A8B80 01 05 FE 80 D1
+                                                            0B 05 FE C0 21
+                                                            06 05 62 06 05
+
+62   Eblan (L Tower 2F)                         A8B81-A8B99 04 04 FE 80 CF
+                                                            08 08 FE 80 CF
+                                                            0A 05 FE 00 82
+                                                            0B 05 FE 80 5B
+                                                            01 07 61 01 06
+
+63   Eblan (R Tower 1F)                         A8B9A-A8BAD 02 05 FE 00 3C
+                                                            0C 05 FE 00 50
+                                                            06 08 64 05 08
+                                                            0B 07 65 C8 03
+
+64   Eblan (R Tower 2F)                         A8BAE-A8BD0 01 05 FE 80 CF
+                                                            01 06 FE 80 D1
+                                                            06 03 FE 80 D4
+                                                            0B 05 FE C1 29
+                                                            0B 06 FE 80 E3
+                                                            0A 05 63 8B 05
+                                                            04 05 FF 01 00
+
+65   Eblan (basement)                           A8BD1-A8BE4 02 0B FE 80 D1
+                                                            03 0B FE 80 D1
+                                                            08 0C FE C2 D3
+                                                            10 11 FB 2D ED
+
+66   Castle Baron (Black Magic Class)           --          --------------
+67   Castle Baron (White Magic Class)           --          --------------
+68   empty desert (D)                           --          --------------
+69   classroom (Training Room)                  --          --------------
+6A   Waterfall (D)                              --          --------------
+6B   water (D)                                  --          --------------
+
+6C   Misty Cave                                 A8BE5-A8C11 06 03 FE 80 CE
+                                                            18 03 FE 80 DD
+                                                            0D 0C FE 80 E2
+                                                            1E 12 FE 80 CE
+                                                            02 1D FB 4C 85
+                                                            1B 02 FB 54 78
+                                                            04 09 FF 09 00
+                                                            1B 0A FF 0A 00
+                                                            1B 04 FF 0B 00
+
+6D   -- (crystal room)                          --          --------------
+6E   background for Watery Pass (D)             --          --------------
+
+6F   Watery Pass - South                        A8C12-A8C39 1D 0E FE 80 DD
+                                                            16 10 FE 80 CE
+                                                            04 1C FE 80 E2
+                                                            0D 0E FE 00 0C
+                                                            19 03 FE 80 A7
+                                                            1A 1E FB 8A 54
+                                                            02 02 70 1A 1C
+                                                            0A 11 83 05 09
+
+70   Watery Pass (B2F, save point entrance)     A8C3A-A8C5C 15 05 FE 80 CE
+                                                            09 12 FE 80 D1
+                                                            0D 03 FE 80 08
+                                                            1A 1D 6F 82 03
+                                                            02 11 54 04 0B
+                                                            02 0C 54 84 03
+                                                            10 07 71 97 09
+
+71   Watery Pass (B3F - islands)                A8C5D-A8C70 16 18 FE 00 14
+                                                            0C 18 FE 80 CE
+                                                            17 08 70 90 08
+                                                            06 09 72 0D 1A
+
+72   Watery Pass (B2F - tunnels)                A8C71-A8C84 05 11 FE 80 CE
+                                                            13 16 FE 80 78
+                                                            0D 1B 71 86 0A
+                                                            07 0A 73 0A 16
+
+73   Watery Pass - North                        A8C85-A8CA7 03 0F FE 80 D1
+                                                            05 0A FE 80 D1
+                                                            11 11 FE 80 17
+                                                            14 14 FE 80 DD
+                                                            0A 17 72 87 0B
+                                                            18 08 FB 8A 4E
+                                                            18 0A FF 25 00
+
+74   Watery Pass (waterfalls)                   A8CA8-A8CAC 10 0B FF 0E 00
+
+75   Watery Pass (B2F - bottom of falls)        A8CAD-A8CBB 0C 1B FE 80 6F
+                                                            10 1B FE 80 9E
+                                                            0A 0B 76 85 17
+
+76   Watery Pass (lake)                         A8CBC-A8CD4 19 16 FE 90 83
+                                                            18 17 FE 90 D1
+                                                            05 16 75 8A 0C
+                                                            10 0A FB 7D 43
+                                                            10 0C FF 0F 00
+
+77   Antlion's Cave (B1F)                       A8CD5-A8D06 03 07 FE 10 13
+                                                            0A 04 FE 90 CE
+                                                            02 17 FE 90 E2
+                                                            06 11 FE 90 CE
+                                                            1B 04 FE 10 15
+                                                            17 09 FE 80 CE
+                                                            0F 03 FB 88 39
+                                                            1B 17 78 9B 03
+                                                            15 1C 78 95 08
+                                                            0E 1A 7A 05 0C
+
+78   Antlion's Cave (B2F)                       A8D07-A8D29 17 04 FE 90 DD
+                                                            1D 17 FE 90 D4
+                                                            08 05 FE 10 19
+                                                            1B 02 77 1B 16
+                                                            15 07 77 15 1B
+                                                            0E 1D 79 8E 04
+                                                            19 17 7B 04 0C
+
+79   Antlion's Cave (nest)                      A8D2A-A8D33 0E 03 78 0E 1C
+                                                            0E 13 FF 12 00
+
+7A   Antlion's Cave (save point)                A8D34-A8D42 08 07 FE 90 D4
+                                                            06 03 FE 90 D1
+                                                            01 04 FE 90 E2
+
+7B   Antlion's Cave (treasure room)             A8D43-A8D47 03 04 FE 90 45
+
+7C   Black Background                           --          --------------
+7D   Mist Background                            --          --------------
+
+7E   Mt. Hobs - West                            A8D48-A8D5B 0F 1E FB 98 32
+                                                            08 09 81 D4 0A
+                                                            16 07 7F 88 16
+                                                            0F 1A FF 13 00
+
+7F   Mt. Hobs - Summit                          A8D5C-A8D6F 14 18 FE 90 55
+                                                            08 15 7E 96 08
+                                                            13 09 80 87 0A
+                                                            14 14 FF 14 00
+
+80   Mt. Hobs - East                            A8D70-A8D79 07 09 7F 93 0A
+                                                            15 1F FB A0 32
+
+81   Mt. Hobs (save point)                      A8D7A-A8D92 0B 13 FE 80 E2
+                                                            10 11 FE 80 CE
+                                                            12 12 FE 80 DD
+                                                            16 12 FE 00 23
+                                                            14 09 7E 88 0A
+
+82   background for mountains (3F)              --          --------------
+
+83   Watery Pass (South secret waterfall room)  A8D93-A8DA1 01 07 FE 80 CF
+                                                            02 08 FE 80 D3
+                                                            07 06 FE 00 81
+
+84   Mt. Ordeals (entrance)                     A8DA2-A8DBF 17 13 FE 80 CE
+                                                            16 0F FE 80 CE
+                                                            13 09 85 8A 18
+                                                            14 1F FB DA C8
+                                                            15 1F FB DA C8
+                                                            0B 1C FF 1A 00
+
+85   Mt. Ordeals (3rd station)                  A8DC0-A8DCE 0A 17 84 93 0A
+                                                            15 07 86 97 17
+                                                            12 0C FF 1B 00
+
+86   Mt. Ordeals (7th station)                  A8DCF-A8DE2 09 11 FE 80 D1
+                                                            10 0D FE 80 D1
+                                                            17 16 85 95 08
+                                                            0B 07 87 8F 16
+
+87   Mt. Ordeals (summit)                       A8DE3-A8E05 0F 15 86 8B 08
+                                                            0F 17 FF 1C 00
+                                                            10 10 FF 1D 00
+                                                            11 10 FF 1D 00
+                                                            0E 0A FF 1E 00
+                                                            06 0A FF 1F 00
+                                                            09 0A FF 21 00
+
+88   Mysidia (crystal room)                     A8E06-A8E0F 0B 13 16 8E 01
+                                                            0B 04 FF 3C 00
+
+89   Mysidia (Serpent Road house)               A8E10-A8E19 04 0B 03 99 12
+                                                            04 05 FF 20 00
+
+8A   Castle Baron (hallway to throneroom)       A8E1A-A8E2D 07 09 2B 8E 03
+                                                            17 09 2B 8E 03
+                                                            07 02 2C 08 0A
+                                                            17 02 2C 08 0A
+
+8B   Agart (well)                               --          --------------
+
+8C   Cave Magnes (entrance)                     A8E2E-A8E41 1B 07 FE 80 CF
+                                                            02 14 FE 80 DD
+                                                            06 13 8D 9B 1A
+                                                            05 08 FF 2A 00
+
+8D   Cave Magnes (B2F - big pits)               A8E42-A8E50 04 13 FE 80 D1
+                                                            1A 08 8E 08 0E
+                                                            05 0A 8F 9B 06
+
+8E   Cave Magnes (B2F - pit)                    A8E51-A8E5A 02 05 FE 00 32
+                                                            0B 07 FE 80 D1
+
+8F   Cave Magnes (B3F)                          A8E5B-A8E69 15 09 92 06 0C
+                                                            18 1C 90 08 0D
+                                                            08 05 91 0E 0D
+
+90   Cave Magnes (B2F - treasure room)          A8E6A-A8E78 04 06 FE 80 CF
+                                                            08 05 FE 80 D0
+                                                            0C 06 FE 80 D4
+
+91   Cave Magnes (B2F - passage)                A8E79-A8E82 0E 05 FE 80 04
+                                                            05 0E 93 96 1B
+
+92   Cave Magnes (save point) [1]               --          --------------
+
+93   Cave Magnes (B4F)                          A8E83-A8E91 07 08 FE 80 D2
+                                                            1B 0F A1 06 0C
+                                                            0D 07 94 0B 19
+
+94   Cave Magnes (crystal room)                 --          --------------
+95   empty room (dark sand)                     --          --------------
+96   Watery Pass (inside tent)                  --          --------------
+
+97   Baron (Serpent Road house)                 A8E92-A8EA0 05 0E 00 84 1B
+                                                            05 05 FF 06 00
+                                                            05 07 FF 01 00
+
+98   Tower of Zot (entrance)                    A8EA1-A8EAF 03 04 FE 80 87
+                                                            1A 04 99 9A 05
+                                                            08 1A FF 31 00
+
+99   Tower of Zot (2F)                          A8EB0-A8EB9 07 0F FE C3 1C
+                                                            02 0D 9A 82 0E
+
+9A   Tower of Zot (3F)                          A8EBA-A8EBE 02 07 9C 85 05
+
+9B   empty room (black)                         --          --------------
+
+9C   Tower of Zot (4F)                          A8EBF-A8ED2 08 0A 9D 88 09
+                                                            10 07 9D 90 0A
+                                                            16 04 9D 96 07
+                                                            18 0F 9D 98 0E
+
+9D   Tower of Zot (5F)                          A8ED3-A8EF5 0B 09 FE 80 05
+                                                            0B 0A FE 80 4A
+                                                            0A 17 FE 80 66
+                                                            13 0E FE 80 90
+                                                            16 15 A2 04 0A
+                                                            0F 0F 9E 87 10
+                                                            0F 11 FF 26 00
+
+9E   Tower of Zot (6F)                          A8EF6-A8EFF 07 04 9F 07 12
+                                                            07 09 FF 27 00
+
+9F   Tower of Zot (7F)                          A8F00-A8F04 07 0A FF 28 00
+
+A0   Grotto Adamant                             --          --------------
+A1   Magnes Cave (save point) [2]               --          --------------
+A2   Tower of Zot (save point) [1]              --          --------------
+A3   airship - people (Enterprise)              --          --------------
+A4   airship - no people (Enterprise)           --          --------------
+A5   airship - Edward's (Enterprise)            --          --------------
+A6   Tower of Zot (save point) [2]              --          --------------
+
+A7   Tower of Bab-il (1F)                       A8F05-A8F22 12 04 FE 80 D0
+                                                            1A 0C FE 80 D0
+                                                            15 13 A8 95 14
+                                                            1C 12 CA 96 03
+                                                            19 06 FF 39 00
+                                                            1C 06 FF 38 00
+
+A8   Tower of Bab-il (B2F)                      A8F23-A8F31 0E 14 FE C4 3A
+                                                            15 13 A7 95 14
+                                                            07 13 A9 86 14
+
+A9   Tower of Bab-il (B3F)                      A8F32-A8F4F 14 15 FE 00 82
+                                                            02 07 AA 03 08
+                                                            14 09 A6 04 0A
+                                                            18 07 AA 97 08
+                                                            06 13 A8 87 14
+                                                            0D 19 AA 8E 1A
+
+AA   Tower of Bab-il (B4F)                      A8F50-A8F68 0C 12 FE 80 2C
+                                                            0E 19 A9 8D 1A
+                                                            03 07 A9 82 08
+                                                            17 07 A9 98 08
+                                                            14 07 AC 96 08
+
+AB   Tower of Bab-il (crystal room)             A8F69-A8F77 10 17 AC 8E 10
+                                                            10 03 AC 0E 04
+                                                            10 14 FF 3B 00
+
+AC   Tower of Bab-il (B5F)                      A8F78-A8F90 05 0F FE 00 D2
+                                                            16 07 AA 94 08
+                                                            0E 0F AB 10 16
+                                                            06 07 FF 00 00
+                                                            0E 14 FF 3A 00
+
+AD   background for falling to the Underworld   --          --------------
+AE   -- (Tower of Bab-il B7F)                   --          --------------
+AF   empty room, crystal floor (Antlion B1F)    --          --------------
+B0   -- (Antlion's Nest)                        --          --------------
+
+B1   Training Room 1F                           A8F91-A8F95 0E 00 B2 0F 05
+
+B2   Training Room 2F                           --          --------------
+B3   -- (Fabul)                                 --          --------------
+B4   -- (Mt. Hobs - East)                       --          --------------
+
+B5   Giant of Bab-il (Mouth)                    A8F96-A8F9A 09 07 B6 87 04
+
+B6   Giant of Bab-il (Neck)                     A8F9B-A8FA4 07 04 B5 09 07
+                                                            07 07 B7 8E 03
+
+B7   Giant of Bab-il (Chest)                    A8FA5-A8FC7 09 08 FE 80 40
+                                                            0B 13 FE 80 CF
+                                                            15 14 FE 80 D1
+                                                            1B 06 FE 80 5D
+                                                            0E 12 FE 80 E3
+                                                            0E 03 B6 07 07
+                                                            12 09 B9 11 14
+
+B8   -- (Mysidia)                               --          --------------
+
+B9   Giant of Bab-il (Stomach)                  A8FC8-A8FDB 13 09 FE 80 D4
+                                                            1A 06 FE 80 D4
+                                                            11 14 B7 92 09
+                                                            03 04 BA 83 04
+
+BA   Giant of Bab-il (Passage)                  A8FDC-A8FEA 0E 15 FE C7 D3
+                                                            03 04 B9 83 04
+                                                            15 04 BC 0F 18
+
+BB   --                                         --          --------------
+
+BC   Giant of Bab-il (Lung)                     A8FEB-A8FF9 0F 18 BA 15 04
+                                                            0F 04 BD 08 12
+                                                            0F 0F FF 4F 00
+
+BD   Giant of Bab-il (CPU)                      A8FFA-A9003 08 12 BC 8F 04
+                                                            09 0D FF 51 00
+
+BE   background for Giant of Bab-il (D)         --          --------------
+BF   --                                         --          --------------
+C0   airship (flying)                           --          --------------
+C1   Port of Fabul                              --          --------------
+C2   ship sailing                               --          --------------
+C3   Enterprise (black background, docked)      --          --------------
+C4   two airships connected by a bridge         --          --------------
+C5   airship, blue sky, empty (D)               --          --------------
+C6   Enterprise (flying underground)            --          --------------
+
+C7   Cave Eblana (entrance)                     A9004-A901C 12 04 FE 80 40
+                                                            16 03 FE 80 DD
+                                                            1A 19 FE 00 78
+                                                            0A 03 FB 18 E8
+                                                            03 1E C8 9B 03
+
+C8   Cave Eblana (B2F)                          A901D-A9035 1B 02 C7 03 1D
+                                                            09 03 C9 07 1D
+                                                            16 09 CB 11 0A
+                                                            11 07 CC 09 0B
+                                                            04 0C CE 0D 0B
+
+C9   Cave Eblana (Pass to Bab-il)               A9036-A9085 08 1C FE 80 D1
+                                                            04 0A FE 80 E2
+                                                            0C 0B FE 80 CF
+                                                            10 0B FE 80 E3
+                                                            10 0C FE 80 CF
+                                                            14 0C FE 80 D3
+                                                            14 0E FE 80 D3
+                                                            0A 1A FE 80 CF
+                                                            0F 1C FE 00 50
+                                                            1B 1B FE 00 55
+                                                            1C 1B FE 80 D4
+                                                            1D 1B FE 80 D4
+                                                            07 1E C8 89 04
+                                                            06 08 CA 03 1B
+                                                            0F 07 CA 0B 1A
+                                                            19 03 CA 1A 19
+
+CA   Cave Eblana (exit)                         A9086-A90B7 0E 08 FE 80 D0
+                                                            11 09 FE 80 D2
+                                                            12 10 FE 80 D4
+                                                            12 16 FE 80 40
+                                                            16 02 A7 1C 11
+                                                            03 1C C9 86 09
+                                                            0B 1B C9 8F 08
+                                                            1A 1A C9 99 04
+                                                            1D 17 CD 04 0B
+                                                            18 08 FF 37 00
+
+CB   Cave Eblana (Inn/Item Shop)                --          --------------
+CC   Cave Eblana (Weapon/Armor Shop)            --          --------------
+
+CD   Cave Eblana (save point)                   A90B8-A90BC 11 05 FE C6 1F
+
+CE   Cave Eblana (infirmary)                    A90BD-A90C6 02 05 FE 80 CE
+                                                            0E 07 FE 80 CE
+
+CF   Chocobo Forest (Fabul)                     A90C7-A90CB 09 07 FE 90 EB
+
+D0   airship, blue sky, pilot (Sylvan Cave)     --          --------------
+
+D1   Chocobo Forest (Mt. Ordeals)               A90CC-A90D0 09 07 FE 90 EB
+
+D2   Chocobo Forest (Baron)                     A90D1-A90D5 09 07 FE 90 EB
+
+D3   Chocobo Forest (south of Toroia)           A90D6-A90DA 09 07 FE 90 EB
+
+D4   Chocobo Forest (Toroia/Kaipo island)       A90DB-A90DF 09 07 FE 90 EB
+
+D5   empty throneroom (Baron)                   --          --------------
+D6   Enterprise (black background, pilot)       --          --------------
+D7   Enterprise (blue sky, pilot)               --          --------------
+D8   Enterprise (underground, pilot)            --          --------------
+D9   Enterprise (black background, pilot)       --          --------------
+DA   Mysidia (Room of Wishes w/everyone)        --          --------------
+DB   background for airships (Adamant Grotto)   --          --------------
+DC   empty black room with dock (Dwarf Base)    --          --------------
+DD   -- (Super Cannon)                          --          --------------
+DE   -- (Cave Bahamut)                          --          --------------
+DF   empty black room, small dock (Lunar Lair)  --          --------------
+E0   Village Mist (Inn)                         --          --------------
+E1   Village Mist (Weapon Shop)                 --          --------------
+E2   Village Mist (Armor Shop)                  --          --------------
+E3   Kaipo (Weapon Shop)                        --          --------------
+E4   Kaipo (Armor Shop)                         --          --------------
+E5   Mysidia (Weapon Shop)                      --          --------------
+E6   Mysidia (Armor Shop)                       --          --------------
+E7   Mysidia (Item Shop)                        --          --------------
+E8   Silvera (Inn)                              --          --------------
+E9   Silvera (Weapon Shop)                      --          --------------
+EA   Silvera (Armor Shop)                       --          --------------
+EB   Silvera (Item Shop)                        --          --------------
+EC   Baron (Item Shop)                          --          --------------
+ED   Ending (House of Wishes, mages and elder)  --          --------------
+EE   Ending (Palom and girl)                    --          --------------
+EF   Ending (Edge in Eblan throneroom)          --          --------------
+F0   Ending (Rydia with summoned monsters)      --          --------------
+F1   Ending (Edward in Damcyan)                 --          --------------
+F2   Ending (Castle of Dwarves)                 --          --------------
+F3   Ending (Kain)                              --          --------------
+F4   Ending (Observatory)                       --          --------------
+F5   Ending (Cecil's Room)                      --          --------------
+F6   Ending (Castle Baron throneroom)           --          --------------
+F7   Ending (Yang in Fabul)                     --          --------------
+F8   -- (Cave of Lunarians)                     --          --------------
+F9   --                                         --          --------------
+FA   -- (Stomach)                               --          --------------
+FB   [Overworld map]                            --          --------------
+FC   [Underworld map]                           --          --------------
+FD   [Moon map]                                 --          --------------
+FE   [same map]                                 --          --------------
+FF   [trigger/call to Visual Effects]           --          --------------
+
+
+-------------------------------------------
+Underground & Moon
+-------------------------------------------
+Map  Map Name                                   Offsets     Trigger Data
+---  -------------                              ----------- --------------
+00   Smithy                                     A90E0-A90E4 06 06 02 07 0E
+
+01   Tomra                                      A90E5-A9107 18 13 04 0A 07
+                                                            08 15 32 04 07
+                                                            13 0A 05 06 09
+                                                            17 0A 05 19 09
+                                                            06 05 06 07 07
+                                                            10 1C FC 3E 7A
+                                                            11 1C FC 3E 7A
+
+02   Smithy (1F)                                A9108-A911B 0A 03 FE 80 CF
+                                                            02 0A FE 80 DD
+                                                            19 05 FE 00 81
+                                                            0E 05 03 C9 04
+
+03   Smithy (2F)                                A911C-A9120 05 03 FE 80 D3
+
+04   Tomra (Inn)                                --          --------------
+
+05   Tomra (Weapon/Armor Shop)                  A9121-A912A 06 0C 01 93 0A
+                                                            19 0C 01 97 0A
+
+06   Tomra (storage house)                      A912B-A9148 03 05 FE 00 31
+                                                            03 06 FE 00 2F
+                                                            04 06 FE 80 CF
+                                                            0A 04 FE 80 CF
+                                                            0B 05 FE 80 E3
+                                                            0B 06 FE 00 30
+
+07   Dwarf Castle (entrance)                    A9149-A9166 0F 13 08 0B 0B
+                                                            07 08 13 06 0B
+                                                            17 08 10 06 0B
+                                                            0E 1F FC 64 53
+                                                            0F 1F FC 64 53
+                                                            10 1F FC 64 53
+
+08   Dwarf Castle (1F)                          A9167-A917A 0B 0F 07 8F 14
+                                                            0B 01 09 0A 0D
+                                                            01 06 11 10 0C
+                                                            15 06 0E 01 0D
+
+09   Dwarf Castle (throneroom)                  A917B-A918E 0A 0F 08 8B 03
+                                                            0A 01 0D 09 13
+                                                            08 01 FF 01 00
+                                                            0A 0B FF 30 00
+
+0A   Dwarf Castle (B1F)                         A918F-A91B6 17 04 FE 80 EB
+                                                            18 03 FE 80 EB
+                                                            1A 04 FE 80 EB
+                                                            01 08 11 90 03
+                                                            1A 08 0E 81 04
+                                                            06 07 12 09 07
+                                                            0B 00 0B 1D 09
+                                                            0E 01 FF 01 00
+
+0B   Dwarf Castle (B2F)                         A91B7-A91CF 1B 12 FE 80 E3
+                                                            1C 12 FE 80 E3
+                                                            1D 13 FE 80 E3
+                                                            1D 09 0A 8B 00
+                                                            02 1B 0F DD 05
+
+0C   --                                         --          --------------
+
+0D   Dwarf Castle (crystal room)                A91D0-A91D4 09 14 09 8A 01
+
+0E   Dwarf Castle (2F Weapon/Armor Shop)        A91D5-A91E8 01 0D 08 95 06
+                                                            01 04 0A 1A 08
+                                                            0D 04 10 0A 0A
+                                                            08 00 20 05 09
+
+0F   Dwarf Castle (Dwarf Base)                  A91E9-A91F2 1D 05 0B 42 1B
+                                                            03 0E FC 5B 54
+
+10   Dwarf Castle (R Tower 1F)                  A91F3-A9206 06 03 FE 80 39
+                                                            06 0E 07 97 09
+                                                            06 05 1B 18 15
+                                                            0A 0A 0E 8D 04
+
+11   Dwarf Castle (2F Inn/Item Shop)            A9207-A921A 08 03 FE 00 64
+                                                            10 0C 08 81 06
+                                                            10 03 0A 41 08
+                                                            01 0C 13 02 0A
+
+12   Dwarf Castle (infirmary)                   A921B-A9224 09 0A 0A 86 08
+                                                            05 05 FF 3F 00
+
+13   Dwarf Castle (L Tower 1F)                  A9225-A9233 06 0E 07 87 09
+                                                            06 05 1B 06 05
+                                                            02 0A 11 41 0C
+
+14   Tower of Bab-il (save point)               --          --------------
+
+15   Tower of Bab-il (2F E IceBrand room)       A9234-A9238 05 04 FE C0 1D
+
+16   Tower of Bab-il (2F W BlizzSpear room)     A9239-A923D 05 04 FE C1 26
+
+17   Tower of Bab-il (4F S Ice Shield room)     A923E-A9242 05 04 FE C2 67
+
+18   Tower of Bab-il (4F N Ice Armor room)      A9243-A9247 05 04 FE C3 88
+
+19   Dwarf Castle (R Tower 3F)                  A9248-A925B 06 03 FE 80 AA
+                                                            01 07 FE 80 D1
+                                                            0B 07 FE 80 D2
+                                                            06 0B FE 80 D3
+
+1A   Dwarf Castle (L Tower 3F)                  A925C-A926F 06 03 FE 80 D3
+                                                            01 07 FE 80 CF
+                                                            0B 07 FE 80 D1
+                                                            06 0B FE 80 99
+
+1B   Dwarf Castle (L Tower 2F)                  A9270-A9283 08 0A FE 00 32
+                                                            15 18 FE 00 32
+                                                            06 07 1A 86 07
+                                                            18 17 19 86 07
+
+1C   water, can't walk (Mysidians)              --          --------------
+
+1D   Tower of Bab-il (8F) [1]                   A9284-A9292 06 03 FE 80 CF
+                                                            02 14 1E 82 15
+                                                            03 07 FF 3D 00
+
+1E   Tower of Bab-il (7F) [1]                   A9293-A9297 0A 04 1F 8A 05
+
+1F   Tower of Bab-il (6F) [1]                   A9298-A92A1 1C 0B FE 90 CF
+                                                            09 15 FF 3E 00
+
+20   Dwarf Castle (Cafe HOWDY!)                 --          --------------
+
+21   Tower of Bab-il (entrance)                 A92A2-A92BF 05 0A FE 80 57
+                                                            06 14 FE 80 57
+                                                            1A 0C FE 80 D1
+                                                            0F 04 22 8F 05
+                                                            0F 19 FC 30 10
+                                                            0F 15 FF 35 00
+
+22   Tower of Bab-il (2F)                       A92C0-A92D8 08 07 FE 80 7E
+                                                            10 0D 23 90 0E
+                                                            0F 16 16 05 07
+                                                            17 10 15 05 07
+                                                            0F 04 21 8F 05
+
+23   Tower of Bab-il (3F)                       A92D9-A92F6 0D 0B FE 80 06
+                                                            1A 13 FE 80 CF
+                                                            0F 19 FE 80 D4
+                                                            14 13 24 94 14
+                                                            0C 13 24 8C 14
+                                                            10 0D 22 90 0E
+
+24   Tower of Bab-il (4F)                       A92F7-A931E 10 13 FE 80 50
+                                                            1D 17 FE 80 D4
+                                                            03 08 25 83 09
+                                                            06 13 14 04 07
+                                                            1B 08 18 05 07
+                                                            1A 11 17 05 07
+                                                            1D 11 14 1B 07
+                                                            0C 13 23 8C 14
+
+25   Tower of Bab-il (5F)                       A931F-A9337 06 0C FE 00 82
+                                                            1D 16 FE 80 CF
+                                                            19 05 26 99 06
+                                                            03 08 24 83 09
+                                                            10 09 2D 05 0B
+
+26   Tower of Bab-il (6F) [2]                   A9338-A9341 1C 0B FE 80 CF
+                                                            0E 04 27 8E 05
+
+27   Tower of Bab-il (7F) [2]                   A9342-A9350 10 18 FE 80 D2
+                                                            1D 10 28 9D 11
+                                                            1B 08 14 04 07
+
+28   Tower of Bab-il (8F) [2]                   A9351-A935A 06 03 FE 80 5A
+                                                            10 14 FF 33 00
+
+29   --                                         --          --------------
+2A   --                                         --          --------------
+2B   --                                         --          --------------
+
+2C   Blue Whale (interior)                      A935B-A9378 04 15 FF 53 00
+                                                            04 18 FF 53 00
+                                                            06 17 FF 53 00
+                                                            08 17 FF 53 00
+                                                            0A 15 FF 53 00
+                                                            0A 18 FF 53 00
+
+2D   Tower of Bab-il (5F Cannon Room)           A9379-A937D 05 0A FF 34 00
+
+2E   tank (dwarves)                             --          --------------
+
+2F   Blue Whale (interior)                      A937E-A939B 04 15 FF 53 00
+                                                            04 18 FF 53 00
+                                                            06 17 FF 53 00
+                                                            08 17 FF 53 00
+                                                            0A 15 FF 53 00
+                                                            0A 18 FF 53 00
+
+30   black, can't walk (Mysidians)              --          --------------
+31   Palom's ending scene (with Mysidians)      --          --------------
+32   Tomra (Item Shop)                          --          --------------
+
+33   Mysidia (Room of Wishes, Yang/Cid/Edward)  A939C-A93A0 05 0C FF 3D 00
+
+34   empty room (Mysidians)                     --          --------------
+35   water, can't walk (Mysidians)              --          --------------
+
+36   Land of Monsters (entrance)                A93A1-A93B9 08 06 FE 80 D1
+                                                            1A 06 FE 80 D4
+                                                            19 15 FE 80 CF
+                                                            03 11 37 84 13
+                                                            11 0C FF 40 00
+
+37   Land of Monsters (B2F)                     A93BA-A93C8 09 05 FE 80 E3
+                                                            18 19 FE 80 CF
+                                                            1C 10 38 8B 02
+
+38   Land of Monsters (B3F)                     A93C9-A93EB 12 06 FE C4 1E
+                                                            03 15 FE 80 CF
+                                                            04 15 FE 80 47
+                                                            05 15 FE 80 2E
+                                                            0B 17 FE 80 D4
+                                                            19 15 FE 80 D0
+                                                            12 0E 3A 0C 0E
+
+39   --                                         --          --------------
+
+3A   Town of Monsters (B1F)                     A93EC-A940E 06 03 FE 00 82
+                                                            05 0A FE 80 D1
+                                                            14 08 FE 80 F6
+                                                            19 0C FE 00 82
+                                                            12 15 FE 00 83
+                                                            0E 04 3C 1C 0B
+                                                            13 0F 3B 10 15
+
+3B   Town of Monsters (treasure floor)          A940F-A9427 0F 09 FE 80 52
+                                                            0F 0A FE 80 5D
+                                                            10 09 FE 80 D2
+                                                            10 0A FE 80 D3
+                                                            10 18 FC 1B 57
+
+3C   Town of Monsters (B2F)                     A9428-A9440 0B 05 3D 05 0A
+                                                            0C 0C 3E 06 08
+                                                            08 14 41 06 09
+                                                            13 18 42 05 06
+                                                            16 05 43 0E 0A
+
+3D   Town of Monsters (save point)              A9441-A9459 01 06 FE 80 DD
+                                                            09 06 FE 80 D4
+                                                            05 09 FF 02 00
+                                                            04 0A FF 02 00
+                                                            06 0A FF 02 00
+
+3E   Town of Monsters (library 1F)              A945A-A945E 01 08 3F 07 09
+
+3F   Town of Monsters (library BF)              A945F-A9463 02 05 40 06 09
+
+40   Town of Monsters (King and Queen's Room)   --          --------------
+41   Town of Monsters (Weapon Shop)             --          --------------
+42   Town of Monsters (Armor Shop)              --          --------------
+43   Town of Monsters (Inn/Item Shop)           --          --------------
+
+44   Sealed Cave (entrance)                     A9464-A946D 04 02 4A 18 01
+                                                            04 04 FF 48 00
+
+45   Sylvan Cave (entrance)                     A946E-A94A9 05 04 FE 80 56
+                                                            06 04 FE 80 57
+                                                            07 04 FE 80 58
+                                                            0A 05 FE 80 D1
+                                                            0A 06 FE 80 CF
+                                                            03 12 FE 80 E3
+                                                            04 12 FE 00 64
+                                                            1C 05 FE 80 5C
+                                                            1C 06 FE 80 CF
+                                                            1D 05 FE 80 51
+                                                            10 13 46 91 12
+                                                            07 1D 46 86 1B
+
+46   Sylvan Cave (B1F)                          A94AA-A94F4 1D 1D FE 80 D0
+                                                            17 1D FE 80 D1
+                                                            1D 1C FE 80 CF
+                                                            19 1C FE 80 DD
+                                                            17 1B FE 80 DD
+                                                            17 0D FE 80 DD
+                                                            19 0D FE 80 CF
+                                                            17 0F FE 00 82
+                                                            19 0F FE 00 83
+                                                            0B 06 FE C5 32
+                                                            0B 0F 47 8D 0C
+                                                            0E 19 45 10 1A
+                                                            04 11 45 07 12
+                                                            04 08 47 85 07
+                                                            1C 1D 47 5D 1C
+
+47   Sylvan Cave (B2F)                          A94F5-A9517 0A 04 FE 80 CF
+                                                            0B 04 FE 80 0C
+                                                            0B 05 FE 80 DD
+                                                            01 09 FE 80 D3
+                                                            15 13 49 0B 07
+                                                            13 08 48 42 06
+                                                            13 01 46 12 07
+
+48   Sylvan Cave (treasure room)                A9518-A953A 07 05 FE C6 D3
+                                                            09 05 FE C6 D3
+                                                            0B 05 FE C6 D3
+                                                            07 07 FE C7 43
+                                                            09 07 FE C8 4C
+                                                            0B 07 FE C9 5E
+                                                            10 06 FC 0D 0F
+
+49   Sylvan Cave (Sylphs' room)                 A953B-A954E 0D 03 FE 80 05
+                                                            0D 05 FE 80 06
+                                                            09 04 49 1B 08
+                                                            1B 04 FC 0D 0F
+
+4A   Sealed Cave (B1F)                          A954F-A9571 12 1C FE 80 D4
+                                                            19 16 4B 09 0D
+                                                            08 07 4C 05 0D
+                                                            1A 09 FF 41 00
+                                                            1A 0F FF 42 00
+                                                            09 0F FF 42 00
+                                                            09 09 FF 41 00
+
+4B   Sealed Cave (2 chests spaced)              A9572-A957B 02 05 FE 80 2D
+                                                            0E 05 FE 80 D1
+
+4C   Sealed Cave (passage, 2 chests)            A957C-A9594 02 06 FE 80 CF
+                                                            10 07 FE 80 D1
+                                                            0E 0D 4D 94 15
+                                                            06 03 58 05 08
+                                                            0C 04 58 05 08
+
+4D   Sealed Cave (B2F)                          A9595-A95D5 1E 13 FE 80 D4
+                                                            1D 1A FE 80 D4
+                                                            17 06 50 06 0B
+                                                            12 03 4F 07 11
+                                                            05 03 4E 06 0B
+                                                            04 1A 51 0B 0C
+                                                            1D 06 58 05 08
+                                                            0E 04 58 05 08
+                                                            09 06 58 1A 09
+                                                            16 17 FF 46 03
+                                                            14 17 FF 41 07
+                                                            14 1D FF 42 07
+                                                            0C 0C FF 43 06
+
+4E   Sealed Cave (2 chests close)               A95D6-A95DF 03 05 FE 80 2D
+                                                            09 05 FE 80 7F
+
+4F   Sealed Cave (3 chests)                     A95E0-A95EE 03 05 FE 80 D3
+                                                            04 07 FE 80 41
+                                                            13 09 FE 00 85
+
+50   Sealed Cave (treasure room, 1 chest)       A95EF-A95F3 06 03 FE 80 1A
+
+51   Sealed Cave (passage, 1 chest)             A95F4-A95FD 09 05 FE 80 D1
+                                                            02 0E 53 87 04
+
+52   Sealed Cave (B3F)                          A95FE-A961B 19 09 FE 80 D4
+                                                            19 19 54 06 0B
+                                                            07 15 56 86 04
+                                                            16 0B 58 05 08
+                                                            10 08 FF 44 15
+                                                            10 1C FF 45 15
+
+53   Sealed Cave (passage, 2 chests, pillar)    A961C-A962F 0C 08 FE 80 CF
+                                                            0A 0A FE 80 D4
+                                                            06 0D 52 84 07
+                                                            03 05 58 05 08
+
+54   Sealed Cave (treasure room with boxes)     A9630-A9639 09 05 FE 80 D0
+                                                            03 0A FE 80 D2
+
+55   Sealed Cave (B4F)                          A963A-A9648 0F 0B 57 8F 16
+                                                            09 08 FF 46 00
+                                                            15 08 FF 46 00
+
+56   Sealed Cave (save point)                   A9649-A964D 06 12 55 8F 04
+
+57   Sealed Cave (bridge to crystal room)       A964E-A9657 0F 03 59 09 13
+                                                            0F 06 FF 47 00
+
+58   Sealed Cave (empty room)                   --          --------------
+
+59   Sealed Cave (crystal room)                 A9658-A965C 09 14 57 8F 04
+
+5A   Cave Bahamut (B1F)                         A965D-A966B 1C 0B FE 80 6A
+                                                            08 18 FE 80 A4
+                                                            17 1A 5B 99 1C
+
+5B   Cave Bahamut (B2F)                         A966C-A967F 06 0B FE 80 8A
+                                                            1A 0D FE 80 74
+                                                            14 06 5C 99 0B
+                                                            11 0C FF 56 00
+
+5C   Cave Bahamut (B3F)                         A9680-A9689 08 1A FF 57 00
+                                                            19 10 FF 59 00
+
+5D   --                                         --          --------------
+5E   --                                         --          --------------
+5F   --                                         --          --------------
+
+60   Lunar's Lair (entrance)                    A968A-A969D 10 05 61 10 1C
+                                                            04 11 FF 4B 00
+                                                            1C 11 FF 4C 00
+                                                            10 15 FF 4A 00
+
+61   Lunar's Lair (crystals room)               A969E-A96A2 10 10 FF 4D 00
+
+62   empty room (gray floor)                    --          --------------
+
+63   Lunar Path 1                               A96A3-A96BB 1A 16 FE CA D3
+                                                            1C 06 FE 80 CF
+                                                            1D 07 FE 80 DD
+                                                            13 04 FD 12 0F
+                                                            0C 1F FD 12 15
+
+64   Lunar Path 2                               A96BC-A96C5 15 05 FD 29 19
+                                                            09 1A FD 28 1D
+
+65   Humingways' Cave                           --          --------------
+66   --                                         --          --------------
+
+67   Lunar Subterrane (B1F)                     A96C6-A96D9 06 18 FE CB 9B
+                                                            06 12 67 18 14
+                                                            18 11 68 9A 14
+                                                            10 18 68 93 19
+
+68   Lunar Subterrane (B2F)                     A96DA-A96F7 0A 04 FE 8E 6B
+                                                            1A 0C FE CC 14
+                                                            19 17 FE 80 36              
+                                                            16 13 68 CE 0F
+                                                            04 1A 69 84 1B
+                                                            0F 04 69 8F 05
+
+69   Lunar Subterrane (B3F)                     A96F8-A970B 19 10 FE 80 75
+                                                            17 18 FE 80 8B
+                                                            0E 1C FE 80 A5
+                                                            10 0F 6A 89 07
+
+6A   Lunar Subterrane (B4F)                     A970C-A9729 1C 07 FE 80 5F
+                                                            06 18 FE D3 0D
+                                                            19 08 7E 09 08
+                                                            08 0D 73 03 09
+                                                            19 18 74 18 13
+                                                            10 1F 6B 90 02
+
+6B   Lunar Subterrane (B5F)                     A972A-A975B 07 09 FE CE 6C
+                                                            01 0F FE D4 AE
+                                                            1A 0B FE D0 8C
+                                                            1B 10 FE D1 A6
+                                                            05 14 FE D2 76
+                                                            0B 0D 75 05 0F
+                                                            0E 14 76 09 0F
+                                                            17 1B 77 02 09
+                                                            03 06 78 83 04
+                                                            14 1F 6C 94 01
+
+6C   Lunar Subterrane (B6F)                     A975C-A9783 0F 05 FE 80 5F
+                                                            19 05 FE 80 41
+                                                            12 11 FE 80 E3
+                                                            06 1B FE 80 D4
+                                                            16 15 79 05 0D
+                                                            08 08 6C 88 14
+                                                            1E 17 6C 01 11
+                                                            01 04 6B 01 1C
+
+6D   Lunar Subterrane (B7F)                     A9784-A9797 0D 14 7B 03 0E
+                                                            13 14 7A 03 0A
+                                                            19 14 7C 03 0A
+                                                            11 07 6E 91 08
+
+6E   Lunar Subterrane (crystal floor B1F)       A9798-A97A6 07 0B FE 80 41
+                                                            17 13 FE 80 D3
+                                                            11 13 6F 8F 08
+
+6F   Lunar Subterrane (crystal floor B2F)       A97A7-A97B5 15 0A FE 80 D3
+                                                            0D 18 FE 80 ED
+                                                            16 17 70 95 07
+
+70   Lunar Subterrane (crystal floor B3F)       A97B6-A97C4 07 0F FE 80 41
+                                                            18 0E FE 80 41
+                                                            17 18 71 D9 08
+
+71   Lunar Subterrane (crystal floor B4F)       A97C5-A97C9 06 14 72 0F 17
+
+72   Lunar Subterrane (final)                   A97CA-A97CE 0F 0F FF 55 00
+
+73   Lunar Subterrane (B4F room, 1 chest)       A97CF-A97D3 03 06 FE 80 D3
+
+74   Lunar Subterrane (B4F room, 2 chests)      A97D4-A97E2 17 05 FE 80 D0
+                                                            02 0E FE 80 D0
+                                                            06 0D 6A 8A 15
+
+75   Lunar Subterrane (B5F room, 3 rooms)       A97E3-A97F1 0D 04 FE 80 AE
+                                                            14 15 6B 94 0F
+                                                            16 07 6B 96 16
+
+76   Lunar Subterrane (B5F divided room)        A97F2-A97FB 03 0E FE 80 93
+                                                            06 03 6B 8E 1C
+
+77   Lunar Subterrane (B5F room, 1 chest)       A97FC-A9800 07 05 FE 80 E3
+
+78   Lunar Subterrane (B5F save point)          A9801-A9805 03 0B 6B 93 09
+
+79   Lunar Subterrane (B6F treasure room)       A9806-A980F 02 04 FE CD 95
+                                                            0A 04 6D 83 08
+
+7A   Lunar Subterrane (B7F white lance room)    --          --------------
+7B   Lunar Subterrane (B7F save point)          --          --------------
+7C   Lunar Subterrane (B7F room, 2 chests)      A9810-A981E 02 05 FE 80 7C
+                                                            04 05 FE 80 7C
+                                                            03 08 FF 50 00
+
+7D   --                                         --          --------------
+7E   --                                         --          --------------
+7F   --                                         --          --------------

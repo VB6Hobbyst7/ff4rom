@@ -58,5 +58,9 @@ sub FF4Rom.ReadMonsters()
    next
    start += 1
   end if
+  if p->has_reaction then
+   p->reaction = ais[ByteAt(start)]
+   start += 1
+  end if
  next
 end sub

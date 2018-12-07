@@ -1,0 +1,106 @@
+=================================================================
+7B700-7B727: Pointers for level up data (by character):
+=================================================================
+FB B4: Dark Knight Cecil
+2F B6: Kain 1
+90 B7: Rydia (Kid)
+92 B8: Tellah 1
+DF B9: Gilbert
+13 BB: Rosa 1
+47 BC: Yang 1
+7B BD: Palom
+AF BE: Porom
+10 C0: Paladin Cecil
+92 B8: Tellah 2
+47 BC: Yang 2
+12 C1: Cid
+2F B6: Kain 2
+13 BB: Rosa 2
+90 B7: Rydia (Adult)
+FB C1: Edge
+67 C2: FuSoYa
+2F B6: Kain 3
+
+=================================================================
+7B728-7C5C8: Main Bank (5 bytes per level in Level Data):
+=================================================================
+7B728-7B853: Dark Knight Cecil Level Data (11-70)   
+7B854-7B85B: Dark Knight Cecil Random Attribute Bonuses (71-99)
+7B85C-7B987: Kain Level Data (11-70)                 
+7B988-7B98F: Kain Random Attribute Bonuses (71-99)
+7B990-7BAE9: Rydia Level Data (02-70)               
+7BAEA-7BAF0: Rydia Random Attribute Bonuses (71-99)
+7BAF1-7BBEA: Tellah Level Data (21-70)
+7BBEB-7BBF1: Tellah Random Attribute Bonuses (71-99)
+7BBF2-7BD37: Glibert Level Data (06-70)     
+7BD38-7BD3F: Gilbert Random Attribute Bonuses (71-99)
+7BD40-7BE6B: Rosa Level Data (11-70)
+7BE6C-7BE73: Rosa Random Attribute Bonuses (71-99)
+7BE74-7BF9F: Yang Level Data (11-70)
+7BFA0-7BFA7: Yang Random Attribute Bonuses (71-99)
+7BFA8-7C0D3: Palom Level Data (11-70)
+7C0D4-7C0DB: Palom Random Attribute Bonuses (71-99)
+7C0DC-7C207: Porom Level Data (11-70)
+7C208-7C20F: Porom Random Attribute Bonuses (71-99)
+7C210-7C368: Paladin Cecil Level Data (02-70)
+7C369-7C370: Paladin Cecil Random Attribute Bonuses (71-99)
+7C371-7C46A: Cid Level Data (21-70)
+7C46B-7C472: Cid Random Attribute Bonuses (71-99)
+7C473-7C553: Edge Level Data (25-70)
+7C554-7C55B: Edge Random Attribute Bonuses (71-99)
+7C55C-7C5BF: FuSoYa Level Data (51-70)
+7C5C0-7C5C7: FuSoYa Random Attribute Bonuses (71-99)
+
+Quote from: Details
+=================================================================
+Level Data bytes:
+=================================================================
+Byte 1: Attribute Bonus:
+------------------------
+01: Add +1 to all activated bonuses
+02: Add +2 to all activated bonuses
+04: Add +4 to all activated bonuses
+08: Activates Will
+10: Activates Wisdom
+20: Activates Vitality
+40: Activates Agility
+80: Activates Strength
+------------------------
+
+Byte 2: Hit Point Gain
+
+Byte 3: Magic Point Gain; also, around the 50th level gained or
+so (varies for each character), the ROM begins adding $20, $40,
+or ($20 + $40) for each subsequent entry for this byte.  This
+may have something to do with how your HP/MP/Exp needed data is
+updated after you pass level 70.
+
+Byte 4: Lower byte for Exp needed to gain a level.
+
+Byte 5: Upper byte for Exp needed to gain a level.
+
+=================================================================
+Random Attribute Bonus Bytes:
+=================================================================
+------------------------
+01: Add +1 to all activated bonuses
+02: Add +2 to all activated bonuses
+04: Add +4 to all activated bonuses
+
+(Putting 01, 02, and 04 together seems to give a -1 instead;
+the game never uses 02 and 04 together.  Putting 01 and 02
+together simply gives +3, as expected)
+
+08: Activates Will
+10: Activates Wisdom
+20: Activates Vitality
+40: Activates Agility
+80: Activates Strength
+------------------------
+
+
+changed $7B728's value from E1 (raise Strength, Agility, and Vitality 1 point) to E6 (previously unknown) 
+for Dark Knight Cecil's 11th level, and when I ran a new game on the ROM/had DKC level up, it raised the 
+indicated values by 6 points instead of the previous 1.  So adding 02 and 04 together gives +6. 
+
+Using E5 instead gives a +5 modification.  It seems only having 01, 02, and 04 all at the same time produces the -1.

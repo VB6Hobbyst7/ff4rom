@@ -1,0 +1,27 @@
+weapons/spells	armors
+	--------------	------
+bit 0:	fire		resist fire, weak to ice
+bit 1:	ice		resist ice, weak to fire
+bit 2:	lightning	resist lightning
+bit 3:	dark		resist dark, weak to holy
+bit 4:	holy		resist holy, weak to dark
+bit 5:	spears/arrows	resists spears/arrows
+bit 6:	drain		absorb (also resists drain)
+bit 7:	force		immune (including to force)
+
+
+1. If an armor has bits 0 and 6 set, it will absorb fire, be resistant to drain, and be weak to ice. 
+2. If an armor has bits 2, 3, and 7 set, it will be immune to lightning/dark/force and weak to holy.
+3. If an armor has bits 0, 1, 6, and 7 set, it will be immune to fire/ice/drain/force.
+
+
+attack		resistance			weakness
+	------		----------			--------
+bit 0:	fire		fire				fire
+bit 1:	ice		ice				ice
+bit 2:	lightning	lightning			lightning
+bit 3:	dark		dark				dark
+bit 4:	holy		holy				holy
+bit 5:	spears/arrows	spears/arrows			spears/arrows (adds immunity to quake)
+bit 6:	drain		absorb (also resists drain)	drain
+bit 7:	force		immune (including to force)	susceptible (damage x4, including from force)

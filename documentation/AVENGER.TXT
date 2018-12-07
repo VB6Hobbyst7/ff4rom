@@ -1,0 +1,40 @@
+1) Equipping the Avenger Sword while in combat doesn't change the attack 
+power... you will have the attack power of the 
+previously held weapon. If you were to have Cecil at max stats (99 STR and 
+96+ AGI at level 99), swapping the Crystal Sword 
+for the Avenger Sword will allow you to deal an average of 9000 damage. This 
+bug goes away after the battle is over. 
+In theory, this tactic is relatively overpowered. This is fixed in FF4A AFAIK.
+
+2) If the Avenger Sword is equipped before the battle with Zeromus, 
+particularly on Cecil, he is forever stuck in that battle.
+AFAIK, FF4A has this bug "fixed" where "Berserk" status is uninflictable 
+until post-Zeromus change.
+
+On a related FF4A change, if Charm is inflicted on the wielder, Berserk 
+status is removed... though this seems specific 
+to FF4A. Also, Black Hole removes this status completely in FF4A. FF2/4 
+continues to reapply the status under both instances...
+
+3) There are some peculiar properties with the Charm status, especially when 
+afflicted on the Avenger Sword wielder 
+(this doesn't apply to Berserk since it is not possible otherwise). The first 
+attack made while under Charm actually hits 
+the enemy... sometimes continues for a longer duration but eventually follows 
+proper Charm targeting...
+
+
+The guy wielding the Avenger Sword will not attack until the characters 
+preceding him in the attacking order
+executes a command. After the preceding character executes a command, the 
+Avenger Sword user attacks like a normal 
+Berserked user.
+
+The only exception here though is if the wielder of said weapon is in the 
+first attacking slot (middle).
+
+This bug does not occur in FF4A.
+
+Addtionally, if the Avenger Sword wielder is coming off Charm, the character 
+is reberserked when his turn comes up... 
+so they may be stuck doing nothing for several turns.

@@ -1,0 +1,59 @@
+SNES version - The back row bug for this version of the game is simple. If you equip a back row compatible weapon on a character, 
+it is not unset when you switch to a non-back row compatible weapon.
+
+This bug is very beneficial except that most of those weapons have the "disable critical bit" enabled which is the tradeoff. This 
+bug occurs for all versions w/o exception.
+
+Note: The "disable critical hit" bit is only available in the SNES version.
+
+Characters that are unaffected are Tellah and Yang, since they do not have a back row compatible weapon.
+
+Characters who are automatically inflicted with this bug include Rosa (initially) and Rydia (when she comes back).
+
+Edge needs both hands to have equipped (at one point or another) a Boomerang weapon to take advantage of this bug.  This also 
+implies that both hands need to be "back row" compatible for the benefits to stick when both hands have a weapon. This is the 
+same reason why bows+arrows have that bit set.
+
+GBA Version - There are two different back row bugs.
+
+GBA US Version (probably includes Jap v1.0) - The back row bit is not adhered to at all, thus making normally back row compatible 
+weapons to decrease hit rate.
+
+GBA Euro Version (probably includes Jap v1.1) - The back row bit is not adhered to at all, thus making the either row deal the 
+same amount of damage. The back row bit is effectively useless in this version.
+
+What I've learned from all of this:
+
+Back row incompatible weapons reduce hit rate by 1/2.
+
+Attacking enemies that are "considered" to be in the back row also reduce hit rate by 1/2. This penalty is stackable with back row 
+incompatible weapons.
+
+Note: There is no front/back rows for enemies in FF4A. (In other words, there is no distinction for enemy location when attacking).
+
+Second Note: Whoever spread the rumors that FF4ET didn't adhere to rows was grossly informed and didn't do any testing. More likely 
+than not, they were experiencing the back row bug.
+
+Back row compatible weapons (and those characters that are affected by the bug) in the SNES version are not affected by either back row penalty.
+
+The GBA versions can't decide between "no back row compatible weapons" (US and Jap v1.0) and "always back row compatible" (Euro and Jap v1.1).
+
+The Bow+Arrow combo is "bugged" in FF4A... I could be wrong if it is a bug, but I'll call it that anyways.
+
+I originally thought Rosa's Attack command is tied to some character specific code that cripples her usage of the Bow+Arrow combo, to force the 
+use of Aim.
+
+However, that isn't the case.
+
+Apparently, the back row bit is ignored when a Bow+Arrow combo is equipped.
+
+All Bows and Arrows have the back row bit enabled. When testing this in battle, it appears that being in the front row does make a difference.. 
+as full hit rate is available. In the back row, approximately half of the damage is dealt (which means 1/2 hit rate penalty is applied).
+
+So, in conclusion:
+
+To deal full damage with the Bow+Arrow combo in FF4A, you need to one of the following:
+
+1) Have the Aim command, so you can use it effectively in the back row.
+
+2) Be in the front row.

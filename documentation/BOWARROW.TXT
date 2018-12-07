@@ -1,0 +1,50 @@
+Weapon = Power
+
+To calculate attack power for Bows+Arrows:
+
+Bow Attack Power/2 + Arrow Attack Power + Strength/4
+
+Bows:
+
+ShortBow = 10
+CrossBow = 20
+GreatBow = 30
+Archer = 40
+ElvenBow = 50
+Samurai = 60
+Artemis = 80
+
+Arrows:
+
+Iron = 5
+White = 10
+Fire = 15
+Ice = 15
+Lit = 15
+Darkness = 20
+Poison = 30
+Mute = 35
+Charm = 40
+Samurai = 50
+Medusa = 1
+Artemis = 75
+
+Example:
+Strength: 99 (empty hand attack power 48)
+Artemis Bow attack power: 80
+Artemis Arrow attack power: 75
+
+40 + 75 + 24 = 139
+
+The exact amount shown in game.  Nice work.
+
+*edit*And using the attack multiplier that's a 2641 damage median.
+
+Hit Rates:
+ShortBow: 30%
+CrossBow: 35%
+GreatBow: 40%
+Archer: 50%
+ElvenBow: 75%
+Samurai: 60%
+Artemis: 70%
