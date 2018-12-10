@@ -12,7 +12,7 @@ sub FF4Rom.ReadMaps()
   p->tile_layout = layouts[ByteAt(start + 1)]
   p->tile_set = tile_sets[ByteAt(start + 2)]
   p->placement_set = placement_sets[ByteAt(start + 3)]
-  p->border_tile = p->tile_set.tiles[ByteAt(start + 4)] mod &h80
+  p->border_tile = p->tile_set->tiles[ByteAt(start + 4) mod &h80]
   p->solid_border = bit(ByteAt(start + 4), 7)
   p->map_palette = ByteAt(start + 5)
   p->npc_palette1 = ByteAt(start + 6) mod &h10
