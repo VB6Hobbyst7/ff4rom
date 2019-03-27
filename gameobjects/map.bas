@@ -1,6 +1,6 @@
 type Map
  triggers as TriggerList
- messages as List
+ messages as MessageList
  battle_background as UByte
  warpable as Boolean
  exitable as Boolean
@@ -23,7 +23,7 @@ type Map
  move_direction as UByte
  move_speed as UByte
  ending as Boolean
- name_index as UByte
+ name as String ptr
  encounter_rate as UByte
  treasure_index as UByte
  encounter_set as Encounter ptr
@@ -31,6 +31,7 @@ type Map
 end type
 
 const total_maps = 383
+const total_map_names = &h79
 
 function Map.TileAt(x as UByte, y as UByte) as Tile ptr
  return tile_set->tiles[tile_layout->tiles.ValueAt(y * 32 + x)]

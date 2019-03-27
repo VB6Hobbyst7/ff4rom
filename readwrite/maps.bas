@@ -1,6 +1,17 @@
 sub FF4Rom.ReadMaps()
  dim start as Long
  dim p as Map ptr
+ dim temp as String ptr
+ start = &hA9820
+ for i as Integer = 0 to total_map_names
+  temp = new String
+  do until ByteAt(start) = 0
+   *temp += chr(ByteAt(start))
+   start += 1
+  loop
+  map_names.AddPointer(temp)
+  start += 1
+ next
  for index as Integer = 0 to total_maps
   p = maps[index]
   start = &hA9E84 + index * 13
@@ -26,7 +37,7 @@ sub FF4Rom.ReadMaps()
   p->move_direction = (ByteAt(start + 9) \ &h10) mod 4
   p->move_speed = ByteAt(start + 9) \ &h40
   p->ending = bit(ByteAt(start + 10), 7)
-  p->name_index = ByteAt(start + 11)
+  p->name = iif(ByteAt(start + 11) < map_names.Size(), map_names.PointerAt(ByteAt(start + 11) + 1), 0)
   p->treasure_index = ByteAt(start + 12)
   p->encounter_rate = ByteAt(&h74542 + index)
  next

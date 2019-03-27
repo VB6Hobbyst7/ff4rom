@@ -1,7 +1,7 @@
 type MenuCommandFwd as MenuCommand
 
 type Actor
- name_index as UByte
+ name as String ptr
  load_initial as Boolean
  store_shadow as Boolean
  load_slot as UByte
@@ -14,7 +14,7 @@ type Actor
 end type
 
 const total_actors = 21
-const total_names = 13
+const total_actor_names = 13
 
 enum ActorNames
  cecil1 = 1

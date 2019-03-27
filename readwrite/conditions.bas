@@ -1,6 +1,7 @@
 sub FF4Rom.ReadConditions()
  dim start as Long
  dim p as Condition ptr
+ dim h as Integer ptr
  for index as Integer = 0 to total_conditions
   p = conditions[index]
   start = &h76900 + index * 4
@@ -11,6 +12,8 @@ sub FF4Rom.ReadConditions()
  next
  for index as Integer = 0 to total_condition_hps
   start = &h76200 + index * 2
-  condition_hps(index) = ByteAt(start) + ByteAt(start + 1)
+  h = new Integer
+  *h = ByteAt(start) + ByteAt(start + 1) * &h100
+  condition_hps.AddPointer(h)
  next
 end sub

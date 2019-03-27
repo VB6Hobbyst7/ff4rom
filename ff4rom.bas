@@ -91,6 +91,7 @@ type FF4Rom extends Object
   equip_tables as EquipTableList = EquipTableList(total_equip_tables)
   characters as CharacterList = CharacterList(total_characters)
   bank1_messages as MessageList = MessageList(total_bank1_messages)
+  'Bank 2 messages are stored as part of each map
   bank3_messages as MessageList = MessageList(total_bank3_messages)
   battle_messages as MessageList = MessageList(total_battle_messages)
   alert_messages as MessageList = MessageList(total_alert_messages)
@@ -123,14 +124,15 @@ type FF4Rom extends Object
   placement_sets as PlacementSetList = PlacementSetList(total_placement_sets)
   maps as MapList = MapList(total_maps)
   '---- Lists and ranges
-  condition_hps(total_condition_hps) as Integer
+  condition_hps(total_condition_hps) as Integer ptr
   player_spell_range as Range
   menu_spell_range as Range
   white_range as Range
   summon_range as Range
   black_range as Range
-  names as List
-  prices as List
+  actor_names(total_actor_names) as String ptr
+  map_names(total_map_names) as String ptr
+  prices(total_prices) as Integer ptr
   descriptions_range as Range
   weapons_range as Range
   armors_range as Range

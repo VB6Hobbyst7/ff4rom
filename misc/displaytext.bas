@@ -1,6 +1,7 @@
 function FF4Rom.DisplayText(ff4text as String) as String
  dim result as String
  dim symbol_code as UByte
+ dim p as String ptr
  for i as Integer = 1 to len(ff4text)
   symbol_code = asc(mid(ff4text, i, 1))
   select case symbol_code
@@ -131,7 +132,8 @@ function FF4Rom.DisplayText(ff4text as String) as String
   case Symbols.advance
    result += "[Advance]"
   case Symbols.actor_name
-   result += "[" + Pad(DisplayText(names.ItemAt(asc(mid(ff4text, i + 1, 1)))), 6) + "]"
+   p = actor_names.PointerAt(asc(mid(ff4text, i + 1, 1)))
+   result += "[" + Pad(DisplayText(*p), 6) + "]"
    i += 1
   case Symbols.song
    result += "[Song " + str(asc(mid(ff4text, i + 1, 1))) + "]"
